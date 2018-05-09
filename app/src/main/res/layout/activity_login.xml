@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.cf.basketball.LoginActivity">
+
+    <com.cf.basketball.stock.TabIndicatorViewV2
+        android:id="@+id/tabIndicatorView"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="#171B20"
+        app:indicatorHeight="1dp"
+        app:indicatorPadding="10dp"
+        app:normalColor="#A9B4C7"
+        app:selectedColor="#FF1F64"
+        app:textSize="15sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_weight="0.318">
+
+        <com.cf.basketball.stock.MLineView
+            android:id="@+id/mLineView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#171B20"
+            android:visibility="visible" />
+
+        <com.cf.basketball.stock.KlineView
+            android:id="@+id/kDayLineView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#171B20"
+            android:visibility="gone" />
+        <com.cf.basketball.stock.KlineView
+            android:id="@+id/kWeekLineView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#171B20"
+            android:visibility="gone" />
+        <com.cf.basketball.stock.KlineView
+            android:id="@+id/kMonthLineView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#171B20"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="股票代码"
+        android:inputType="textPersonName" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:onClick="onClick"
+        android:text="查询股票" />
+
+</LinearLayout>
