@@ -289,6 +289,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
             case MONTH_KLINE:
                 refreshMonthData(curMarket, stockCode);
                 break;
+
         }
     }
 
