@@ -7,7 +7,8 @@ package com.cf.basketball.interfaces;
 public interface OnItemClickListener {
     /**
      * 点击事件
-     * @param item item字符
+     *
+     * @param item 条目
      */
-    void onItemClickListener(String item);
+    void onItemClickListener(int item);
 }

@@ -1,59 +1,102 @@
 package com.cf.basketball.adapter;
 
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cf.basketball.R;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.admin.basic.application.BaseApplication;
 
 import java.util.List;
 
 /**
+ * 顶部导航栏数据
+ *
  * @author Xinxin Shi
  */
 
-public class HomeNavigationAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-
-    private String selectedItem;
+public class HomeNavigationAdapter extends RecyclerView.Adapter<HomeNavigationAdapter.ViewHolder> {
+    private Context context;
+    private List<String> dataList;
+    private int selectedPosition = -1;
     private com.cf.basketball.interfaces.OnItemClickListener onItemClickListener;
-    private TextView selectedView;
+    private View selectedView;
 
-    public HomeNavigationAdapter(int layoutResId, @Nullable List<String> data, String
-            selectedItem) {
-        super(layoutResId, data);
-        this.selectedItem = selectedItem;
+    public HomeNavigationAdapter(Context context, List<String> dataList) {
+        this.context = context;
+        this.dataList = dataList;
+    }
+
+
+    public void setOnItemClickListener(com.cf.basketball.interfaces.OnItemClickListener
+                                               onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, final String item) {
-        helper.setText(R.id.tv_navigation_title, item);
-//        helper.setText(R.id.tv_navigation_line, item);
-        if (TextUtils.equals(selectedItem, item)) {
-            selectedView =(TextView) helper.itemView.findViewById(R.id.tv_navigation_line);
-            selectedView.setVisibility(View.VISIBLE);
-        } else {
-            helper.itemView.findViewById(R.id.tv_navigation_line).setVisibility(View.INVISIBLE);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(BaseApplication.getInstance()).inflate(R.layout
+                .item_home_navigation, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        holder.setData(dataList.get(position));
+//        设置最后一个元素的padding
+        if (dataList.size() > 0 && position == dataList.size() - 1) {
+            holder.rlNavigation.setPadding(0, 0, (int) context.getResources().getDimension(R
+                    .dimen.dp_14), 0);
         }
-        helper.itemView.setOnClickListener(new View.OnClickListener() {
+//        设置选中状态
+        if ((selectedPosition == -1 && position == 0) || selectedPosition == position) {
+            selectedPosition = position;
+            holder.tvNavigationLine.setVisibility(View.VISIBLE);
+            selectedView = holder.tvNavigationLine;
+        } else {
+            holder.tvNavigationLine.setVisibility(View.INVISIBLE);
+        }
+        holder.rlNavigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    selectedItem = item;
                     selectedView.setVisibility(View.INVISIBLE);
-                    selectedView=(TextView) helper.itemView.findViewById(R.id.tv_navigation_line);
-                    selectedView.setVisibility(View
-                            .VISIBLE);
-                    onItemClickListener.onItemClickListener(item);
+                    selectedView = holder.tvNavigationLine;
+                    selectedView.setVisibility(View.VISIBLE);
+                    onItemClickListener.onItemClickListener(position);
                 }
             }
         });
     }
 
-    public void setOnItemClickListener(com.cf.basketball.interfaces.OnItemClickListener
-                                               onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setSelectedPosition(int position) {
+        selectedPosition = position;
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return dataList == null ? 0 : dataList.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView tvNavigationTitle;
+        private View tvNavigationLine;
+        private RelativeLayout rlNavigation;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            tvNavigationTitle = (TextView) itemView.findViewById(R.id.tv_navigation_title);
+            tvNavigationLine = itemView.findViewById(R.id.tv_navigation_line);
+            rlNavigation = (RelativeLayout) itemView.findViewById(R.id.rl_navigation);
+        }
+
+        public void setData(String title) {
+            tvNavigationTitle.setText(title);
+        }
     }
 }
