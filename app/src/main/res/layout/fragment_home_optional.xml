@@ -6,7 +6,9 @@
         android:orientation="vertical"
         tools:context="com.cf.basketball.fragment.HomeOptionalFragment">
 
-        <include layout="@layout/common_sort_prompt"></include>
+        <include
+            android:id="@+id/ll_sort_prompt"
+            layout="@layout/common_sort_prompt"></include>
 
         <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
             android:id="@+id/sry_container"

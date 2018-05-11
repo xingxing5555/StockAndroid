@@ -10,6 +10,10 @@ import com.cf.basketball.R;
 import com.cf.basketball.adapter.HomeNavigationAdapter;
 import com.cf.basketball.adapter.HomeViewPagerAdapter;
 import com.cf.basketball.databinding.ActivityHomeBinding;
+import com.cf.basketball.fragment.HomeBTCFragment;
+import com.cf.basketball.fragment.HomeHuobiFragment;
+import com.cf.basketball.fragment.HomeIncreaseFragment;
+import com.cf.basketball.fragment.HomeMarketFragment;
 import com.cf.basketball.fragment.HomeOptionalFragment;
 import com.cf.basketball.interfaces.OnItemClickListener;
 import com.example.admin.basic.base.BaseActivity;
@@ -19,6 +23,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 首页
+ *
  * @author Xinxin Shi
  */
 public class HomeActivity extends BaseActivity {
@@ -75,9 +81,15 @@ public class HomeActivity extends BaseActivity {
 
 
     private void getFragments() {
-        for (int i = 0; i < navigationTitleArray.length; i++) {
-            fragmentList.add(new HomeOptionalFragment());
-        }
+        fragmentList.add(new HomeOptionalFragment());
+        fragmentList.add(new HomeMarketFragment());
+        fragmentList.add(new HomeIncreaseFragment());
+        fragmentList.add(new HomeBTCFragment());
+        fragmentList.add(new HomeOptionalFragment());
+        fragmentList.add(new HomeOptionalFragment());
+        fragmentList.add(new HomeHuobiFragment());
+        fragmentList.add(new HomeOptionalFragment());
+        fragmentList.add(new HomeOptionalFragment());
     }
 
     /**
@@ -87,13 +99,13 @@ public class HomeActivity extends BaseActivity {
      * @param n       要跳转的位置
      */
     public static void MoveToPosition(LinearLayoutManager manager, int n) {
-        int lastCompletelyVisibleItemPosition = manager.findLastCompletelyVisibleItemPosition();
         int firstCompletelyVisibleItemPosition = manager.findFirstCompletelyVisibleItemPosition();
+        int lastCompletelyVisibleItemPosition = manager.findLastCompletelyVisibleItemPosition();
         if (n >= lastCompletelyVisibleItemPosition) {
             manager.scrollToPositionWithOffset(n, 0);
             manager.setStackFromEnd(true);
         }
-        if (n < firstCompletelyVisibleItemPosition) {
+        if (n <= firstCompletelyVisibleItemPosition) {
             manager.scrollToPositionWithOffset(0, n);
             manager.setStackFromEnd(false);
         }

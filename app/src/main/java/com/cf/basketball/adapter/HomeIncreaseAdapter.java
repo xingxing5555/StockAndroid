@@ -11,22 +11,21 @@ import com.example.admin.basic.model.HomeCurrencyModel;
 import java.util.List;
 
 /**
- * 自选列表
+ * 涨幅列表
  *
  * @author Xinxin Shi
  */
 
-public class HomeCurrencyAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseViewHolder> {
+public class HomeIncreaseAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseViewHolder> {
 
-    public HomeCurrencyAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
+    public HomeIncreaseAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, HomeCurrencyModel item) {
-        helper.setText(R.id.tv_increase_source, item.getName());
         helper.setText(R.id.tv_increase_name, item.getType());
-        helper.setText(R.id.tv_market_price, item.getVolume());
+        helper.setText(R.id.tv_increase_source, item.getName());
         helper.setText(R.id.tv_increase_price, item.getPrice());
         helper.setText(R.id.tv_increase_foreign_price, item.getForeignPrice());
         helper.setText(R.id.btn_increase, item.getIncrease());

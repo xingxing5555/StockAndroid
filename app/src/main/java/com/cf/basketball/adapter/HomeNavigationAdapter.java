@@ -46,11 +46,6 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter<HomeNavigationAd
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.setData(dataList.get(position));
-//        设置最后一个元素的padding
-        if (dataList.size() > 0 && position == dataList.size() - 1) {
-            holder.rlNavigation.setPadding(0, 0, (int) context.getResources().getDimension(R
-                    .dimen.dp_14), 0);
-        }
 //        设置选中状态
         if ((selectedPosition == -1 && position == 0) || selectedPosition == position) {
             selectedPosition = position;

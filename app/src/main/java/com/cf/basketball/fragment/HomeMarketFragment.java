@@ -2,31 +2,36 @@ package com.cf.basketball.fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.annotation.Nullable;
 
 import com.cf.basketball.R;
+import com.cf.basketball.adapter.HomeMarketAdapter;
+import com.example.admin.basic.base.BaseRecyclerViewFragment;
+import com.example.admin.basic.model.HomeCurrencyModel;
+
+import java.util.List;
 
 /**
  * 市值
  *
  * @author xinxin Shi
  */
-public class HomeMarketFragment extends Fragment {
+public class HomeMarketFragment extends BaseRecyclerViewFragment {
 
 
-    public HomeMarketFragment() {
-        // Required empty public constructor
+    private List<HomeCurrencyModel> list;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        list = createData();
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
-            savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_market, container, false);
+    public void initView() {
+        mRecyclerView.setAdapter(new HomeMarketAdapter(R.layout.item_home_market, list));
     }
+
 
 }

@@ -14,10 +14,8 @@ import com.cf.basketball.adapter.HomeCurrencyAdapter;
 import com.cf.basketball.databinding.FragmentHomeOptionalBinding;
 import com.example.admin.basic.base.BaseFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
-import com.example.admin.basic.utils.LogUtils;
 import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,26 +28,26 @@ public class HomeOptionalFragment extends BaseFragment {
 
     private FragmentHomeOptionalBinding binding;
     private HomeCurrencyAdapter adapter;
-    private List<HomeCurrencyModel> list = new ArrayList<>();
+    private List<HomeCurrencyModel> list;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtils.e("====onCreate=====");
-        createData();
+        list = createData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        LogUtils.e("======onCreateView====");
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_optional, container,
                 false);
         initData();
         return binding.getRoot();
     }
 
+
     private void initData() {
+        binding.getRoot().findViewById(R.id.ll_sort_prompt).setVisibility(View.VISIBLE);
         binding.sryContainer.setLayoutManager(createLayoutManager(true));
         binding.sryContainer.addItemDecoration(createItemDecoration(R.color.grey_d));
         adapter = new HomeCurrencyAdapter(R.layout.item_home_currency, list);
@@ -85,12 +83,4 @@ public class HomeOptionalFragment extends BaseFragment {
     }
 
 
-    public void createData() {
-        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
-                "交易量27163.070BT", "-4.81%", "0"));
-        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
-                "交易量27163.070BT", "-4.81%", "1"));
-        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
-                "交易量27163.070BT", "-4.81%", "1"));
-    }
 }
