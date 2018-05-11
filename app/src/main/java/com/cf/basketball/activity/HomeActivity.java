@@ -67,7 +67,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                MoveToPosition(layoutManager, position);
+                moveToPosition(layoutManager, position);
                 adapter.setSelectedPosition(position);
                 adapter.notifyDataSetChanged();
             }
@@ -92,22 +92,5 @@ public class HomeActivity extends BaseActivity {
         fragmentList.add(new HomeOptionalFragment());
     }
 
-    /**
-     * RecyclerView 移动到当前位置，
-     *
-     * @param manager 设置RecyclerView对应的manager
-     * @param n       要跳转的位置
-     */
-    public static void MoveToPosition(LinearLayoutManager manager, int n) {
-        int firstCompletelyVisibleItemPosition = manager.findFirstCompletelyVisibleItemPosition();
-        int lastCompletelyVisibleItemPosition = manager.findLastCompletelyVisibleItemPosition();
-        if (n >= lastCompletelyVisibleItemPosition) {
-            manager.scrollToPositionWithOffset(n, 0);
-            manager.setStackFromEnd(true);
-        }
-        if (n <= firstCompletelyVisibleItemPosition) {
-            manager.scrollToPositionWithOffset(0, n);
-            manager.setStackFromEnd(false);
-        }
-    }
+
 }
