@@ -1,5 +1,6 @@
 package com.example.admin.basic.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -47,5 +48,9 @@ public class BaseFragment extends Fragment {
         list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
                 "交易量27163.070BT", "-4.81%", "1"));
         return list;
+    }
+
+    public void startActivity(Class toClass) {
+        startActivity(new Intent(BaseApplication.getInstance(), toClass));
     }
 }

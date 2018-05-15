@@ -1,4 +1,4 @@
-package com.cf.basketball.interfaces;
+package com.example.admin.basic.interfaces;
 
 /**
  * @author Xinxin Shi

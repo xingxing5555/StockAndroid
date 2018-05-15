@@ -41,7 +41,7 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
     }
 
     private void init() {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_increase);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         llSortPrompt = (LinearLayout) view.findViewById(R.id.ll_sort_prompt);
         mRecyclerView.setLayoutManager(createLayoutManager(true));
         mRecyclerView.addItemDecoration(createItemDecoration(R.color.grey_d));

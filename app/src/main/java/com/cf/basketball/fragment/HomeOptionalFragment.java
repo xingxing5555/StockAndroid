@@ -10,10 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.HomeCurrencyAdapter;
+import com.cf.basketball.activity.CurrencyInfoActivity;
+import com.cf.basketball.adapter.HomeOptionalAdapter;
 import com.cf.basketball.databinding.FragmentHomeOptionalBinding;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
+import com.example.admin.basic.utils.LogUtils;
 import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 
 import java.util.Collections;
@@ -27,7 +30,7 @@ import java.util.List;
 public class HomeOptionalFragment extends BaseFragment {
 
     private FragmentHomeOptionalBinding binding;
-    private HomeCurrencyAdapter adapter;
+    private HomeOptionalAdapter adapter;
     private List<HomeCurrencyModel> list;
 
     @Override
@@ -50,10 +53,17 @@ public class HomeOptionalFragment extends BaseFragment {
         binding.getRoot().findViewById(R.id.ll_sort_prompt).setVisibility(View.VISIBLE);
         binding.sryContainer.setLayoutManager(createLayoutManager(true));
         binding.sryContainer.addItemDecoration(createItemDecoration(R.color.grey_d));
-        adapter = new HomeCurrencyAdapter(R.layout.item_home_currency, list);
+        adapter = new HomeOptionalAdapter(R.layout.item_home_optional, list);
         binding.sryContainer.setAdapter(adapter);
         binding.sryContainer.setLongPressDragEnabled(true);
         binding.sryContainer.setOnItemMoveListener(getItemMoveListener());
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                LogUtils.e("position==" + position);
+                startActivity(CurrencyInfoActivity.class);
+            }
+        });
     }
 
     /**

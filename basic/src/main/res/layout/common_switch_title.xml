@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_32"
+    android:background="@color/grey_e"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/first_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:enabled="false"
+            android:text="@string/currency_news"
+            android:textColor="@drawable/select_text_title"
+            android:textSize="@dimen/sp_14" />
+
+        <include
+            android:id="@+id/first_line"
+            layout="@layout/common_navigation_line"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_2"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/second_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:enabled="true"
+            android:text="@string/currency_brief"
+            android:textColor="@drawable/select_text_title"
+            android:textSize="@dimen/sp_14" />
+
+        <include
+            android:id="@+id/second_line"
+            layout="@layout/common_navigation_line"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_2"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/third_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:enabled="true"
+            android:text="@string/currency_market"
+            android:textColor="@drawable/select_text_title"
+            android:textSize="@dimen/sp_14" />
+
+        <include
+            android:id="@+id/third_line"
+            layout="@layout/common_navigation_line"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_2"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+</LinearLayout>

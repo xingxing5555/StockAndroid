@@ -21,6 +21,17 @@
     <string name="title_activity_score">ScoreActivity</string>
     <string name="title_activity_team_status">TeamStatusActivity</string>
 
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name_currency">币种名称</string>
+    <string name="current_price">现价</string>
+    <string name="increase_amount">涨幅</string>
+    <string name="market">行情</string>
+    <string name="add_currency">+添加币种</string>
+    <string name="currency_news">新闻</string>
+    <string name="currency_brief">简况</string>
+    <string name="currency_market">市场</string>
+
     <string-array name="market">
         <item>沪深</item>
         <item>港股</item>
@@ -39,10 +50,18 @@
         <item>Bitfinex</item>
     </string-array>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="name_currency">币种名称</string>
-    <string name="current_price">现价</string>
-    <string name="increase_amount">涨幅</string>
-    <string name="market">行情</string>
-    <string name="add_currency">+添加币种</string>
+
+    <string-array name="info_data_name">
+        <item>最高</item>
+        <item>最低</item>
+        <item>今开</item>
+        <item>今收</item>
+        <item>买一</item>
+        <item>卖一</item>
+    </string-array>
+    <string-array name="currency_info_data_item">
+        <item>新闻</item>
+        <item>简况</item>
+        <item>市场</item>
+    </string-array>
 </resources>

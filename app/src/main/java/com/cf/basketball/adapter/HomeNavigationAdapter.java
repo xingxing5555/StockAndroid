@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cf.basketball.R;
 import com.example.admin.basic.application.BaseApplication;
+import com.example.admin.basic.interfaces.OnItemClickListener;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter<HomeNavigationAd
     private Context context;
     private List<String> dataList;
     private int selectedPosition = -1;
-    private com.cf.basketball.interfaces.OnItemClickListener onItemClickListener;
+    private OnItemClickListener onItemClickListener;
     private View selectedView;
 
     public HomeNavigationAdapter(Context context, List<String> dataList) {
@@ -32,7 +33,7 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter<HomeNavigationAd
     }
 
 
-    public void setOnItemClickListener(com.cf.basketball.interfaces.OnItemClickListener
+    public void setOnItemClickListener(OnItemClickListener
                                                onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }

@@ -16,9 +16,9 @@ import java.util.List;
  * @author Xinxin Shi
  */
 
-public class HomeCurrencyAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseViewHolder> {
+public class HomeOptionalAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseViewHolder> {
 
-    public HomeCurrencyAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
+    public HomeOptionalAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
         super(layoutResId, data);
     }
 

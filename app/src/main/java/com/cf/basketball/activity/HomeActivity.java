@@ -15,7 +15,7 @@ import com.cf.basketball.fragment.HomeHuobiFragment;
 import com.cf.basketball.fragment.HomeIncreaseFragment;
 import com.cf.basketball.fragment.HomeMarketFragment;
 import com.cf.basketball.fragment.HomeOptionalFragment;
-import com.cf.basketball.interfaces.OnItemClickListener;
+import com.example.admin.basic.interfaces.OnItemClickListener;
 import com.example.admin.basic.base.BaseActivity;
 
 import java.util.ArrayList;
