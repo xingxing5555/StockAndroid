@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.HomeOptionalAdapter;
+import com.cf.basketball.adapter.HomeBTCAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
 
@@ -28,6 +28,6 @@ public class HomeBTCFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void initView() {
-        mRecyclerView.setAdapter(new HomeOptionalAdapter(R.layout.item_home_optional, list));
+        mRecyclerView.setAdapter(new HomeBTCAdapter(R.layout.item_home_btc, list));
     }
 }

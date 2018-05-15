@@ -24,6 +24,10 @@ public class HomeMarketAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, HomeCurrencyModel item) {
+        if (helper.getAdapterPosition() > 2) {
+            helper.itemView.findViewById(R.id.tv_rank).setEnabled(false);
+        }
+        helper.setText(R.id.tv_rank, String.valueOf(helper.getAdapterPosition() + 1));
         helper.setText(R.id.tv_market_name, item.getName());
         helper.setText(R.id.tv_market_total_value, item.getVolume());
         helper.setText(R.id.tv_market_price, item.getPrice());

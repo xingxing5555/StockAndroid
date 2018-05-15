@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.HomeMarketAdapter;
+import com.cf.basketball.adapter.HomeHuobiAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
 
@@ -28,7 +28,7 @@ public class HomeHuobiFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void initView() {
-        mRecyclerView.setAdapter(new HomeMarketAdapter(R.layout.item_home_market, list));
+        mRecyclerView.setAdapter(new HomeHuobiAdapter(R.layout.item_home_huobi, list));
     }
 
 }

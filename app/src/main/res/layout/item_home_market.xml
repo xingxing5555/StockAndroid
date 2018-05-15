@@ -9,11 +9,15 @@
     android:paddingTop="@dimen/dp_14">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
-        android:text="1"
-        android:textColor="@color/white" />
+        android:id="@+id/tv_rank"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_gravity="center"
+        android:background="@drawable/selector_rank_bg"
+        android:enabled="true"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_10" />
     <!--左-->
     <LinearLayout
         android:layout_width="0dp"
@@ -23,11 +27,10 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/tv_market_name"
@@ -36,25 +39,35 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/tv_market_total_value"
-                style="@style/TextGrey9"
+                android:id="@+id/tv_market_source"
+                style="@style/TextBlack12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="bottom" />
-        </LinearLayout>
+                android:layout_alignBottom="@id/tv_market_name"
+                android:layout_toRightOf="@id/tv_market_name" />
+
+            <TextView
+                android:id="@+id/tv_market_total_value"
+                style="@style/ItemInterval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_market_name" />
+        </RelativeLayout>
 
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/tv_market_price"
-                style="@style/TextGrey9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_increase_name" />
+                android:layout_below="@id/tv_increase_name"
+                android:textColor="@drawable/selector_market_text"
+                android:textSize="@dimen/sp_13" />
         </LinearLayout>
 
 
@@ -65,6 +78,6 @@
         android:id="@+id/btn_increase"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_30"
-        android:layout_alignParentRight="true"
+        android:layout_gravity="center"
         android:background="@drawable/select_btn_increase" />
 </LinearLayout>

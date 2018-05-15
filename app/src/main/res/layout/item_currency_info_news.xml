@@ -36,5 +36,5 @@
         android:layout_marginBottom="@dimen/dp_16"
         android:layout_marginRight="@dimen/dp_14"
         android:scaleType="centerCrop"
-        android:src="@drawable/maci_750" />
+        />
 </RelativeLayout>
