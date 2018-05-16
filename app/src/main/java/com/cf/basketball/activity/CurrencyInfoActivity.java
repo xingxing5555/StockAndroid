@@ -15,7 +15,6 @@ import com.example.admin.basic.base.BaseActivity;
 import com.example.admin.basic.interfaces.OnItemClickListener;
 import com.example.admin.basic.interfaces.OnScrollChangedListener;
 import com.example.admin.basic.utils.DateUtils;
-import com.example.admin.basic.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +87,10 @@ public class CurrencyInfoActivity extends BaseActivity implements View.OnClickLi
     public void onScrollChanged(int top, int oldTop) {
         if (top >= binding.llInfoContent.getBottom()) {
             binding.tvInfoTime.setText("交易量什么的啊");
+            binding.ivDown.setVisibility(View.VISIBLE);
         } else {
             binding.tvInfoTime.setText(currentTime);
+            binding.ivDown.setVisibility(View.GONE);
         }
     }
 
