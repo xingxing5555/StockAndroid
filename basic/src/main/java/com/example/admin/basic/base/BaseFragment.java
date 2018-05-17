@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -32,6 +33,11 @@ public class BaseFragment extends Fragment {
         return new LinearLayoutManager(BaseApplication.getInstance(), LinearLayoutManager
                 .HORIZONTAL, false);
     }
+
+    public RecyclerView.LayoutManager createGridLayoutManager(int spanCount) {
+        return new GridLayoutManager(BaseApplication.getInstance(), spanCount);
+    }
+
 
     protected RecyclerView.ItemDecoration createItemDecoration(int colorRes) {
         return new DefaultItemDecoration(ContextCompat.getColor(BaseApplication.getInstance(),

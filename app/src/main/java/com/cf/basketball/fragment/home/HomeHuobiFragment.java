@@ -1,23 +1,22 @@
-package com.cf.basketball.fragment;
+package com.cf.basketball.fragment.home;
 
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.HomeIncreaseAdapter;
+import com.cf.basketball.adapter.home.HomeHuobiAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
 
 import java.util.List;
 
 /**
- * 涨幅
+ * 火币
  *
  * @author xinxin Shi
  */
-public class HomeIncreaseFragment extends BaseRecyclerViewFragment {
-
+public class HomeHuobiFragment extends BaseRecyclerViewFragment {
 
     private List<HomeCurrencyModel> list;
 
@@ -29,9 +28,7 @@ public class HomeIncreaseFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void initView() {
-        mRecyclerView.setAdapter(new HomeIncreaseAdapter(R.layout.item_home_increase, list));
-        setSortPromptVisible();
+        mRecyclerView.setAdapter(new HomeHuobiAdapter(R.layout.item_home_huobi, list));
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.cf.basketball.adapter;
+package com.cf.basketball.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -9,57 +9,11 @@
         tools:context="com.cf.basketball.activity.CurrencyInfoActivity">
 
         <!--顶部数据-->
-        <RelativeLayout
+        <com.example.admin.basic.view.RxToolBar
+            android:id="@+id/rtl_text"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_44"
-            android:background="@color/red">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_23"
-                android:layout_centerVertical="true"
-                android:paddingLeft="@dimen/dp_20"
-                android:paddingRight="@dimen/dp_20"
-                android:src="@mipmap/back" />
-
-            <RelativeLayout
-                android:id="@+id/rl_info_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_8"
-                android:layout_centerHorizontal="true">
-
-                <TextView
-                    android:id="@+id/tv_info_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BTC/USD"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_16" />
-
-                <ImageView
-                    android:id="@+id/iv_down"
-                    android:layout_width="@dimen/dp_14"
-                    android:layout_height="@dimen/dp_14"
-                    android:layout_marginTop="@dimen/dp_4"
-                    android:layout_marginLeft="@dimen/dp_8"
-                    android:layout_toRightOf="@id/tv_info_name"
-                    android:src="@mipmap/arrows_down_white"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-
-            <TextView
-                android:id="@+id/tv_info_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/rl_info_name"
-                android:layout_centerInParent="true"
-                android:text="2018/05/03  22:15:34"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_8" />
-        </RelativeLayout>
+            app:toolbarTitle="BTC/USD"
+            android:layout_height="@dimen/dp_44"></com.example.admin.basic.view.RxToolBar>
 
         <!--中间数据-->
         <com.example.admin.basic.view.ObservableScrollView

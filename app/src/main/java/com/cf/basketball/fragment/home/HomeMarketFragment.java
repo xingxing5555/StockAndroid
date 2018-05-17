@@ -1,11 +1,11 @@
-package com.cf.basketball.fragment;
+package com.cf.basketball.fragment.home;
 
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.HomeMarketAdapter;
+import com.cf.basketball.adapter.home.HomeMarketAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
 

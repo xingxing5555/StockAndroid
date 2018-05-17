@@ -3,14 +3,13 @@ package com.cf.basketball.activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.HomeCurrencyInfoDataAdapter;
+import com.cf.basketball.adapter.home.HomeCurrencyInfoDataAdapter;
 import com.cf.basketball.databinding.ActivityCurrencyInfoBinding;
-import com.cf.basketball.fragment.CurrencyInfoBriefFragment;
-import com.cf.basketball.fragment.CurrencyInfoMarketFragment;
-import com.cf.basketball.fragment.CurrencyInfoNewsFragment;
+import com.cf.basketball.fragment.currency.CurrencyInfoBriefFragment;
+import com.cf.basketball.fragment.currency.CurrencyInfoMarketFragment;
+import com.cf.basketball.fragment.currency.CurrencyInfoNewsFragment;
 import com.example.admin.basic.base.BaseActivity;
 import com.example.admin.basic.interfaces.OnItemClickListener;
 import com.example.admin.basic.interfaces.OnScrollChangedListener;
@@ -24,8 +23,8 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class CurrencyInfoActivity extends BaseActivity implements View.OnClickListener,
-        OnScrollChangedListener, OnItemClickListener {
+public class CurrencyInfoActivity extends BaseActivity implements OnScrollChangedListener,
+        OnItemClickListener {
 
     private ActivityCurrencyInfoBinding binding;
     private String currentTime;
@@ -45,11 +44,10 @@ public class CurrencyInfoActivity extends BaseActivity implements View.OnClickLi
 
     private void initView() {
         currentTime = DateUtils.getCurrentTime();
-        binding.tvInfoTime.setText(currentTime);
-        binding.ivBack.setOnClickListener(this);
+        binding.rtlText.setTvToolbarContent(currentTime);
         binding.svInfoContainer.setOnScrollChangedListener(this);
         binding.rvInfoData.setLayoutManager(createGridLayoutManager(2));
-        binding.rvInfoData.setAdapter(new HomeCurrencyInfoDataAdapter(this, createData()));
+        binding.rvInfoData.setAdapter(new HomeCurrencyInfoDataAdapter(this, getData()));
         binding.slCurrencyNavigation.setOnItemClickListener(this);
     }
 
@@ -65,17 +63,6 @@ public class CurrencyInfoActivity extends BaseActivity implements View.OnClickLi
                 (currencyInfoBriefFragment).hide(currencyInfoMarketFragment).commit();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
-            default:
-                break;
-        }
-    }
-
 
     /**
      * ScrollView的滑动监听
@@ -86,15 +73,15 @@ public class CurrencyInfoActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onScrollChanged(int top, int oldTop) {
         if (top >= binding.llInfoContent.getBottom()) {
-            binding.tvInfoTime.setText("交易量什么的啊");
-            binding.ivDown.setVisibility(View.VISIBLE);
+            binding.rtlText.setTvToolbarContent("交易量什么的啊");
+            binding.rtlText.setDownVisible(true);
         } else {
-            binding.tvInfoTime.setText(currentTime);
-            binding.ivDown.setVisibility(View.GONE);
+            binding.rtlText.setTvToolbarContent(currentTime);
+            binding.rtlText.setDownVisible(false);
         }
     }
 
-    public List<String> createData() {
+    public List<String> getData() {
         List<String> list = new ArrayList<>();
         list.add("8908.31");
         list.add("8908.31");

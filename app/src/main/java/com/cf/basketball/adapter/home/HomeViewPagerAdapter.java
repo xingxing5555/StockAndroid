@@ -1,4 +1,4 @@
-package com.cf.basketball.adapter;
+package com.cf.basketball.adapter.home;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -9,7 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.admin.basic.application.BaseApplication;
+import com.example.admin.basic.model.HomeCurrencyModel;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Xinxin Shi
@@ -24,6 +28,9 @@ public class BaseActivity extends AppCompatActivity {
 
     public RecyclerView.LayoutManager createGridLayoutManager(int spanCount) {
         return new GridLayoutManager(BaseApplication.getInstance(), spanCount);
+    }
+    public RecyclerView.LayoutManager createLinearLayoutManager() {
+        return new LinearLayoutManager(BaseApplication.getInstance());
     }
 
     protected RecyclerView.ItemDecoration createItemDecoration(int colorRes) {
@@ -50,6 +57,18 @@ public class BaseActivity extends AppCompatActivity {
             manager.setStackFromEnd(false);
         }
     }
+
+    public List<HomeCurrencyModel> createData() {
+        List<HomeCurrencyModel> list = new ArrayList<>();
+        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
+                "交易量27163.070BT", "-4.81%", "0"));
+        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
+                "交易量27163.070BT", "-4.81%", "1"));
+        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
+                "交易量27163.070BT", "-4.81%", "1"));
+        return list;
+    }
+
 
     public void startActivity(Class activityCls) {
         startActivity(new Intent(this, activityCls));

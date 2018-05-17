@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RxToolBar">
+        <attr name="toolbarTitle" format="string|reference"></attr>
+        <attr name="toolbarContent" format="string|reference"></attr>
+    </declare-styleable>
+</resources>

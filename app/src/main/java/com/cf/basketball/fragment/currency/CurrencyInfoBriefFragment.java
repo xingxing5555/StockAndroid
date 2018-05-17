@@ -1,4 +1,4 @@
-package com.cf.basketball.fragment;
+package com.cf.basketball.fragment.currency;
 
 
 import android.os.Bundle;

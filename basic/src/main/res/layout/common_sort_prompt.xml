@@ -4,7 +4,7 @@
     <LinearLayout
         android:id="@+id/ll_sort_prompt"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="@dimen/dp_32"
         android:background="@color/grey_e"
         android:gravity="center"
         android:orientation="horizontal"
@@ -33,9 +33,9 @@
             <ImageView
                 android:layout_width="@dimen/dp_10"
                 android:layout_height="@dimen/dp_10"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_toRightOf="@id/tv_price"
-                android:layout_centerVertical="true"
                 android:src="@mipmap/arrow_up" />
         </RelativeLayout>
 

@@ -1,4 +1,4 @@
-package com.cf.basketball.adapter;
+package com.cf.basketball.adapter.home;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -30,7 +30,7 @@ public class HomeMarketAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseV
         helper.setText(R.id.tv_rank, String.valueOf(helper.getAdapterPosition() + 1));
         helper.setText(R.id.tv_market_name, item.getName());
         helper.setText(R.id.tv_market_total_value, item.getVolume());
-        helper.setText(R.id.tv_market_price, item.getPrice());
+        helper.setText(R.id.tv_market_volume, item.getPrice());
         helper.setText(R.id.btn_increase, item.getIncrease());
         if (TextUtils.equals("0", item.getState())) {
             helper.itemView.findViewById(R.id.btn_increase).setSelected(false);

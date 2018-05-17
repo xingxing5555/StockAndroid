@@ -1,22 +1,23 @@
-package com.cf.basketball.fragment;
+package com.cf.basketball.fragment.home;
 
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.HomeBTCAdapter;
+import com.cf.basketball.adapter.home.HomeIncreaseAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
 
 import java.util.List;
 
 /**
- * BTC
+ * 涨幅
  *
  * @author xinxin Shi
  */
-public class HomeBTCFragment extends BaseRecyclerViewFragment {
+public class HomeIncreaseFragment extends BaseRecyclerViewFragment {
+
 
     private List<HomeCurrencyModel> list;
 
@@ -28,6 +29,9 @@ public class HomeBTCFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void initView() {
-        mRecyclerView.setAdapter(new HomeBTCAdapter(R.layout.item_home_btc, list));
+        mRecyclerView.setAdapter(new HomeIncreaseAdapter(R.layout.item_home_increase, list));
+        setSortPromptVisible();
     }
+
+
 }

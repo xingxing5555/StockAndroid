@@ -1,4 +1,4 @@
-package com.cf.basketball.adapter;
+package com.cf.basketball.adapter.home;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -26,7 +26,7 @@ public class HomeBTCAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseView
     protected void convert(BaseViewHolder helper, HomeCurrencyModel item) {
         helper.setText(R.id.tv_btc_name, item.getName());
         helper.setText(R.id.tv_btc_source, item.getType());
-        helper.setText(R.id.tv_market_price, item.getVolume());
+        helper.setText(R.id.tv_market_volume, item.getVolume());
         helper.setText(R.id.tv_btc_price, item.getPrice());
         helper.setText(R.id.tv_btc_foreign_price, item.getForeignPrice());
         helper.setText(R.id.btn_btc, item.getIncrease());

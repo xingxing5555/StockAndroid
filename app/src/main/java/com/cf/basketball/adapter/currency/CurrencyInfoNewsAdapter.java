@@ -1,4 +1,4 @@
-package com.cf.basketball.adapter;
+package com.cf.basketball.adapter.currency;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

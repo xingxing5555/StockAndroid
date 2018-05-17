@@ -28,7 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.CurrencyInfoActivity"></activity>
+        <activity android:name=".activity.CurrencyInfoActivity" />
+        <activity android:name=".activity.BTCInfoActivity"></activity>
     </application>
 
 </manifest>

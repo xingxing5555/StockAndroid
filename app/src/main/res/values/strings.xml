@@ -47,4 +47,9 @@
     <string name="add_currency">+添加币种</string>
     <string name="share">分享</string>
     <string name="optional">+自选</string>
+    <string name="hint_text">输入币名/交易所搜索</string>
+    <string name="cancel">取消</string>
+    <string name="search_history">搜索历史</string>
+    <string name="hot_currency">热门币种</string>
+    <string name="select_trade">从交易所中选择</string>
 </resources>

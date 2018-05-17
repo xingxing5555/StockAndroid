@@ -1,4 +1,4 @@
-package com.cf.basketball.fragment;
+package com.cf.basketball.fragment.home;
 
 
 import android.databinding.DataBindingUtil;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.cf.basketball.R;
 import com.cf.basketball.activity.CurrencyInfoActivity;
-import com.cf.basketball.adapter.HomeOptionalAdapter;
+import com.cf.basketball.adapter.home.HomeOptionalAdapter;
 import com.cf.basketball.databinding.FragmentHomeOptionalBinding;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseFragment;

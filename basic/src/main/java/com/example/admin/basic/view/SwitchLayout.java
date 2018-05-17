@@ -3,7 +3,6 @@ package com.example.admin.basic.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.admin.basic.R;
 import com.example.admin.basic.interfaces.OnItemClickListener;
-import com.example.admin.basic.utils.LogUtils;
 
 /**
  * 切换View
@@ -61,23 +59,6 @@ public class SwitchLayout extends RelativeLayout implements View.OnClickListener
         selectedView = firstView;
         addView(view);
     }
-//
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        int width = measureWidth(widthMeasureSpec);
-//        int height = measureHeight(heightMeasureSpec);
-//        int size = MeasureSpec.getSize(widthMeasureSpec);
-//        int size1 = MeasureSpec.getSize(heightMeasureSpec);
-//        LogUtils.e("width=" + size + ";height=" + size1);
-//        setMeasuredDimension(size, size1);
-//        super.onMeasure(size,size1);
-////        int measuredWidth = getMeasuredWidth();
-////        int measuredHeight = getMeasuredHeight();
-////        LogUtils.e("width=" + width + ";height=" + height + ";measureHight=" + measuredHeight +
-////                ";measureWidth=" + measuredWidth);
-//
-//    }
-
 
     @Override
     public void onClick(View v) {
@@ -105,5 +86,11 @@ public class SwitchLayout extends RelativeLayout implements View.OnClickListener
         if (onItemClickListener != null) {
             onItemClickListener.onItemClickListener(position);
         }
+    }
+
+    public void setText(String firstText, String secondText, String thirdText) {
+        firstView.setText(firstText);
+        secondView.setText(secondText);
+        thirdView.setText(thirdText);
     }
 }

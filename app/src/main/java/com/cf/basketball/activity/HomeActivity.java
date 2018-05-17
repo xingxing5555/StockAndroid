@@ -5,16 +5,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.HomeNavigationAdapter;
-import com.cf.basketball.adapter.HomeViewPagerAdapter;
+import com.cf.basketball.adapter.home.HomeNavigationAdapter;
+import com.cf.basketball.adapter.home.HomeViewPagerAdapter;
 import com.cf.basketball.databinding.ActivityHomeBinding;
-import com.cf.basketball.fragment.HomeBTCFragment;
-import com.cf.basketball.fragment.HomeHuobiFragment;
-import com.cf.basketball.fragment.HomeIncreaseFragment;
-import com.cf.basketball.fragment.HomeMarketFragment;
-import com.cf.basketball.fragment.HomeOptionalFragment;
+import com.cf.basketball.fragment.home.HomeBTCFragment;
+import com.cf.basketball.fragment.home.HomeHuobiFragment;
+import com.cf.basketball.fragment.home.HomeIncreaseFragment;
+import com.cf.basketball.fragment.home.HomeMarketFragment;
+import com.cf.basketball.fragment.home.HomeOptionalFragment;
 import com.example.admin.basic.interfaces.OnItemClickListener;
 import com.example.admin.basic.base.BaseActivity;
 
@@ -27,7 +28,7 @@ import java.util.List;
  *
  * @author Xinxin Shi
  */
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private ActivityHomeBinding binding;
     private HomeNavigationAdapter adapter;
@@ -49,6 +50,7 @@ public class HomeActivity extends BaseActivity {
         navigationTitleArray = getResources().getStringArray(R.array.home_navigation_title);
         adapter = new HomeNavigationAdapter(this, Arrays.asList(navigationTitleArray));
         binding.rvTopTitle.setAdapter(adapter);
+        binding.ivSearch.setOnClickListener(this);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClickListener(int item) {
@@ -93,4 +95,14 @@ public class HomeActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_search:
+                startActivity(SearchActivity.class);
+                break;
+            default:
+                break;
+        }
+    }
 }
