@@ -1,13 +1,121 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cf.basketball.fragment.currency.CurrencyInfoBriefFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_280"
+        android:layout_marginLeft="@dimen/dp_13"
+        android:layout_marginRight="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_13"
+        android:orientation="vertical"
+        tools:context="com.cf.basketball.fragment.currency.CurrencyInfoBriefFragment">
 
-</FrameLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/dp_4"
+            app:cardPreventCornerOverlap="false"
+            android:layout_marginBottom="@dimen/dp_13"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_13"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_13"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="12dp"
+                        android:layout_marginRight="@dimen/dp_7"
+                        android:background="@color/red" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="基本信息"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <include layout="@layout/common_vertical_line"></include>
+
+                <com.example.admin.basic.view.MeasureRecyclerView
+                    android:id="@+id/mrv_currency_brief_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <!--简介-->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/dp_4"
+            app:cardElevation="0dp"
+            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_13"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_13"
+                android:layout_marginLeft="@dimen/dp_13"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="12dp"
+                    android:layout_marginRight="@dimen/dp_7"
+                    android:background="@color/red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="简介"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <include layout="@layout/common_vertical_line"></include>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_13"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="比特币（BitCoin）的概念最初由中本聪在2009年提出，根据中本聪的思路设计发布的开源软件以及建构其上的P2P网络。比特币是一种P2P形式的数字货币。点对点的传输意味着一个去中心化的支付系统。
+
+与大多数货币不同，比特币不依靠特定货币机构发行，它依据特定算法，通过大量的计算产生，比特币经济使用整个P2P网络中众多节点构成的分布式数据库来确认并记录所有的交易行为，并使用密码学的设计来确保货币流通各个环节安全性。P2P的去中心化特性与算法本身可以确保无法通过大量制造比特币来人为操控币值。基于密码学的设计可以使比特币只能被真实的拥有者转移或支付。这同样确保了货币所有权与流通交易的匿名性。比特币与其他虚拟货币最大的不同，是其总数量非常有限，具有极强的稀缺性。该货币系统曾在4年内只有不超过1050万个，之后的总数量将被永久限制在2100"
+                android:textColor="@color/grey_6"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</layout>

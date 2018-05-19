@@ -2,12 +2,19 @@
 <resources>
     <color name="white">@android:color/white</color>
     <color name="black">#333333</color>
-    <color name="blue">@android:color/holo_blue_dark</color>
     <color name="red">#EA3226</color>
+    <color name="red_dark">#FD6D6D</color>
+    <color name="red_light">#FFCFCF</color>
     <color name="green">#27D581</color>
+    <color name="green_dark">#2FDF61</color>
+    <color name="green_light">#B2FFCA</color>
+
     <color name="grey_e">#eeeeee</color>
     <color name="grey_d">#DDDDDD</color>
     <color name="grey_9">#999999</color>
     <color name="grey_6">#666666</color>
+    <color name="blue">#2F86DF</color>
+    <color name="blue_light">#BFDFFF</color>
     <color name="blue_dark">#113EC0</color>
+    <color name="blue_link">#113EC0</color>
 </resources>

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RxToolBar">
-        <attr name="toolbarTitle" format="string|reference"></attr>
-        <attr name="toolbarContent" format="string|reference"></attr>
+        <attr name="toolbarTitle" format="string|reference" />
+        <attr name="toolbarContent" format="string|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PercentageView">
+        <attr name="defaultBackground" format="reference" />
+        <attr name="percentBackground" format="reference"/>
+        <attr name="percentValue" format="string|reference"/>
+        <attr name="defaultText" format="string|reference"/>
     </declare-styleable>
 </resources>

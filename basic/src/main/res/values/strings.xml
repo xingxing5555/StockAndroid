@@ -64,4 +64,23 @@
         <item>简况</item>
         <item>市场</item>
     </string-array>
+
+    <string-array name="btc_info_project_title">
+        <item >排行</item>
+        <item >市值</item>
+        <item >流通量</item>
+        <item >总发行量</item>
+        <item >ICO成本</item>
+        <item >发行时间</item>
+        <item >相关链接</item>
+    </string-array>
+    <string-array name="currency_info_brief_basic_info">
+        <item >英文名称：</item>
+        <item >中文名称：</item>
+        <item >官网：</item>
+        <item >排名：</item>
+        <item >币种总量：</item>
+        <item >流通量：</item>
+        <item >上架交易所：</item>
+    </string-array>
 </resources>

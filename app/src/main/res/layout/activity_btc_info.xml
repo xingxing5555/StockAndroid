@@ -29,7 +29,7 @@
                     android:paddingBottom="@dimen/dp_20"
                     android:paddingLeft="@dimen/dp_14"
                     android:paddingRight="@dimen/dp_14"
-                    android:paddingTop="@dimen/dp_16">
+                    android:layout_marginTop="@dimen/dp_16">
 
                     <TextView
                         android:id="@+id/tv_btc_name"
@@ -53,9 +53,8 @@
                         android:id="@+id/btn_btc_increase"
                         android:layout_width="@dimen/dp_50"
                         android:layout_height="@dimen/dp_20"
-                        android:layout_alignBaseline="@+id/tv_btc_price"
+                       android:layout_marginTop="@dimen/dp_20"
                         android:layout_below="@id/tv_btc_name"
-                        android:layout_marginBottom="@dimen/dp_5"
                         android:layout_toRightOf="@id/tv_btc_price"
                         android:background="@drawable/shape_btn_increase"
                         android:text="-4.81%"
