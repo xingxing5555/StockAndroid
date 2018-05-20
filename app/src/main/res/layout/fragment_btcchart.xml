@@ -10,7 +10,9 @@
             android:layout_width="200dp"
             android:layout_height="200dp" />
 
-        <include layout="@layout/common_sort_prompt"></include>
+        <com.example.admin.basic.view.SortLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <com.example.admin.basic.view.MeasureRecyclerView
             android:id="@+id/mrv_list"

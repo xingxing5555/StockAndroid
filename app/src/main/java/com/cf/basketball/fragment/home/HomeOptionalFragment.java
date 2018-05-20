@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 
 import com.cf.basketball.R;
 import com.cf.basketball.activity.CurrencyInfoActivity;
+import com.cf.basketball.activity.SearchActivity;
 import com.cf.basketball.adapter.home.HomeOptionalAdapter;
 import com.cf.basketball.databinding.FragmentHomeOptionalBinding;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
 import com.example.admin.basic.utils.LogUtils;
+import com.example.admin.basic.view.SortLayout;
 import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 
 import java.util.Collections;
@@ -27,7 +29,8 @@ import java.util.List;
  *
  * @author Xinxin Shi
  */
-public class HomeOptionalFragment extends BaseFragment {
+public class HomeOptionalFragment extends BaseFragment implements View.OnClickListener,
+        SortLayout.OnSortChangeListener {
 
     private FragmentHomeOptionalBinding binding;
     private HomeOptionalAdapter adapter;
@@ -44,12 +47,12 @@ public class HomeOptionalFragment extends BaseFragment {
             savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_optional, container,
                 false);
-        initData();
+        initView();
         return binding.getRoot();
     }
 
 
-    private void initData() {
+    private void initView() {
         binding.getRoot().findViewById(R.id.ll_sort_prompt).setVisibility(View.VISIBLE);
         binding.sryContainer.setLayoutManager(createLayoutManager(true));
         binding.sryContainer.addItemDecoration(createItemDecoration(R.color.grey_d));
@@ -57,6 +60,8 @@ public class HomeOptionalFragment extends BaseFragment {
         binding.sryContainer.setAdapter(adapter);
         binding.sryContainer.setLongPressDragEnabled(true);
         binding.sryContainer.setOnItemMoveListener(getItemMoveListener());
+        binding.btnAddCurrency.setOnClickListener(this);
+        binding.slSort.setOnSortChangeListener(this);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -93,4 +98,19 @@ public class HomeOptionalFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_add_currency:
+                startActivity(SearchActivity.class);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onSortChangeListener(int type, int changeState) {
+        LogUtils.e("type=" + type + ";changeState=" + changeState);
+    }
 }

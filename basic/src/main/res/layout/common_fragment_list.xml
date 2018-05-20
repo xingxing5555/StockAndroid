@@ -6,7 +6,11 @@
         android:orientation="vertical"
         tools:context="com.cf.basketball.fragment.home.HomeIncreaseFragment">
 
-        <include layout="@layout/common_sort_prompt"></include>
+        <com.example.admin.basic.view.SortLayout
+            android:id="@+id/sl_sort"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_list"

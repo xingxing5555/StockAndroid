@@ -6,9 +6,10 @@
         android:orientation="vertical"
         tools:context="com.cf.basketball.fragment.home.HomeOptionalFragment">
 
-        <include
-            android:id="@+id/ll_sort_prompt"
-            layout="@layout/common_sort_prompt"></include>
+        <com.example.admin.basic.view.SortLayout
+            android:id="@+id/sl_sort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
             android:id="@+id/sry_container"
@@ -16,6 +17,7 @@
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/btn_add_currency"
             android:layout_width="@dimen/dp_160"
             android:layout_height="@dimen/dp_50"
             android:layout_gravity="center"

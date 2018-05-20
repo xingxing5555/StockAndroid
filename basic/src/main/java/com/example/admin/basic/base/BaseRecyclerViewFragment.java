@@ -7,10 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.example.admin.basic.R;
 import com.example.admin.basic.application.BaseApplication;
+import com.example.admin.basic.view.SortLayout;
 
 
 /**
@@ -22,7 +22,7 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
 
     private View view;
     public RecyclerView mRecyclerView;
-    public LinearLayout llSortPrompt;
+    public SortLayout slSort;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
 
     private void init() {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
-        llSortPrompt = (LinearLayout) view.findViewById(R.id.ll_sort_prompt);
+        slSort = (SortLayout) view.findViewById(R.id.sl_sort);
         mRecyclerView.setLayoutManager(createLayoutManager(true));
         mRecyclerView.addItemDecoration(createItemDecoration(R.color.grey_d));
     }
@@ -50,6 +50,6 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
     public abstract void initView();
 
     public void setSortPromptVisible() {
-        llSortPrompt.setVisibility(View.VISIBLE);
+        slSort.setVisibility(View.VISIBLE);
     }
 }
