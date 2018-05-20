@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.cf.basketball.R;
 import com.cf.basketball.activity.BTCInfoActivity;
-import com.cf.basketball.adapter.home.HomeBTCAdapter;
+import com.cf.basketball.adapter.home.HomeBtcAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
@@ -19,10 +19,10 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class HomeBTCFragment extends BaseRecyclerViewFragment {
+public class HomeBtcFragment extends BaseRecyclerViewFragment {
 
     private List<HomeCurrencyModel> list;
-    private HomeBTCAdapter homeBTCAdapter;
+    private HomeBtcAdapter homeBTCAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class HomeBTCFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void initView() {
-        homeBTCAdapter = new HomeBTCAdapter(R.layout.item_home_btc, list);
+        homeBTCAdapter = new HomeBtcAdapter(R.layout.item_home_btc, list);
         mRecyclerView.setAdapter(homeBTCAdapter);
         homeBTCAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

@@ -17,4 +17,5 @@
     <color name="blue_light">#BFDFFF</color>
     <color name="blue_dark">#113EC0</color>
     <color name="blue_link">#113EC0</color>
+    <color name="transparent">#00000000</color>
 </resources>

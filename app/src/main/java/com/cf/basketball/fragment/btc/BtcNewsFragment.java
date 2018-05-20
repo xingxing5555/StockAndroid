@@ -8,7 +8,7 @@ import com.example.admin.basic.base.BaseRecyclerViewFragment;
  *
  * @author xinxin Shi
  */
-public class BTCNewsFragment extends BaseRecyclerViewFragment {
+public class BtcNewsFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void initView() {

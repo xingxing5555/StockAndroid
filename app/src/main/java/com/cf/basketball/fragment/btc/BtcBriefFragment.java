@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class BTCBriefFragment extends BaseFragment {
+public class BtcBriefFragment extends BaseFragment {
 
     private List<String> list = new ArrayList<>();
     private FragmentBtcBriefBinding binding;

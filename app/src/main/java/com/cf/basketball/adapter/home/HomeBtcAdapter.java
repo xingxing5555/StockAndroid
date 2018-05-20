@@ -16,9 +16,9 @@ import java.util.List;
  * @author Xinxin Shi
  */
 
-public class HomeBTCAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseViewHolder> {
+public class HomeBtcAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseViewHolder> {
 
-    public HomeBTCAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
+    public HomeBtcAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
         super(layoutResId, data);
     }
 

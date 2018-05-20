@@ -5,8 +5,8 @@ import android.os.Bundle;
 
 import com.cf.basketball.R;
 import com.cf.basketball.databinding.ActivityBtcInfoBinding;
-import com.cf.basketball.fragment.btc.BTCBriefFragment;
-import com.cf.basketball.fragment.btc.BTCChartFragment;
+import com.cf.basketball.fragment.btc.BtcBriefFragment;
+import com.cf.basketball.fragment.btc.BtcMarketFragment;
 import com.cf.basketball.fragment.currency.CurrencyInfoNewsFragment;
 import com.example.admin.basic.base.BaseActivity;
 import com.example.admin.basic.interfaces.OnItemClickListener;
@@ -19,8 +19,8 @@ import com.example.admin.basic.interfaces.OnItemClickListener;
 public class BTCInfoActivity extends BaseActivity implements OnItemClickListener {
 
     private ActivityBtcInfoBinding binding;
-    private BTCChartFragment btcChartFragment;
-    private BTCBriefFragment btcBriefFragment;
+    private BtcMarketFragment btcChartFragment;
+    private BtcBriefFragment btcBriefFragment;
     private CurrencyInfoNewsFragment infoNewsFragment;
 
     @Override
@@ -30,8 +30,8 @@ public class BTCInfoActivity extends BaseActivity implements OnItemClickListener
         binding.slBtcNavigation.setText(getString(R.string.currency_market), getString(R.string
                 .currency_brief), getString(R.string.currency_news));
         binding.slBtcNavigation.setOnItemClickListener(this);
-        btcChartFragment = new BTCChartFragment();
-        btcBriefFragment = new BTCBriefFragment();
+        btcChartFragment = new BtcMarketFragment();
+        btcBriefFragment = new BtcBriefFragment();
         infoNewsFragment = new CurrencyInfoNewsFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fl_container, btcChartFragment)
                 .add(R.id.fl_container, btcBriefFragment).add(R.id.fl_container,
