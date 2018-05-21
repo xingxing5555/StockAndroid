@@ -1,4 +1,4 @@
-package com.cf.basketball.stock;
+package com.example.admin.basic.stock;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,7 +15,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.cf.basketball.R;
+import com.example.admin.basic.R;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

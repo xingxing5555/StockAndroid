@@ -1,8 +1,8 @@
-package com.cf.basketball.utils;
+package com.example.admin.basic.net;
 
-import com.cf.basketball.model.HSFiveDayModel;
-import com.cf.basketball.model.HSKlineModel;
-import com.cf.basketball.model.HSTodayModel;
+import com.example.admin.basic.model.HSFiveDayModel;
+import com.example.admin.basic.model.HSKlineModel;
+import com.example.admin.basic.model.HSTodayModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

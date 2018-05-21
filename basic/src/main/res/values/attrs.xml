@@ -12,4 +12,20 @@
         <attr name="percentValue" format="string|reference"/>
         <attr name="defaultText" format="string|reference"/>
     </declare-styleable>
+
+    <declare-styleable name="TabIndicatorViewV2">
+        <attr name="textSize" format="dimension" />
+        <attr name="indicatorPadding" format="dimension" />
+        <attr name="indicatorHeight" format="dimension" />
+        <attr name="radius" format="dimension" />
+        <attr name="selectedColor" format="color" />
+        <attr name="normalColor" format="color" />
+        <attr name="selectedTextColor" format="color"/>
+        <attr name="normalTextColor" format="color"/>
+        <attr name="indicatorType" format="integer">
+            <enum name="indicator" value="0" />
+            <enum name="rect" value="1" />
+            <enum name="roundRect" value="2" />
+        </attr>
+    </declare-styleable>
 </resources>

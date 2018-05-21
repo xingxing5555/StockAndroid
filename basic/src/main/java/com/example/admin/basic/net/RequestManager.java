@@ -1,4 +1,4 @@
-package com.cf.basketball.utils;
+package com.example.admin.basic.net;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

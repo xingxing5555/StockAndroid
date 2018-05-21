@@ -1,6 +1,6 @@
-package com.cf.basketball.model;
+package com.example.admin.basic.model;
 
-import com.cf.basketball.stock.DayData;
+import com.example.admin.basic.stock.DayData;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.cf.basketball.stock;
+package com.example.admin.basic.stock;
 
 import android.content.Context;
 import android.graphics.Canvas;

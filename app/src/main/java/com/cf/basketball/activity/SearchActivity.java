@@ -1,7 +1,6 @@
 package com.cf.basketball.activity;
 
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -22,8 +21,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private ActivitySearchBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         binding.tvCancel.setOnClickListener(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_search_container, new
@@ -31,6 +29,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         binding.rvSearchResult.setLayoutManager(createLinearLayoutManager());
         binding.rvSearchResult.addItemDecoration(createItemDecoration(R.color.grey_d));
         binding.etSearch.addTextChangedListener(this);
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     @Override

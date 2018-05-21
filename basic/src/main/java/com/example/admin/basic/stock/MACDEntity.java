@@ -1,4 +1,4 @@
-package com.cf.basketball.stock;
+package com.example.admin.basic.stock;
 
 /**
  * Created by GongWen on 17/1/4.

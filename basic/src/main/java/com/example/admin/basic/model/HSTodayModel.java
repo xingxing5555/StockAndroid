@@ -1,6 +1,6 @@
-package com.cf.basketball.model;
+package com.example.admin.basic.model;
 
-import com.cf.basketball.stock.MinData;
+import com.example.admin.basic.stock.MinData;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.cf.basketball.R;
 import com.cf.basketball.activity.NewsInfoActivity;
 import com.cf.basketball.adapter.currency.CurrencyInfoNewsAdapter;
-import com.cf.basketball.model.CurrencyInfoNewsModel;
+import com.example.admin.basic.model.CurrencyInfoNewsModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.application.BaseApplication;
 import com.example.admin.basic.base.BaseFragment;

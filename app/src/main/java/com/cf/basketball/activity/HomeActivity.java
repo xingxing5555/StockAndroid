@@ -1,13 +1,13 @@
 package com.cf.basketball.activity;
 
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.cf.basketball.LoginActivity;
 import com.cf.basketball.R;
 import com.cf.basketball.adapter.home.HomeNavigationAdapter;
 import com.cf.basketball.adapter.home.HomeViewPagerAdapter;
@@ -40,13 +40,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private long exitTime;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-        initData();
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
 //     顶部导航栏配置
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         binding.rvTopTitle.setLayoutManager(layoutManager);

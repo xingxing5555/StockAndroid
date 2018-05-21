@@ -1,4 +1,4 @@
-package com.cf.basketball.model;
+package com.example.admin.basic.model;
 
 /**
  * @author Xinxin Shi

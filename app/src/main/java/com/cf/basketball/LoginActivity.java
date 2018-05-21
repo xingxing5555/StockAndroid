@@ -12,18 +12,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.cf.basketball.model.HSFiveDayModel;
-import com.cf.basketball.model.HSKlineModel;
-import com.cf.basketball.model.HSTodayModel;
-import com.cf.basketball.stock.KlineView;
-import com.cf.basketball.stock.MLineView;
-import com.cf.basketball.stock.TabIndicatorViewV2;
-import com.cf.basketball.utils.RequestManager;
+import com.example.admin.basic.model.HSFiveDayModel;
+import com.example.admin.basic.model.HSKlineModel;
+import com.example.admin.basic.model.HSTodayModel;
+import com.example.admin.basic.stock.KlineView;
+import com.example.admin.basic.stock.MLineView;
+import com.example.admin.basic.stock.TabIndicatorViewV2;
+import com.example.admin.basic.net.RequestManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -91,15 +90,12 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         super.onResume();
         tabIndicatorView = (TabIndicatorViewV2) this.findViewById(R.id.tabIndicatorView);
         mLineView = (MLineView) this.findViewById(R.id.mLineView);
-        mLineView.setMarket("hs");
+        mLineView.setMarket(HS_MARKET);
         kDayLineView = (KlineView) this.findViewById(R.id.kDayLineView);
         kWeekLineView = (KlineView) this.findViewById(R.id.kWeekLineView);
         kMonthLineView = (KlineView) this.findViewById(R.id.kMonthLineView);
-        RequestManager.init();
-
         String[] title = getResources().getStringArray(R.array.currency_trend);
-        List<String> titles = Arrays.asList(title);
-        tabIndicatorView.setTitles(titles);
+        tabIndicatorView.setTitles(Arrays.asList(title));
         tabIndicatorView.setOnTabSelectedListener(new TabIndicatorViewV2.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
@@ -147,7 +143,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
             reset();
             tabIndicatorView.selectPosition(0, true);
             String code = editText.getText().toString();
-            code = curMarket.equals("hs") ? "1" + code : code;
+            code = curMarket.equals(HS_MARKET) ? "1" + code : code;
             stockCode = code;
             getTodayData(curMarket, code, false);
             getFiveDayData(curMarket, code);

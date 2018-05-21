@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.cf.basketball.R;
-import com.cf.basketball.activity.BTCInfoActivity;
+import com.cf.basketball.activity.BtcInfoActivity;
 import com.cf.basketball.adapter.home.HomeMarketAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
@@ -43,6 +43,6 @@ public class HomeMarketFragment extends BaseRecyclerViewFragment implements Base
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        startActivity(BTCInfoActivity.class);
+        startActivity(BtcInfoActivity.class);
     }
 }

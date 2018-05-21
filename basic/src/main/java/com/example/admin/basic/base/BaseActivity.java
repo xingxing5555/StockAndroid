@@ -18,17 +18,31 @@ import java.util.List;
 /**
  * @author Xinxin Shi
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
+    public static final int MLINE = 0;
+    public static final int FIVE_MLINE = 1;
+    public static final int DAY_KLINE = 2;
+    public static final int WEEK_KLINE = 3;
+    public static final int MONTH_KLINE = 4;
+    public static final String HS_MARKET = "hs";
+    public static final String HK_MARKET = "hk";
+    public static final String US_MARKET = "us";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initView();
+        initData();
     }
 
+    public abstract void initView();
+
+    public abstract void initData();
 
     public RecyclerView.LayoutManager createGridLayoutManager(int spanCount) {
         return new GridLayoutManager(BaseApplication.getInstance(), spanCount);
     }
+
     public RecyclerView.LayoutManager createLinearLayoutManager() {
         return new LinearLayoutManager(BaseApplication.getInstance());
     }
@@ -69,6 +83,16 @@ public class BaseActivity extends AppCompatActivity {
         return list;
     }
 
+    public List<String> getData() {
+        List<String> list = new ArrayList<>();
+        list.add("8908.31");
+        list.add("8908.31");
+        list.add("8908.31");
+        list.add("8908.31");
+        list.add("8908.3");
+        list.add("8908.31");
+        return list;
+    }
 
     public void startActivity(Class activityCls) {
         startActivity(new Intent(this, activityCls));

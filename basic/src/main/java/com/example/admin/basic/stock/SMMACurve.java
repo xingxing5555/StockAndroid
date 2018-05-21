@@ -1,4 +1,4 @@
-package com.cf.basketball.stock;
+package com.example.admin.basic.stock;
 
 /**
  * �����ƶ�ƽ�� ������ߵ�ʱ��ʹ��

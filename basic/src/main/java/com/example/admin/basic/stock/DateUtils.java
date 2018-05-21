@@ -1,4 +1,4 @@
-package com.cf.basketball.stock;
+package com.example.admin.basic.stock;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

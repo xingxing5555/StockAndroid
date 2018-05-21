@@ -12,7 +12,7 @@ import com.cf.basketball.R;
 import com.cf.basketball.adapter.search.DefaultSearchAdapter;
 import com.cf.basketball.adapter.search.TradeSearchAdapter;
 import com.cf.basketball.databinding.FragmentDefaultSearchBinding;
-import com.cf.basketball.model.TradeModel;
+import com.example.admin.basic.model.TradeModel;
 import com.example.admin.basic.base.BaseFragment;
 
 import java.util.ArrayList;

@@ -2,13 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dp_280"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context="com.cf.basketball.LoginActivity">
 
 
-    <com.cf.basketball.stock.TabIndicatorViewV2
+    <com.example.admin.basic.stock.TabIndicatorViewV2
         android:id="@+id/tabIndicatorView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_32"
@@ -23,31 +23,30 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_240"
-        android:layout_weight="0.318">
+        android:layout_height="@dimen/dp_240">
 
-        <com.cf.basketball.stock.MLineView
+        <com.example.admin.basic.stock.MLineView
             android:id="@+id/mLineView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#171B20"
             android:visibility="visible" />
 
-        <com.cf.basketball.stock.KlineView
+        <com.example.admin.basic.stock.KlineView
             android:id="@+id/kDayLineView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:visibility="gone" />
 
-        <com.cf.basketball.stock.KlineView
+        <com.example.admin.basic.stock.KlineView
             android:id="@+id/kWeekLineView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:visibility="gone" />
 
-        <com.cf.basketball.stock.KlineView
+        <com.example.admin.basic.stock.KlineView
             android:id="@+id/kMonthLineView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

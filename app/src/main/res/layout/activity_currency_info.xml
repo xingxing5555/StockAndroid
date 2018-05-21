@@ -13,7 +13,8 @@
             android:id="@+id/rtl_text"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44"
-            app:toolbarTitle="BTC/USD"></com.example.admin.basic.view.RxToolBar>
+            app:toolbarTitle="BTC/USD"/>
+
 
         <!--中间数据-->
         <com.example.admin.basic.view.ObservableScrollView
@@ -27,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:id="@+id/ll_info_content"
                     android:layout_width="match_parent"
@@ -101,10 +101,9 @@
 
                 <include layout="@layout/common_vertical_line" />
                 <!--todo 货币趋势图UI-->
-                <!--<include layout="@layout/activity_login"/>-->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_280"/>
+                <include
+                    android:id="@+id/view_trend"
+                    layout="@layout/activity_login" />
 
                 <com.example.admin.basic.view.SwitchLayout
                     android:id="@+id/sl_currency_navigation"

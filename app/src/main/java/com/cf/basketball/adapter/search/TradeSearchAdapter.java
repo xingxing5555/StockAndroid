@@ -3,7 +3,7 @@ package com.cf.basketball.adapter.search;
 import android.support.annotation.Nullable;
 
 import com.cf.basketball.R;
-import com.cf.basketball.model.TradeModel;
+import com.example.admin.basic.model.TradeModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
