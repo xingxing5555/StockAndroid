@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.cf.basketball.R;
@@ -16,8 +17,9 @@ import com.cf.basketball.fragment.home.HomeHuobiFragment;
 import com.cf.basketball.fragment.home.HomeIncreaseFragment;
 import com.cf.basketball.fragment.home.HomeMarketFragment;
 import com.cf.basketball.fragment.home.HomeOptionalFragment;
-import com.example.admin.basic.interfaces.OnItemClickListener;
 import com.example.admin.basic.base.BaseActivity;
+import com.example.admin.basic.interfaces.OnItemClickListener;
+import com.example.admin.basic.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +37,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private String[] navigationTitleArray;
     private LinearLayoutManager layoutManager;
     private List<Fragment> fragmentList = new ArrayList<>();
+    private long exitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,4 +108,22 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+
+    //重写 onKeyDown方法
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //两秒之内按返回键就会退出
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                ToastUtils.toastShot(this, "再按一次退出");
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

@@ -25,7 +25,8 @@ public class CurrencyInfoMarketFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_currency_info_market, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_currency_info_market,
+                container, false);
         initView();
         return binding.getRoot();
     }
@@ -33,7 +34,8 @@ public class CurrencyInfoMarketFragment extends BaseFragment {
     private void initView() {
         binding.mrvMarketList.setLayoutManager(createLayoutManager(true));
         binding.mrvMarketList.addItemDecoration(createItemDecoration(R.color.grey_d));
-        binding.mrvMarketList.setAdapter(new CurrencyInfoMarketAdapter(R.layout.item_currency_info_market,createData()));
+        binding.mrvMarketList.setAdapter(new CurrencyInfoMarketAdapter(R.layout
+                .item_currency_info_market, createData()));
     }
 
 

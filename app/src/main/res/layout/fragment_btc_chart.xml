@@ -8,10 +8,10 @@
         tools:context="com.cf.basketball.fragment.btc.BtcMarketFragment">
 
         <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pic_chart"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center" />
+            android:id="@+id/pic_chart"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center" />
 
 
         <LinearLayout
@@ -45,6 +45,7 @@
             android:id="@+id/mrv_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_100" />
+            android:layout_marginBottom="@dimen/dp_100"
+            android:focusable="false" />
     </LinearLayout>
 </layout>

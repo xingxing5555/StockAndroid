@@ -87,6 +87,8 @@
         <attr name="radius" format="dimension" />
         <attr name="selectedColor" format="color" />
         <attr name="normalColor" format="color" />
+        <attr name="selectedTextColor" format="color"/>
+        <attr name="normalTextColor" format="color"/>
         <attr name="indicatorType" format="integer">
             <enum name="indicator" value="0" />
             <enum name="rect" value="1" />

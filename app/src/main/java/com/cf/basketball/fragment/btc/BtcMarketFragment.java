@@ -52,17 +52,10 @@ public class BtcMarketFragment extends BaseFragment {
         binding.mrvList.setLayoutManager(createLayoutManager(true));
         binding.mrvList.addItemDecoration(createItemDecoration(R.color.grey_d));
         binding.mrvList.setAdapter(new HomeBtcAdapter(R.layout.item_home_btc, createData()));
-//         int[] mColors = {getResources().getColor(R.color.red),getResources().getColor(R.color
-// .blue),getResources().getColor(R.color.green)};
-//        for (int i=0; i<3; i++){
-//            PieData pieData = new PieData();
-//            pieData.setName("区域"+i);
-//            pieData.setValue((float)i+1);
-//            pieData.setColor(mColors[i]);
-//            mPieDatas.add(pieData);
-//        }
-//        binding.pieChart.setPieData(mPieDatas);
-//        binding.pieChart.setAnimatedFlag(false);
+        initPieChart();
+    }
+
+    private void initPieChart() {
         List<PieEntry> strings = new ArrayList<>();
         strings.add(new PieEntry(20f, ""));
         strings.add(new PieEntry(30f, ""));
@@ -92,15 +85,13 @@ public class BtcMarketFragment extends BaseFragment {
         binding.picChart.setRotationAngle(0);
         binding.picChart.setRotationEnabled(false);
         binding.picChart.getLegend().setEnabled(false);
-//        binding.picChart.highlightValue(0, 2);
         for (IDataSet<?> set : binding.picChart.getData().getDataSets()) {
-//            set.setDrawValues(!set.isDrawValuesEnabled());
+            set.setDrawValues(!set.isDrawValuesEnabled());
         }
         IPieDataSet index = binding.picChart.getData().getDataSetByIndex(0);
-//        index.setHighlightEnabled(true);
-        binding.picChart.highlightValue(index.getEntryForIndex(0).getX(),index.getEntryForIndex(0).getY(),0);
+        binding.picChart.highlightValue(index.getEntryForIndex(0).getX(), index.getEntryForIndex
+                (0).getY(), 0);
         binding.picChart.invalidate();
-
     }
 
     private SpannableString generateCenterSpannableText(String firstText, String percentText) {

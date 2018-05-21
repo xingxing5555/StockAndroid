@@ -70,7 +70,7 @@
                     android:layout_height="@dimen/dp_36"
                     android:layout_alignParentRight="true"
                     app:defaultBackground="@drawable/shape_percent_light_blue_bg"
-                    app:percentBackground="@drawable/shape_percent_dark_red_bg"
+                    app:percentBackground="@drawable/shape_percent_dark_blue_bg"
                     app:percentValue="86.67%" />
             </RelativeLayout>
 

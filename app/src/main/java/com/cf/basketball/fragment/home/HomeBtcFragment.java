@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.cf.basketball.R;
-import com.cf.basketball.activity.BTCInfoActivity;
+import com.cf.basketball.activity.CurrencyInfoActivity;
 import com.cf.basketball.adapter.home.HomeBtcAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
@@ -19,7 +19,8 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class HomeBtcFragment extends BaseRecyclerViewFragment {
+public class HomeBtcFragment extends BaseRecyclerViewFragment implements BaseQuickAdapter
+        .OnItemClickListener {
 
     private List<HomeCurrencyModel> list;
     private HomeBtcAdapter homeBTCAdapter;
@@ -34,11 +35,11 @@ public class HomeBtcFragment extends BaseRecyclerViewFragment {
     public void initView() {
         homeBTCAdapter = new HomeBtcAdapter(R.layout.item_home_btc, list);
         mRecyclerView.setAdapter(homeBTCAdapter);
-        homeBTCAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(BTCInfoActivity.class);
-            }
-        });
+        homeBTCAdapter.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        startActivity(CurrencyInfoActivity.class);
     }
 }

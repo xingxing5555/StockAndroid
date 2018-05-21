@@ -36,7 +36,9 @@ public class BTCInfoActivity extends BaseActivity implements OnItemClickListener
         getSupportFragmentManager().beginTransaction().add(R.id.fl_container, btcChartFragment)
                 .add(R.id.fl_container, btcBriefFragment).add(R.id.fl_container,
                 infoNewsFragment).hide(btcBriefFragment).hide(infoNewsFragment).commit();
+
     }
+
 
     @Override
     public void onItemClickListener(int item) {

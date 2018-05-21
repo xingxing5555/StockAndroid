@@ -1,5 +1,6 @@
 package com.cf.basketball.activity;
 
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -79,6 +80,17 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
             binding.rtlText.setTvToolbarContent(currentTime);
             binding.rtlText.setDownVisible(false);
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int mCurrentOrientation = getResources().getConfiguration().orientation;
+        if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            startActivity(TrendChartActivity.class);
+            return;
+        }
+
     }
 
     public List<String> getData() {

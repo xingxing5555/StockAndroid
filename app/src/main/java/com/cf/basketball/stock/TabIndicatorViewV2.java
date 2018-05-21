@@ -41,8 +41,8 @@ public class TabIndicatorViewV2 extends View {
     private float indicatorHeight;
     private int indicatorPadding;
 
-    private int selectedColor;
-    private int normalColor;
+    private int selectedColor, selectedTextColor;
+    private int normalColor, normalTextColor;
 
     private float mRadius;
     private float textSize;
@@ -74,12 +74,17 @@ public class TabIndicatorViewV2 extends View {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TabIndicatorViewV2);
         type = a.getInt(R.styleable.TabIndicatorViewV2_indicatorType, TYPE_INDICATOR);
         textSize = a.getDimensionPixelSize(R.styleable.TabIndicatorViewV2_textSize, 15);
-        indicatorPadding = a.getDimensionPixelSize(R.styleable.TabIndicatorViewV2_indicatorPadding, 0);
-        indicatorHeight = a.getDimensionPixelSize(R.styleable.TabIndicatorViewV2_indicatorHeight, 0);
+        indicatorPadding = a.getDimensionPixelSize(R.styleable
+                .TabIndicatorViewV2_indicatorPadding, 0);
+        indicatorHeight = a.getDimensionPixelSize(R.styleable.TabIndicatorViewV2_indicatorHeight,
+                0);
 
         mRadius = a.getDimensionPixelSize(R.styleable.TabIndicatorViewV2_radius, 15);
         selectedColor = a.getColor(R.styleable.TabIndicatorViewV2_selectedColor, 0xffffffff);
         normalColor = a.getColor(R.styleable.TabIndicatorViewV2_normalColor, 0xff089FE6);
+        selectedTextColor = a.getColor(R.styleable.TabIndicatorViewV2_selectedTextColor,
+                0xffffffff);
+        normalTextColor = a.getColor(R.styleable.TabIndicatorViewV2_normalTextColor, 0xff089FE6);
 
         a.recycle();
     }
@@ -109,15 +114,18 @@ public class TabIndicatorViewV2 extends View {
         fm = mTextPaint.getFontMetrics();
         for (int i = 0; i < itemCount; i++) {
             if (i == position) {
-                mTextPaint.setColor(selectedColor);
+                mTextPaint.setColor(selectedTextColor);
             } else {
-                mTextPaint.setColor(normalColor);
+                mTextPaint.setColor(normalTextColor);
             }
             if (type == TYPE_INDICATOR) {
                 canvas.drawText(titles.get(i), getPaddingLeft() + itemWidth * (i + 0.5f),
-                        (getHeight() - getPaddingTop() - getPaddingBottom() - indicatorHeight) / 2 - fm.descent + (fm.bottom - fm.top) / 2, mTextPaint);
+                        (getHeight() - getPaddingTop() - getPaddingBottom() - indicatorHeight) /
+                                2 - fm.descent + (fm.bottom - fm.top) / 2, mTextPaint);
             } else {
-                canvas.drawText(titles.get(i), getPaddingLeft() + itemWidth * (i + 0.5f), (getHeight() - getPaddingTop() - getPaddingBottom()) / 2 - fm.descent + (fm.bottom - fm.top) / 2, mTextPaint);
+                canvas.drawText(titles.get(i), getPaddingLeft() + itemWidth * (i + 0.5f),
+                        (getHeight() - getPaddingTop() - getPaddingBottom()) / 2 - fm.descent +
+                                (fm.bottom - fm.top) / 2, mTextPaint);
             }
         }
     }
@@ -143,28 +151,35 @@ public class TabIndicatorViewV2 extends View {
             float[] leftOuterRadii = new float[]{mRadius, mRadius, 0, 0, 0, 0, mRadius, mRadius};
             float[] rightOuterRadii = new float[]{0, 0, mRadius, mRadius, mRadius, mRadius, 0, 0};
             if (position == 0) {
-                ShapeDrawable mDrawables = new ShapeDrawable(new RoundRectShape(leftOuterRadii, null, null));
+                ShapeDrawable mDrawables = new ShapeDrawable(new RoundRectShape(leftOuterRadii,
+                        null, null));
                 mDrawables.getPaint().setColor(mPaint.getColor());
-                mDrawables.setBounds((int) (position * itemWidth), 0, (int) ((position + 1) * itemWidth), getHeight());
+                mDrawables.setBounds((int) (position * itemWidth), 0, (int) ((position + 1) *
+                        itemWidth), getHeight());
                 mDrawables.draw(canvas);
             } else if (position == (itemCount - 1)) {
-                ShapeDrawable mDrawables = new ShapeDrawable(new RoundRectShape(rightOuterRadii, null, null));
+                ShapeDrawable mDrawables = new ShapeDrawable(new RoundRectShape(rightOuterRadii,
+                        null, null));
                 mDrawables.getPaint().setColor(mPaint.getColor());
-                mDrawables.setBounds((int) (position * itemWidth), 0, (int) ((position + 1) * itemWidth), getHeight());
+                mDrawables.setBounds((int) (position * itemWidth), 0, (int) ((position + 1) *
+                        itemWidth), getHeight());
                 mDrawables.draw(canvas);
             } else {
-                canvas.drawRect(position * itemWidth, 0, (position + 1) * itemWidth, getHeight(), mPaint);
+                canvas.drawRect(position * itemWidth, 0, (position + 1) * itemWidth, getHeight(),
+                        mPaint);
             }
 
         } else {
-            canvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), mRadius, mRadius, mPaint);
+            canvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), mRadius, mRadius,
+                    mPaint);
         }
 
         mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), mRadius, mRadius, mPaint);
 
         for (int i = 1; i < itemCount; i++) {
-            canvas.drawLine(getPaddingLeft() + i * itemWidth, getPaddingTop(), getPaddingLeft() + i * itemWidth, getHeight() - getPaddingBottom(), mPaint);
+            canvas.drawLine(getPaddingLeft() + i * itemWidth, getPaddingTop(), getPaddingLeft() +
+                    i * itemWidth, getHeight() - getPaddingBottom(), mPaint);
         }
     }
 
@@ -175,7 +190,8 @@ public class TabIndicatorViewV2 extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawRect(new RectF(0, 0, getWidth(), getHeight()), mPaint);
         for (int i = 1; i < itemCount; i++) {
-            canvas.drawLine(getPaddingLeft() + i * itemWidth, getPaddingTop(), getPaddingLeft() + i * itemWidth, getHeight() - getPaddingBottom(), mPaint);
+            canvas.drawLine(getPaddingLeft() + i * itemWidth, getPaddingTop(), getPaddingLeft() +
+                    i * itemWidth, getHeight() - getPaddingBottom(), mPaint);
         }
     }
 

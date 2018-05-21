@@ -38,7 +38,12 @@
         <item>币安</item>
         <item>Bitfinex</item>
     </string-array>
-
+    <string-array name="currency_trend">
+        <item>分时</item>
+        <item>日K</item>
+        <item>周K</item>
+        <item>月K</item>
+    </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name_currency">币种名称</string>
     <string name="current_price">现价</string>

@@ -7,20 +7,23 @@
     android:orientation="vertical"
     tools:context="com.cf.basketball.LoginActivity">
 
+
     <com.cf.basketball.stock.TabIndicatorViewV2
         android:id="@+id/tabIndicatorView"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:background="#171B20"
-        app:indicatorHeight="1dp"
-        app:indicatorPadding="10dp"
-        app:normalColor="#A9B4C7"
-        app:selectedColor="#FF1F64"
-        app:textSize="15sp" />
+        android:layout_height="@dimen/dp_32"
+        android:background="@color/grey_e"
+        app:indicatorHeight="2dp"
+        app:indicatorPadding="@dimen/dp_25"
+        app:normalColor="@color/transparent"
+        app:normalTextColor="@color/grey_9"
+        app:selectedColor="@color/red"
+        app:selectedTextColor="@color/red"
+        app:textSize="@dimen/sp_14" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/dp_240"
         android:layout_weight="0.318">
 
         <com.cf.basketball.stock.MLineView
@@ -34,19 +37,21 @@
             android:id="@+id/kDayLineView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#171B20"
+            android:background="@color/white"
             android:visibility="gone" />
+
         <com.cf.basketball.stock.KlineView
             android:id="@+id/kWeekLineView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#171B20"
+            android:background="@color/white"
             android:visibility="gone" />
+
         <com.cf.basketball.stock.KlineView
             android:id="@+id/kMonthLineView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#171B20"
+            android:background="@color/white"
             android:visibility="gone" />
     </FrameLayout>
 

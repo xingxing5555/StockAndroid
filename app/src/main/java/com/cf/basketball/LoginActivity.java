@@ -32,7 +32,7 @@ import retrofit2.Response;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements KlineView.GetMoreDataCallback{
+public class LoginActivity extends AppCompatActivity implements KlineView.GetMoreDataCallback {
     public static final int MLINE = 0;
     public static final int FIVE_MLINE = 1;
     public static final int DAY_KLINE = 2;
@@ -49,9 +49,8 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
+    private static final String[] DUMMY_CREDENTIALS = new String[]{"foo@example.com:hello",
+            "bar@example.com:world"};
 
     HSTodayModel hsModel;
     HSFiveDayModel hsFiveModel;
@@ -68,7 +67,6 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
     EditText editText;
 
 
-
     public static final String HS_MARKET = "hs";
     public static final String HK_MARKET = "hk";
     public static final String US_MARKET = "us";
@@ -77,6 +75,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
     boolean canRefresh;
     int currentChart;
     Handler mHandler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         kMonthLineView = (KlineView) this.findViewById(R.id.kMonthLineView);
         RequestManager.init();
 
-        String[] title = new String[]{"分时", "五日", "日K", "周K", "月K"};
+        String[] title = getResources().getStringArray(R.array.currency_trend);
         List<String> titles = Arrays.asList(title);
         tabIndicatorView.setTitles(titles);
         tabIndicatorView.setOnTabSelectedListener(new TabIndicatorViewV2.OnTabSelectedListener() {
@@ -117,10 +116,11 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
 
             }
         });
-        View.OnClickListener listener = new View.OnClickListener(){
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                LoginActivity.this.setRequestedOrientation(ActivityInfo
+                        .SCREEN_ORIENTATION_LANDSCAPE);
             }
         };
         mLineView.setOnClickListener(listener);
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         initView();
     }
 
-    public void reset(){
+    public void reset() {
         Calendar now = Calendar.getInstance();
         yearDay = now.get(Calendar.YEAR);
         yearWeek = now.get(Calendar.YEAR);
@@ -142,12 +142,12 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         hsMonthKlineModel = null;
     }
 
-    public void onClick(View view){
-        if(!TextUtils.isEmpty(editText.getText())){
+    public void onClick(View view) {
+        if (!TextUtils.isEmpty(editText.getText())) {
             reset();
             tabIndicatorView.selectPosition(0, true);
             String code = editText.getText().toString();
-            code = curMarket.equals("hs") ? "1"+code : code;
+            code = curMarket.equals("hs") ? "1" + code : code;
             stockCode = code;
             getTodayData(curMarket, code, false);
             getFiveDayData(curMarket, code);
@@ -161,18 +161,18 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
     Runnable refreshData = new Runnable() {
         @Override
         public void run() {
-            if(canRefresh){
+            if (canRefresh) {
                 refresh();
                 mHandler.postDelayed(refreshData, 6000);
-            }else{
+            } else {
                 mHandler.postDelayed(refreshData, 2000);
             }
         }
     };
 
-    private void initView(){
+    private void initView() {
         spinner = (Spinner) findViewById(R.id.spinner);
-        editText = (EditText)findViewById(R.id.editText);
+        editText = (EditText) findViewById(R.id.editText);
         //数据
         ArrayList<String> data_list = new ArrayList<String>();
         data_list.add("沪深");
@@ -180,7 +180,8 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         data_list.add("美股");
 
         //适配器
-        ArrayAdapter<String> arr_adapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
+        ArrayAdapter<String> arr_adapter = new ArrayAdapter<String>(this, android.R.layout
+                .simple_spinner_item, data_list);
         //设置样式
         arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //加载适配器
@@ -189,7 +190,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch(position){
+                switch (position) {
                     case 0:
                         curMarket = HS_MARKET;
                         break;
@@ -210,12 +211,11 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
     }
 
     @Override
-
-    public void onConfigurationChanged (Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig) {
 
         super.onConfigurationChanged(newConfig);
         int mCurrentOrientation = getResources().getConfiguration().orientation;
-        if ( mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE ) {
+        if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             isLandScape = true;
             return;
         }
@@ -233,14 +233,13 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
                 mLineView.clearData();
                 mLineView.setVisibility(View.VISIBLE);
                 mLineView.setMlineType(MLineView.ONE_DAY_MINUTES_LINE);
-                if(hsModel != null)
-                    mLineView.setData(hsModel.parseData());
+                if (hsModel != null) mLineView.setData(hsModel.parseData());
                 break;
             case FIVE_MLINE:
                 mLineView.clearData();
                 mLineView.setVisibility(View.VISIBLE);
                 mLineView.setMlineType(MLineView.FIVE_DAY_MINUTES_LINE);
-                if(hsFiveModel != null)
+                if (hsFiveModel != null)
                     mLineView.setData(hsFiveModel.parseData(hsModel, curMarket));
 
                 break;
@@ -249,7 +248,8 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
                 kDayLineView.setVisibility(View.VISIBLE);
 //                kLineTypeView.setVisibility(View.VISIBLE);
                 if (hsDayKlineModel != null) {
-                    kDayLineView.setData(hsDayKlineModel.parseData(), DAY_KLINE,  false, KlineView.K_BOTTOM_TYPE_KDJ);
+                    kDayLineView.setData(hsDayKlineModel.parseData(), DAY_KLINE, false, KlineView
+                            .K_BOTTOM_TYPE_KDJ);
                 }
                 break;
             case WEEK_KLINE:
@@ -257,7 +257,8 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
                 kWeekLineView.setVisibility(View.VISIBLE);
 //                kLineTypeView.setVisibility(View.VISIBLE);
                 if (hsWeekKlineModel != null) {
-                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false, KlineView.K_BOTTOM_TYPE_CJL);
+                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false,
+                            KlineView.K_BOTTOM_TYPE_CJL);
                 }
                 break;
             case MONTH_KLINE:
@@ -265,14 +266,15 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
                 kMonthLineView.setVisibility(View.VISIBLE);
 //                kLineTypeView.setVisibility(View.VISIBLE);
                 if (hsMonthKlineModel != null) {
-                    kMonthLineView.setData(hsMonthKlineModel.parseData(), MONTH_KLINE, false, KlineView.K_BOTTOM_TYPE_KDJ);
+                    kMonthLineView.setData(hsMonthKlineModel.parseData(), MONTH_KLINE, false,
+                            KlineView.K_BOTTOM_TYPE_KDJ);
                 }
                 break;
         }
     }
 
-    private void refresh(){
-        canRefresh =  false;
+    private void refresh() {
+        canRefresh = false;
         switch (currentChart) {
             case MLINE:
                 getTodayData(curMarket, stockCode, true);
@@ -293,20 +295,21 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         }
     }
 
-    private void getTodayData(String market, String stockCode,final boolean isRefresh){
-        Call<HSTodayModel> call = RequestManager.getService().getTodayModelWithMarket(market, stockCode);
+    private void getTodayData(String market, String stockCode, final boolean isRefresh) {
+        Call<HSTodayModel> call = RequestManager.getService().getTodayModelWithMarket(market,
+                stockCode);
         call.enqueue(new Callback<HSTodayModel>() {
             @Override
             public void onResponse(Call<HSTodayModel> call, Response<HSTodayModel> response) {
                 hsModel = response.body();
-                if(isRefresh){
-                    if(currentChart == FIVE_MLINE){
+                if (isRefresh) {
+                    if (currentChart == FIVE_MLINE) {
                         mLineView.setData(hsFiveModel.parseData(hsModel, curMarket));
-                    }else if(currentChart == MLINE){
+                    } else if (currentChart == MLINE) {
                         mLineView.setData(hsModel.parseData());
                     }
                     mLineView.postInvalidate();
-                }else{
+                } else {
                     changeChartView();
 
                 }
@@ -320,8 +323,9 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         });
     }
 
-    private void getFiveDayData(String market, String stockCode){
-        Call<HSFiveDayModel> call = RequestManager.getService().get4daysModelWithMarket(market, stockCode);
+    private void getFiveDayData(String market, String stockCode) {
+        Call<HSFiveDayModel> call = RequestManager.getService().get4daysModelWithMarket(market,
+                stockCode);
         call.enqueue(new Callback<HSFiveDayModel>() {
             @Override
             public void onResponse(Call<HSFiveDayModel> call, Response<HSFiveDayModel> response) {
@@ -335,23 +339,25 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         });
     }
 
-    private void getDayData(final String market, final String stockCode, final boolean getMore){
-        Call<HSKlineModel> call = RequestManager.getService().getDayKlineModelWithMarket(market, String.valueOf(yearDay), stockCode);
+    private void getDayData(final String market, final String stockCode, final boolean getMore) {
+        Call<HSKlineModel> call = RequestManager.getService().getDayKlineModelWithMarket(market,
+                String.valueOf(yearDay), stockCode);
         call.enqueue(new Callback<HSKlineModel>() {
             @Override
             public void onResponse(Call<HSKlineModel> call, Response<HSKlineModel> response) {
-                if(response.body() == null){
+                if (response.body() == null) {
                     return;
                 }
-                if(hsDayKlineModel != null && hsDayKlineModel.getName().equals(response.body().getName())){
+                if (hsDayKlineModel != null && hsDayKlineModel.getName().equals(response.body()
+                        .getName())) {
                     hsDayKlineModel.add(response.body());
-                }else{
+                } else {
                     hsDayKlineModel = response.body();
                 }
-                yearDay -- ;
-                if(getMore){
+                yearDay--;
+                if (getMore) {
                     kDayLineView.setMoreData(hsDayKlineModel.parseData());
-                }else {
+                } else {
                     if (hsDayKlineModel.getData().size() < 200) {
                         getDayData(market, stockCode, false);
                     }
@@ -360,24 +366,27 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
 
             @Override
             public void onFailure(Call<HSKlineModel> call, Throwable t) {
-                if(getMore){
+                if (getMore) {
                     kDayLineView.getMore = false;
                 }
             }
         });
     }
 
-    private void refreshDayData(final String market, final String stockCode){
+    private void refreshDayData(final String market, final String stockCode) {
         Calendar now = Calendar.getInstance();
-        Call<HSKlineModel> call = RequestManager.getService().getDayKlineModelWithMarket(market, String.valueOf(now.get(Calendar.YEAR)), stockCode);
+        Call<HSKlineModel> call = RequestManager.getService().getDayKlineModelWithMarket(market,
+                String.valueOf(now.get(Calendar.YEAR)), stockCode);
         call.enqueue(new Callback<HSKlineModel>() {
             @Override
             public void onResponse(Call<HSKlineModel> call, Response<HSKlineModel> response) {
-                if(response.body() == null){
+                if (response.body() == null) {
                     return;
                 }
-                if(hsDayKlineModel != null && hsDayKlineModel.getName().equals(response.body().getName())){
-                    hsDayKlineModel.refresNewestData(response.body().getData().get(response.body().getData().size() - 1));
+                if (hsDayKlineModel != null && hsDayKlineModel.getName().equals(response.body()
+                        .getName())) {
+                    hsDayKlineModel.refresNewestData(response.body().getData().get(response.body
+                            ().getData().size() - 1));
                     kDayLineView.postInvalidate();
                 }
                 canRefresh = true;
@@ -390,23 +399,25 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         });
     }
 
-    private void getWeekData(final String market, final String stockCode, final boolean getMore){
-        Call<HSKlineModel> call = RequestManager.getService().getWeekKlineModelWithMarket(market, String.valueOf(yearWeek), stockCode);
+    private void getWeekData(final String market, final String stockCode, final boolean getMore) {
+        Call<HSKlineModel> call = RequestManager.getService().getWeekKlineModelWithMarket(market,
+                String.valueOf(yearWeek), stockCode);
         call.enqueue(new Callback<HSKlineModel>() {
             @Override
             public void onResponse(Call<HSKlineModel> call, Response<HSKlineModel> response) {
-                if(response.body() == null){
+                if (response.body() == null) {
                     return;
                 }
-                if(hsWeekKlineModel != null && hsWeekKlineModel.getName().equals(response.body().getName())){
+                if (hsWeekKlineModel != null && hsWeekKlineModel.getName().equals(response.body()
+                        .getName())) {
                     hsWeekKlineModel.add(response.body());
-                }else{
+                } else {
                     hsWeekKlineModel = response.body();
                 }
-                yearWeek -- ;
-                if(getMore){
+                yearWeek--;
+                if (getMore) {
                     kWeekLineView.setMoreData(hsWeekKlineModel.parseData());
-                }else {
+                } else {
                     if (hsWeekKlineModel.getData().size() < 100) {
                         getWeekData(market, stockCode, false);
                     }
@@ -415,24 +426,27 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
 
             @Override
             public void onFailure(Call<HSKlineModel> call, Throwable t) {
-                if(getMore){
+                if (getMore) {
                     kWeekLineView.getMore = false;
                 }
             }
         });
     }
 
-    private void refreshWeekData(final String market, final String stockCode){
+    private void refreshWeekData(final String market, final String stockCode) {
         Calendar now = Calendar.getInstance();
-        Call<HSKlineModel> call = RequestManager.getService().getWeekKlineModelWithMarket(market, String.valueOf(now.get(Calendar.YEAR)), stockCode);
+        Call<HSKlineModel> call = RequestManager.getService().getWeekKlineModelWithMarket(market,
+                String.valueOf(now.get(Calendar.YEAR)), stockCode);
         call.enqueue(new Callback<HSKlineModel>() {
             @Override
             public void onResponse(Call<HSKlineModel> call, Response<HSKlineModel> response) {
-                if(response.body() == null){
+                if (response.body() == null) {
                     return;
                 }
-                if(hsWeekKlineModel != null && hsWeekKlineModel.getName().equals(response.body().getName())){
-                    hsWeekKlineModel.refresNewestData(response.body().getData().get(response.body().getData().size() - 1));
+                if (hsWeekKlineModel != null && hsWeekKlineModel.getName().equals(response.body()
+                        .getName())) {
+                    hsWeekKlineModel.refresNewestData(response.body().getData().get(response.body
+                            ().getData().size() - 1));
                     kWeekLineView.postInvalidate();
                 }
                 canRefresh = true;
@@ -446,24 +460,25 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
     }
 
 
-
-    private void getMonthData(final String market, final String stockCode, final boolean getMore){
-        Call<HSKlineModel> call = RequestManager.getService().getMonthKlineModelWithMarket(market, String.valueOf(yearMonth), stockCode);
+    private void getMonthData(final String market, final String stockCode, final boolean getMore) {
+        Call<HSKlineModel> call = RequestManager.getService().getMonthKlineModelWithMarket
+                (market, String.valueOf(yearMonth), stockCode);
         call.enqueue(new Callback<HSKlineModel>() {
             @Override
             public void onResponse(Call<HSKlineModel> call, Response<HSKlineModel> response) {
-                if(response.body() == null){
+                if (response.body() == null) {
                     return;
                 }
-                if(hsMonthKlineModel != null && hsMonthKlineModel.getName().equals(response.body().getName())){
+                if (hsMonthKlineModel != null && hsMonthKlineModel.getName().equals(response.body
+                        ().getName())) {
                     hsMonthKlineModel.add(response.body());
-                }else{
+                } else {
                     hsMonthKlineModel = response.body();
                 }
-                yearMonth -- ;
-                if(getMore){
+                yearMonth--;
+                if (getMore) {
                     kMonthLineView.setMoreData(hsMonthKlineModel.parseData());
-                }else {
+                } else {
                     if (hsMonthKlineModel.getData().size() < 100) {
                         getMonthData(market, stockCode, false);
                     }
@@ -472,24 +487,27 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
 
             @Override
             public void onFailure(Call<HSKlineModel> call, Throwable t) {
-                if(getMore){
+                if (getMore) {
                     kMonthLineView.getMore = false;
                 }
             }
         });
     }
 
-    private void refreshMonthData(final String market, final String stockCode){
+    private void refreshMonthData(final String market, final String stockCode) {
         Calendar now = Calendar.getInstance();
-        Call<HSKlineModel> call = RequestManager.getService().getMonthKlineModelWithMarket(market, String.valueOf(now.get(Calendar.YEAR)), stockCode);
+        Call<HSKlineModel> call = RequestManager.getService().getMonthKlineModelWithMarket
+                (market, String.valueOf(now.get(Calendar.YEAR)), stockCode);
         call.enqueue(new Callback<HSKlineModel>() {
             @Override
             public void onResponse(Call<HSKlineModel> call, Response<HSKlineModel> response) {
-                if(response.body() == null){
+                if (response.body() == null) {
                     return;
                 }
-                if(hsMonthKlineModel != null && hsMonthKlineModel.getName().equals(response.body().getName())){
-                    hsMonthKlineModel.refresNewestData(response.body().getData().get(response.body().getData().size() - 1));
+                if (hsMonthKlineModel != null && hsMonthKlineModel.getName().equals(response.body
+                        ().getName())) {
+                    hsMonthKlineModel.refresNewestData(response.body().getData().get(response
+                            .body().getData().size() - 1));
                     kMonthLineView.postInvalidate();
                 }
                 canRefresh = true;
@@ -504,7 +522,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
 
     @Override
     public void getMoreData(int klineType) {
-        switch (klineType){
+        switch (klineType) {
             case DAY_KLINE:
                 getDayData(stockCode, curMarket, true);
                 break;

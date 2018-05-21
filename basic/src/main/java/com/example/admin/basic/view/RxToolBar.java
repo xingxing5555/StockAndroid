@@ -3,13 +3,12 @@ package com.example.admin.basic.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +27,8 @@ public class RxToolBar extends RelativeLayout implements View.OnClickListener {
     private TextView tvToolbarTitle;
     private TextView tvToolbarContent;
     private String toolbarTitle, toolbarContent;
+    private Drawable backgroundDrawable;
+    private RelativeLayout rlToolbar;
 
     public RxToolBar(Context context) {
         super(context);
@@ -48,15 +49,20 @@ public class RxToolBar extends RelativeLayout implements View.OnClickListener {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RxToolBar);
         toolbarTitle = array.getString(R.styleable.RxToolBar_toolbarTitle);
         toolbarContent = array.getString(R.styleable.RxToolBar_toolbarContent);
+        backgroundDrawable = array.getDrawable(R.styleable.RxToolBar_toolbarBackground);
         array.recycle();
         activity = (Activity) context;
         View view = LayoutInflater.from(context).inflate(R.layout.common_toolbar, this, false);
         ivBack = (ImageView) view.findViewById(R.id.iv_back);
+        rlToolbar = (RelativeLayout) view.findViewById(R.id.rl_toolbar);
         ivDown = (ImageView) view.findViewById(R.id.iv_down);
         tvToolbarTitle = (TextView) view.findViewById(R.id.tv_toolbar_name);
         tvToolbarContent = (TextView) view.findViewById(R.id.tv_toolbar_time);
         tvToolbarTitle.setText(toolbarTitle);
         tvToolbarContent.setText(toolbarContent);
+        if (backgroundDrawable != null) {
+            rlToolbar.setBackgroundDrawable(backgroundDrawable);
+        }
         ivBack.setOnClickListener(this);
         addView(view);
     }

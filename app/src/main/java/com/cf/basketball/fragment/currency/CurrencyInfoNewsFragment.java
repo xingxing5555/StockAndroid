@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cf.basketball.R;
+import com.cf.basketball.activity.NewsInfoActivity;
 import com.cf.basketball.adapter.currency.CurrencyInfoNewsAdapter;
 import com.cf.basketball.model.CurrencyInfoNewsModel;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.application.BaseApplication;
 import com.example.admin.basic.base.BaseFragment;
 import com.example.admin.basic.view.FullyLinearLayoutManager;
@@ -23,10 +25,12 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class CurrencyInfoNewsFragment extends BaseFragment {
+public class CurrencyInfoNewsFragment extends BaseFragment implements BaseQuickAdapter
+        .OnItemClickListener {
 
     private List<CurrencyInfoNewsModel> list = new ArrayList<>();
     private MeasureRecyclerView mRecyclerView;
+    private CurrencyInfoNewsAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,8 +53,9 @@ public class CurrencyInfoNewsFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new FullyLinearLayoutManager(BaseApplication.getInstance()));
         mRecyclerView.addItemDecoration(createItemDecoration(R.color.grey_d));
         mRecyclerView.setNestedScrollingEnabled(false);
-        mRecyclerView.setAdapter(new CurrencyInfoNewsAdapter(getContext(), R.layout
-                .item_currency_info_news, list));
+        adapter = new CurrencyInfoNewsAdapter(getContext(), R.layout.item_currency_info_news, list);
+        mRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(this);
     }
 
 
@@ -73,4 +78,8 @@ public class CurrencyInfoNewsFragment extends BaseFragment {
                 + ".com%2Fuploads%2Fitem%2F201509%2F25%2F20150925110719_HtTCj.jpeg"));
     }
 
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        startActivity(NewsInfoActivity.class);
+    }
 }
