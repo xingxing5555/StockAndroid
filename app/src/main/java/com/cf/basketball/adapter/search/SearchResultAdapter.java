@@ -1,15 +1,20 @@
 package com.cf.basketball.adapter.search;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cf.basketball.R;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.admin.basic.model.HomeCurrencyModel;
-import com.example.admin.basic.utils.LogUtils;
 
 import java.util.List;
 
@@ -19,41 +24,112 @@ import java.util.List;
  * @author Xinxin Shi
  */
 
-public class SearchResultAdapter extends BaseQuickAdapter<HomeCurrencyModel, BaseViewHolder> {
+public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
 
-    private CheckBox cbSelected;
+    private final LayoutInflater inflater;
+    private List<HomeCurrencyModel> list;
+    private OnSearchListener onSearchListener;
 
-    public SearchResultAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
-        super(layoutResId, data);
+    public void setOnSearchListener(OnSearchListener onSearchListener) {
+        this.onSearchListener = onSearchListener;
+    }
+
+    public SearchResultAdapter(Context context, @Nullable List<HomeCurrencyModel> data) {
+        inflater = LayoutInflater.from(context);
+        this.list = data;
+    }
+
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.item_search_result, parent, false));
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, HomeCurrencyModel item) {
-        helper.setText(R.id.tv_search_result_name, item.getName());
-        helper.setText(R.id.tv_search_result_source, item.getType());
-        helper.setText(R.id.tv_market_volume, item.getVolume());
-        helper.setText(R.id.tv_search_result_price, item.getPrice());
-        helper.setText(R.id.tv_search_result_foreign_price, item.getForeignPrice());
-        helper.setText(R.id.btn_search_result, item.getIncrease());
-        cbSelected = (CheckBox) helper.itemView.findViewById(R.id.cb_selected);
-        if (TextUtils.equals("0", item.getState())) {
-            helper.itemView.findViewById(R.id.btn_search_result).setSelected(false);
-            cbSelected.setChecked(false);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        HomeCurrencyModel model = list.get(position);
+        holder.tvSearchResultName.setText(model.getName());
+        holder.tvSearchResultSource.setText(model.getType());
+        holder.tvMarketVolume.setText(model.getVolume());
+        holder.tvSearchResultPrice.setText(model.getPrice());
+        holder.tvSearchResultForeignPrice.setText(model.getForeignPrice());
+        holder.btnSearchResult.setText(model.getIncrease());
+        if (TextUtils.equals("0", model.getState())) {
+            holder.btnSearchResult.setSelected(false);
+            holder.cbSelected.setChecked(false);
         } else {
-            helper.itemView.findViewById(R.id.btn_search_result).setSelected(true);
-            cbSelected.setChecked(true);
+            holder.btnSearchResult.setSelected(true);
+            holder.cbSelected.setChecked(true);
         }
-        cbSelected.setOnClickListener(new View.OnClickListener() {
+        holder.cbSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (onSearchListener != null) {
+                    if (isChecked) {
+//                        删除货币
+                        onSearchListener.onAddOrSubChangeListener(holder.getAdapterPosition(), 2);
+                    } else {
+//                        添加货币
+                        onSearchListener.onAddOrSubChangeListener(holder.getAdapterPosition(), 1);
+                    }
+                }
+
+                holder.cbSelected.setChecked(isChecked);
+            }
+        });
+        holder.llSearchResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cbSelected.isChecked()) {
-                    LogUtils.e("加入列表" + true);
-                    cbSelected.setChecked(false);
-                } else {
-                    LogUtils.e("减出列表");
-                    cbSelected.setChecked(false);
+                if (onSearchListener != null) {
+                    onSearchListener.onItemClickListener(holder.getAdapterPosition());
                 }
             }
         });
+    }
+
+    @Override
+    public int getItemCount() {
+        return list == null ? 0 : list.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView tvSearchResultName, tvSearchResultSource, tvMarketVolume,
+                tvSearchResultPrice;
+        private TextView tvSearchResultForeignPrice;
+        private Button btnSearchResult;
+        private CheckBox cbSelected;
+        private LinearLayout llSearchResult;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            tvSearchResultName = (TextView) itemView.findViewById(R.id.tv_search_result_name);
+            tvSearchResultSource = (TextView) itemView.findViewById(R.id.tv_search_result_source);
+            tvMarketVolume = (TextView) itemView.findViewById(R.id.tv_market_volume);
+            tvSearchResultPrice = (TextView) itemView.findViewById(R.id.tv_search_result_price);
+            tvSearchResultForeignPrice = (TextView) itemView.findViewById(R.id
+                    .tv_search_result_foreign_price);
+            btnSearchResult = (Button) itemView.findViewById(R.id.btn_search_result);
+            cbSelected = (CheckBox) itemView.findViewById(R.id.cb_selected);
+            llSearchResult = (LinearLayout) itemView.findViewById(R.id.ll_search_result);
+        }
+    }
+
+
+    public interface OnSearchListener {
+        /**
+         * item的点击事件
+         *
+         * @param position 位置
+         */
+        void onItemClickListener(int position);
+
+        /**
+         * 添加/删除的事件
+         *
+         * @param position 位置
+         * @param state    状态 1：添加 ；2：删除
+         */
+        void onAddOrSubChangeListener(int position, int state);
     }
 }

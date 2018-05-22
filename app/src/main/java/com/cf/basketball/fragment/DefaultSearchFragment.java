@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cf.basketball.R;
+import com.cf.basketball.activity.CurrencyInfoActivity;
 import com.cf.basketball.adapter.search.DefaultSearchAdapter;
 import com.cf.basketball.adapter.search.TradeSearchAdapter;
 import com.cf.basketball.databinding.FragmentDefaultSearchBinding;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.model.TradeModel;
 import com.example.admin.basic.base.BaseFragment;
 
@@ -23,12 +25,16 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class DefaultSearchFragment extends BaseFragment {
+public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdapter
+        .OnItemClickListener {
 
 
     private FragmentDefaultSearchBinding binding;
     private List<String> dataList = new ArrayList<>();
     private List<TradeModel> tradeList = new ArrayList<>();
+    private DefaultSearchAdapter historyAdapter;
+    private DefaultSearchAdapter hotAdapter;
+    private TradeSearchAdapter tradeAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,12 +59,15 @@ public class DefaultSearchFragment extends BaseFragment {
         binding.mrvSearchHistoryList.setLayoutManager(createGridLayoutManager(5));
         binding.mrvSearchHotList.setLayoutManager(createGridLayoutManager(5));
         binding.mrvSearchTradeList.setLayoutManager(createLayoutManager(true));
-        binding.mrvSearchHistoryList.setAdapter(new DefaultSearchAdapter(R.layout
-                .item_default_search_btn, dataList));
-        binding.mrvSearchHotList.setAdapter(new DefaultSearchAdapter(R.layout
-                .item_default_search_btn, dataList));
-        binding.mrvSearchTradeList.setAdapter(new TradeSearchAdapter(R.layout.item_trade_search,
-                tradeList));
+        historyAdapter = new DefaultSearchAdapter(R.layout.item_default_search_btn, dataList);
+        hotAdapter = new DefaultSearchAdapter(R.layout.item_default_search_btn, dataList);
+        tradeAdapter = new TradeSearchAdapter(R.layout.item_trade_search, tradeList);
+        binding.mrvSearchHistoryList.setAdapter(historyAdapter);
+        binding.mrvSearchHotList.setAdapter(hotAdapter);
+        binding.mrvSearchTradeList.setAdapter(tradeAdapter);
+        historyAdapter.setOnItemClickListener(this);
+        hotAdapter.setOnItemClickListener(this);
+        tradeAdapter.setOnItemClickListener(this);
     }
 
 
@@ -68,6 +77,14 @@ public class DefaultSearchFragment extends BaseFragment {
         }
         for (int i = 0; i < 3; i++) {
             tradeList.add(new TradeModel("火币", "交易量为10000"));
+        }
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        startActivity(CurrencyInfoActivity.class);
+        if (!getActivity().isDestroyed()) {
+            getActivity().finish();
         }
     }
 }

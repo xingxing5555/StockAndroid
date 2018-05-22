@@ -21,6 +21,10 @@ import com.example.admin.basic.utils.LogUtils;
 import com.example.admin.basic.view.SortLayout;
 import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -39,6 +43,7 @@ public class HomeOptionalFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         list = createData();
     }
 
@@ -97,6 +102,12 @@ public class HomeOptionalFragment extends BaseFragment implements View.OnClickLi
         };
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(HomeCurrencyModel messageEvent) {
+        LogUtils.e("Event is execute ");
+        list.add(messageEvent);
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onClick(View v) {
@@ -112,5 +123,14 @@ public class HomeOptionalFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onSortChangeListener(int type, int changeState) {
         LogUtils.e("type=" + type + ";changeState=" + changeState);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

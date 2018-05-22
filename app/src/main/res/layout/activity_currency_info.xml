@@ -13,7 +13,7 @@
             android:id="@+id/rtl_text"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44"
-            app:toolbarTitle="BTC/USD"/>
+            app:toolbarTitle="BTC/USD" />
 
 
         <!--中间数据-->
@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:id="@+id/ll_info_content"
                     android:layout_width="match_parent"
@@ -100,7 +101,7 @@
                 </LinearLayout>
 
                 <include layout="@layout/common_vertical_line" />
-                <!--todo 货币趋势图UI-->
+
                 <include
                     android:id="@+id/view_trend"
                     layout="@layout/activity_login" />

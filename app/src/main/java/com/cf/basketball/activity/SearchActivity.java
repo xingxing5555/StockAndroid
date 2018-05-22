@@ -10,15 +10,20 @@ import com.cf.basketball.adapter.search.SearchResultAdapter;
 import com.cf.basketball.databinding.ActivitySearchBinding;
 import com.cf.basketball.fragment.DefaultSearchFragment;
 import com.example.admin.basic.base.BaseActivity;
+import com.example.admin.basic.utils.LogUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 搜索界面
  *
  * @author xinxin Shi
  */
-public class SearchActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
+public class SearchActivity extends BaseActivity implements View.OnClickListener, TextWatcher,
+        SearchResultAdapter.OnSearchListener {
 
     private ActivitySearchBinding binding;
+    private SearchResultAdapter adapter;
 
     @Override
     public void initView() {
@@ -59,12 +64,26 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             return;
         }
         binding.rvSearchResult.setVisibility(View.VISIBLE);
-        binding.rvSearchResult.setAdapter(new SearchResultAdapter(R.layout.item_search_result,
-                createData()));
+        adapter = new SearchResultAdapter(this, createData());
+        binding.rvSearchResult.setAdapter(adapter);
+        adapter.setOnSearchListener(this);
     }
 
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+
+    @Override
+    public void onItemClickListener(int position) {
+        startActivity(CurrencyInfoActivity.class);
+        finish();
+    }
+
+    @Override
+    public void onAddOrSubChangeListener(int position, int state) {
+        LogUtils.e("position=" + position + ";state=" + state);
+        EventBus.getDefault().post(createData().get(position));
     }
 }

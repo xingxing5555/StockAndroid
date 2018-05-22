@@ -33,6 +33,8 @@ import com.example.admin.basic.stock.MLineView;
 import com.example.admin.basic.stock.TabIndicatorViewV2;
 import com.example.admin.basic.utils.DateUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -48,7 +50,7 @@ import retrofit2.Response;
  */
 public class CurrencyInfoActivity extends BaseActivity implements OnScrollChangedListener,
         OnItemClickListener, TabIndicatorViewV2.OnTabSelectedListener, KlineView
-                .GetMoreDataCallback {
+                .GetMoreDataCallback, View.OnClickListener {
 
     private ActivityCurrencyInfoBinding binding;
     private String currentTime;
@@ -109,13 +111,8 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         kDayLineView.setOnClickListener(listener);
         kWeekLineView.setOnClickListener(listener);
         kMonthLineView.setOnClickListener(listener);
-        binding.rlShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO 用于分享的本页图片
-                Bitmap bitmap = shotScrollView(binding.svInfoContainer);
-            }
-        });
+        binding.rlShare.setOnClickListener(this);
+        binding.tvAddOptional.setOnClickListener(this);
 //        initSpinner();
     }
 
@@ -175,7 +172,6 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         yearDay = now.get(Calendar.YEAR);
         yearWeek = now.get(Calendar.YEAR);
         yearMonth = now.get(Calendar.YEAR);
-
     }
 
 
@@ -577,5 +573,20 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         final Canvas canvas = new Canvas(bitmap);
         scrollView.draw(canvas);
         return bitmap;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_add_optional:
+                EventBus.getDefault().post(createData().get(0));
+                break;
+            case R.id.rl_share:
+                //TODO 用于分享的本页图片
+                Bitmap bitmap = shotScrollView(binding.svInfoContainer);
+                break;
+            default:
+                break;
+        }
     }
 }
