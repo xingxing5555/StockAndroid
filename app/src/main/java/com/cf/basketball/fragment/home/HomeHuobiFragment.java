@@ -3,14 +3,12 @@ package com.cf.basketball.fragment.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 
-import com.cf.basketball.R;
 import com.cf.basketball.activity.CurrencyInfoActivity;
 import com.cf.basketball.adapter.home.HomeHuobiAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -19,8 +17,7 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class HomeHuobiFragment extends BaseRecyclerViewFragment implements BaseQuickAdapter
-        .OnItemClickListener {
+public class HomeHuobiFragment extends BaseRecyclerViewFragment {
 
     private List<HomeCurrencyModel> list;
     private HomeHuobiAdapter adapter;
@@ -33,13 +30,26 @@ public class HomeHuobiFragment extends BaseRecyclerViewFragment implements BaseQ
 
     @Override
     public void initView() {
-        adapter = new HomeHuobiAdapter(R.layout.item_home_huobi, list);
-        mRecyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
+
     }
 
     @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+    public void refresh() {
+        list.addAll(0, createData());
+        mRecyclerView.refreshComplete(0);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public LRecyclerViewAdapter getLRecyclerViewAdapter() {
+        adapter = new HomeHuobiAdapter(getContext());
+        adapter.setDataList(list);
+        return new LRecyclerViewAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClickListener(int position) {
         startActivity(CurrencyInfoActivity.class);
     }
+
 }

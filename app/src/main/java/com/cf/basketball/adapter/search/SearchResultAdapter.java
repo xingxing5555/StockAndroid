@@ -105,7 +105,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             super(itemView);
             tvSearchResultName = (TextView) itemView.findViewById(R.id.tv_search_result_name);
             tvSearchResultSource = (TextView) itemView.findViewById(R.id.tv_search_result_source);
-            tvMarketVolume = (TextView) itemView.findViewById(R.id.tv_market_volume);
+            tvMarketVolume = (TextView) itemView.findViewById(R.id.tv_market_price);
             tvSearchResultPrice = (TextView) itemView.findViewById(R.id.tv_search_result_price);
             tvSearchResultForeignPrice = (TextView) itemView.findViewById(R.id
                     .tv_search_result_foreign_price);

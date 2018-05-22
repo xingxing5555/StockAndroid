@@ -3,6 +3,7 @@ package com.cf.basketball.fragment.btc;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,8 @@ public class BtcBriefFragment extends BaseFragment {
 
     private void initView() {
         binding.mrvProjectList.setLayoutManager(createLayoutManager(true));
-        binding.mrvProjectList.addItemDecoration(createItemDecoration(R.color.grey_d));
+        binding.mrvProjectList.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
         binding.mrvProjectList.setAdapter(new BtcBriefProjectAdapter(getActivity(), R.layout
                 .item_btc_brief_project, getData()));
     }

@@ -3,14 +3,12 @@ package com.cf.basketball.fragment.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 
-import com.cf.basketball.R;
 import com.cf.basketball.activity.BtcInfoActivity;
 import com.cf.basketball.adapter.home.HomeMarketAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
 import com.example.admin.basic.model.HomeCurrencyModel;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -19,8 +17,7 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class HomeMarketFragment extends BaseRecyclerViewFragment implements BaseQuickAdapter
-        .OnItemClickListener {
+public class HomeMarketFragment extends BaseRecyclerViewFragment {
 
 
     private List<HomeCurrencyModel> list;
@@ -35,14 +32,24 @@ public class HomeMarketFragment extends BaseRecyclerViewFragment implements Base
 
     @Override
     public void initView() {
-        adapter = new HomeMarketAdapter(R.layout.item_home_market, list);
-        mRecyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
     }
-
 
     @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+    public void refresh() {
+        list.addAll(0, createData());
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public LRecyclerViewAdapter getLRecyclerViewAdapter() {
+        adapter = new HomeMarketAdapter(getContext());
+        adapter.setDataList(list);
+        return new LRecyclerViewAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClickListener(int position) {
         startActivity(BtcInfoActivity.class);
     }
+
 }

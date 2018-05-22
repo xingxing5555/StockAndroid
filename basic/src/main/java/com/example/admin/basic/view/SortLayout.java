@@ -51,6 +51,8 @@ public class SortLayout extends LinearLayout implements View.OnClickListener {
         ivSortPrice = (ImageView) view.findViewById(R.id.iv_sort_price);
         rlIncrease = (RelativeLayout) view.findViewById(R.id.rl_increase);
         ivSortIncrease = (ImageView) view.findViewById(R.id.iv_sort_increase);
+        ivSortPrice.setEnabled(false);
+        ivSortIncrease.setEnabled(false);
         rlIncrease.setOnClickListener(this);
         rlPrice.setOnClickListener(this);
         addView(view);
@@ -65,25 +67,29 @@ public class SortLayout extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(id==R.id.rl_price){
-            if (ivSortPrice.getVisibility() == GONE||onSortChangeListener==null) {
+        if (id == R.id.rl_price) {
+            if (ivSortPrice.getVisibility() == GONE || onSortChangeListener == null) {
                 return;
             }
-            if(ivSortPrice.isEnabled()){
-                    onSortChangeListener.onSortChangeListener(1,1);
-            }else{
-                onSortChangeListener.onSortChangeListener(1,2);
+            if (ivSortPrice.isEnabled()) {
+//                价格降序
+                onSortChangeListener.onSortChangeListener(0);
+            } else {
+//                价格升序
+                onSortChangeListener.onSortChangeListener(1);
             }
             ivSortPrice.setEnabled(!ivSortPrice.isEnabled());
         }
-        if(id==R.id.rl_increase){
-            if (ivSortIncrease.getVisibility() == GONE||onSortChangeListener==null) {
+        if (id == R.id.rl_increase) {
+            if (ivSortIncrease.getVisibility() == GONE || onSortChangeListener == null) {
                 return;
             }
-            if(ivSortIncrease.isEnabled()){
-                    onSortChangeListener.onSortChangeListener(1,1);
-            }else{
-                onSortChangeListener.onSortChangeListener(1,2);
+            if (ivSortIncrease.isEnabled()) {
+                //                涨幅降序
+                onSortChangeListener.onSortChangeListener(2);
+            } else {
+//                涨幅升序
+                onSortChangeListener.onSortChangeListener(3);
             }
             ivSortIncrease.setEnabled(!ivSortIncrease.isEnabled());
         }
@@ -94,9 +100,8 @@ public class SortLayout extends LinearLayout implements View.OnClickListener {
         /**
          * 排序变化
          *
-         * @param type        1: 价格 2：涨幅
-         * @param changeState 1：升 2：降
+         * @param order 排序类型，值0为现价降序，1为现价升序，2为涨幅降序，3涨幅升序
          */
-        public void onSortChangeListener(int type, int changeState);
+        public void onSortChangeListener(int order);
     }
 }

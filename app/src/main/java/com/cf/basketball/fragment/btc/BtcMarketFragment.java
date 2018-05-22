@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -37,6 +38,7 @@ import java.util.List;
 public class BtcMarketFragment extends BaseFragment {
     private FragmentBtcChartBinding binding;
     private ArrayList<PieData> mPieDatas = new ArrayList<>();
+    private HomeBtcAdapter adapter;
 
 
     @Override
@@ -50,8 +52,11 @@ public class BtcMarketFragment extends BaseFragment {
     private void initView() {
         binding.getRoot().findViewById(R.id.ll_sort_prompt).setVisibility(View.VISIBLE);
         binding.mrvList.setLayoutManager(createLayoutManager(true));
-        binding.mrvList.addItemDecoration(createItemDecoration(R.color.grey_d));
-        binding.mrvList.setAdapter(new HomeBtcAdapter(R.layout.item_home_btc, createData()));
+        binding.mrvList.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
+        adapter = new HomeBtcAdapter(getContext());
+        adapter.setDataList(createData());
+        binding.mrvList.setAdapter(adapter);
         initPieChart();
     }
 

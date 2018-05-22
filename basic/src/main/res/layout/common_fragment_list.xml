@@ -8,11 +8,11 @@
 
         <com.example.admin.basic.view.SortLayout
             android:id="@+id/sl_sort"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
-        <android.support.v7.widget.RecyclerView
+        <com.github.jdsjlzx.recyclerview.LRecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

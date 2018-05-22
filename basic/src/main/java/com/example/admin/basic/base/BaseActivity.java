@@ -10,10 +10,11 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.admin.basic.application.BaseApplication;
 import com.example.admin.basic.model.HomeCurrencyModel;
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.admin.basic.R;
 
 /**
  * @author Xinxin Shi
@@ -48,8 +49,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected RecyclerView.ItemDecoration createItemDecoration(int colorRes) {
-        return new DefaultItemDecoration(ContextCompat.getColor(BaseApplication.getInstance(),
-                colorRes));
+       return new DividerDecoration.Builder(this).setHeight(R.dimen
+                .dp_1)
+                .setColorResource(colorRes).build();
     }
 
 

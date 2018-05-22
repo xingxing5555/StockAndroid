@@ -562,18 +562,7 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
     }
 
 
-    public Bitmap shotScrollView(ScrollView scrollView) {
-        int h = 0;
-        Bitmap bitmap = null;
-        for (int i = 0; i < scrollView.getChildCount(); i++) {
-            h += scrollView.getChildAt(i).getHeight();
-            binding.svInfoContainer.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
-        }
-        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h, Bitmap.Config.RGB_565);
-        final Canvas canvas = new Canvas(bitmap);
-        scrollView.draw(canvas);
-        return bitmap;
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -588,5 +577,18 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
             default:
                 break;
         }
+    }
+
+    public Bitmap shotScrollView(ScrollView scrollView) {
+        int h = 0;
+        Bitmap bitmap = null;
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+            binding.svInfoContainer.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h, Bitmap.Config.RGB_565);
+        final Canvas canvas = new Canvas(bitmap);
+        scrollView.draw(canvas);
+        return bitmap;
     }
 }

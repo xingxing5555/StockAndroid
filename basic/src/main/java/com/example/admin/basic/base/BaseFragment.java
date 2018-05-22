@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.admin.basic.application.BaseApplication;
 import com.example.admin.basic.model.HomeCurrencyModel;
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.admin.basic.R;
 
 /**
  * @author Xinxin Shi
@@ -40,8 +40,9 @@ public class BaseFragment extends Fragment {
 
 
     protected RecyclerView.ItemDecoration createItemDecoration(int colorRes) {
-        return new DefaultItemDecoration(ContextCompat.getColor(BaseApplication.getInstance(),
-                colorRes));
+        return new DividerDecoration.Builder(getContext()).setHeight(R.dimen
+                .dp_1)
+                .setColorResource(colorRes).build();
     }
 
 

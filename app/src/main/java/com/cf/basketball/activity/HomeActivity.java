@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.cf.basketball.LoginActivity;
 import com.cf.basketball.R;
 import com.cf.basketball.adapter.home.HomeNavigationAdapter;
 import com.cf.basketball.adapter.home.HomeViewPagerAdapter;
@@ -17,8 +16,11 @@ import com.cf.basketball.fragment.home.HomeHuobiFragment;
 import com.cf.basketball.fragment.home.HomeIncreaseFragment;
 import com.cf.basketball.fragment.home.HomeMarketFragment;
 import com.cf.basketball.fragment.home.HomeOptionalFragment;
+import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.base.BaseActivity;
 import com.example.admin.basic.interfaces.OnItemClickListener;
+import com.example.admin.basic.interfaces.OnRequestListener;
+import com.example.admin.basic.utils.LogUtils;
 import com.example.admin.basic.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import java.util.List;
  *
  * @author Xinxin Shi
  */
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener, OnRequestListener {
 
     private ActivityHomeBinding binding;
     private HomeNavigationAdapter adapter;
@@ -42,11 +44,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-    }
-
-    @Override
-    public void initData() {
-//     顶部导航栏配置
+        //     顶部导航栏配置
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         binding.rvTopTitle.setLayoutManager(layoutManager);
         navigationTitleArray = getResources().getStringArray(R.array.home_navigation_title);
@@ -81,6 +79,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
+    }
+
+    @Override
+    public void initData() {
+        NetManager.getInstance().getHomeTab(this);
     }
 
 
@@ -125,4 +128,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onResponse(String json) {
+        LogUtils.e("json=" + json);
+    }
+
+    @Override
+    public void onRequestFailure(String errorMsg) {
+        LogUtils.e(errorMsg);
+    }
 }

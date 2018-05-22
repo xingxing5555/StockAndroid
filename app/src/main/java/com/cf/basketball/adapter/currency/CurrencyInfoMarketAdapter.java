@@ -23,6 +23,6 @@ public class CurrencyInfoMarketAdapter extends BaseQuickAdapter<HomeCurrencyMode
     protected void convert(BaseViewHolder helper, HomeCurrencyModel item) {
         helper.setText(R.id.tv_market_time, "23:32:13");
         helper.setText(R.id.tv_market_price, "¥56352.54");
-        helper.setText(R.id.tv_market_volume, "0.02");
+        helper.setText(R.id.tv_market_price, "0.02");
     }
 }

@@ -3,6 +3,7 @@ package com.cf.basketball.fragment.currency;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class CurrencyInfoMarketFragment extends BaseFragment {
 
     private void initView() {
         binding.mrvMarketList.setLayoutManager(createLayoutManager(true));
-        binding.mrvMarketList.addItemDecoration(createItemDecoration(R.color.grey_d));
+        binding.mrvMarketList.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         binding.mrvMarketList.setAdapter(new CurrencyInfoMarketAdapter(R.layout
                 .item_currency_info_market, createData()));
     }

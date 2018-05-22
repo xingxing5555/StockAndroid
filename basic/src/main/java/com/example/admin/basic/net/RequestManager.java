@@ -1,8 +1,11 @@
 package com.example.admin.basic.net;
 
+import com.example.admin.basic.constants.Constants;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by luoyu on 2017/5/8.
@@ -10,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RequestManager {
 
-    private static String BaseUrl = "http://img1.money.126.net/data/";
+    private static String BaseUrl = Constants.BASE_URL;
 
     private static RequestManager _self;
 
@@ -25,19 +28,26 @@ public class RequestManager {
 //        return _self;
 //    }
 
-    public static void init(){
+    public static void init() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor( new AppInterceptor2())//增加App级别的拦截器，可以在较底层处理请求和返回的数据  new AppInterceptor
+//                .addInterceptor( new AppInterceptor2())//增加App级别的拦截器，可以在较底层处理请求和返回的数据  new
+// AppInterceptor
                 .build();
-        mRetrofit = new Retrofit.Builder()
-                .baseUrl(BaseUrl)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+        mRetrofit = new Retrofit.Builder().baseUrl(BaseUrl).client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        mService = mRetrofit.create(NetworkService.class);
+    }
+    public static void initString() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .addInterceptor( new AppInterceptor2())//增加App级别的拦截器，可以在较底层处理请求和返回的数据  new
+// AppInterceptor
                 .build();
+        mRetrofit = new Retrofit.Builder().baseUrl(BaseUrl).client(okHttpClient)
+                .addConverterFactory(ScalarsConverterFactory.create()).build();
         mService = mRetrofit.create(NetworkService.class);
     }
 
-    public static NetworkService getService(){
+    public static NetworkService getService() {
         return mService;
     }
 }

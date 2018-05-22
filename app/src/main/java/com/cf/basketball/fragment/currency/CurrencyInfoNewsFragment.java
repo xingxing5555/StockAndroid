@@ -3,6 +3,7 @@ package com.cf.basketball.fragment.currency;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class CurrencyInfoNewsFragment extends BaseFragment implements BaseQuickA
     public void initView(View view) {
         mRecyclerView = (MeasureRecyclerView) view.findViewById(R.id.mrv_list);
         mRecyclerView.setLayoutManager(new FullyLinearLayoutManager(BaseApplication.getInstance()));
-        mRecyclerView.addItemDecoration(createItemDecoration(R.color.grey_d));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         mRecyclerView.setNestedScrollingEnabled(false);
         adapter = new CurrencyInfoNewsAdapter(getContext(), R.layout.item_currency_info_news, list);
         mRecyclerView.setAdapter(adapter);
