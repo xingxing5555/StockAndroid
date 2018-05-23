@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.cf.basketball.R;
 import com.cf.basketball.activity.CurrencyInfoActivity;
@@ -40,8 +41,8 @@ import java.util.List;
  *
  * @author Xinxin Shi
  */
-public class HomeOptionalFragment extends BaseFragment implements View.OnClickListener,
-        SortLayout.OnSortChangeListener, OnRequestListener, OnRefreshListener {
+public class HomeOptionalFragment extends BaseFragment implements SortLayout
+        .OnSortChangeListener, OnRequestListener, OnRefreshListener {
 
     private FragmentHomeOptionalBinding binding;
     private HomeOptionalAdapter2 adapter;
@@ -50,6 +51,7 @@ public class HomeOptionalFragment extends BaseFragment implements View.OnClickLi
     private int order = 0;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private String token = "fsafasfd";
+    private View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,8 +84,19 @@ public class HomeOptionalFragment extends BaseFragment implements View.OnClickLi
         binding.sryContainer.setAdapter(mLRecyclerViewAdapter);
         binding.sryContainer.setOnRefreshListener(this);
         binding.sryContainer.setLoadMoreEnabled(false);
-        binding.btnAddCurrency.setOnClickListener(this);
         binding.slSort.setOnSortChangeListener(this);
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.foot_add_currency, null, false);
+        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
+                .MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rlp.alignWithParent = true;
+        view.setLayoutParams(rlp);
+        view.findViewById(R.id.btn_add_currency).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(SearchActivity.class);
+            }
+        });
+        mLRecyclerViewAdapter.addFooterView(view);
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
@@ -106,19 +119,10 @@ public class HomeOptionalFragment extends BaseFragment implements View.OnClickLi
     public void addEvent(HomeCurrencyModel messageEvent) {
         LogUtils.e("Event is execute ");
         list.add(messageEvent);
+        adapter.setDataList(list);
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_add_currency:
-                startActivity(SearchActivity.class);
-                break;
-            default:
-                break;
-        }
-    }
 
     @Override
     public void onSortChangeListener(int order) {

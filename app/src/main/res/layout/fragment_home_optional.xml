@@ -9,26 +9,22 @@
         <com.example.admin.basic.view.SortLayout
             android:id="@+id/sl_sort"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <com.github.jdsjlzx.recyclerview.LRecyclerView
-            android:id="@+id/sry_container"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/btn_add_currency"
-            android:layout_width="@dimen/dp_160"
-            android:layout_height="@dimen/dp_50"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dp_50"
-            android:background="@drawable/shape_btn_add_currency"
-            android:paddingBottom="@dimen/dp_15"
-            android:paddingLeft="@dimen/dp_44"
-            android:paddingRight="@dimen/dp_44"
-            android:paddingTop="@dimen/dp_15"
-            android:text="@string/add_currency"
-            android:textColor="@color/blue_dark"
-            android:textSize="@dimen/sp_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:orientation="vertical">
+
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/sry_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
     </LinearLayout>
 </layout>

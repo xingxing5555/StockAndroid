@@ -67,10 +67,16 @@ public interface NetworkService {
             String year, @Path("stockCode") String stockCode);
 
 
-    @GET("tabs")
+    @GET("v1/tabs")
     Call<String> getHomeTab();
 
-    @GET("coins/mine")
-    Call<String> getMineList(@Query("token") String token, @Query("pageNum") int pageNum,
-                             @Query("order") int order);
+    @GET("v1/coins/mine")
+    Call<String> getMineList(@Query("token") String token, @Query("pageNum") int pageNum, @Query
+            ("order") int order);
+
+    @GET("v1/coins/updown")
+    Call<String> getUpDown(@Query("pageNum") int pageNum, @Query("order") int order);
+
+    @GET("v1/coins/{id}")
+    Call<String> getCoinData(@Query("pageNum") int pageNum, @Path("id") String id);
 }

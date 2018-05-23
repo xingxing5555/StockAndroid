@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.cf.basketball.fragment.home.HomeIncreaseFragment">
+        tools:context="com.cf.basketball.fragment.home.HomeUpDownFragment">
 
         <com.example.admin.basic.view.SortLayout
             android:id="@+id/sl_sort"

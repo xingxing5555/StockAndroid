@@ -2,7 +2,6 @@ package com.cf.basketball.net;
 
 import com.example.admin.basic.interfaces.OnRequestListener;
 import com.example.admin.basic.net.RequestManager;
-import com.example.admin.basic.utils.LogUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,9 +40,18 @@ public class NetManager implements Callback<String> {
         RequestManager.getService().getMineList(token, pageNum, order).enqueue(this);
     }
 
+    public void getUpDown(int pageNum, int order, OnRequestListener listener) {
+        this.listener = listener;
+        RequestManager.getService().getUpDown(pageNum, order).enqueue(this);
+    }
+
+    public void getCoinData(int pageNum, String id, OnRequestListener listener) {
+        this.listener = listener;
+        RequestManager.getService().getCoinData(pageNum, id).enqueue(this);
+    }
+
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
-        LogUtils.e(response.body());
         listener.onResponse(response.body());
     }
 

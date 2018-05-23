@@ -16,12 +16,12 @@ import com.example.admin.basic.view.SuperViewHolder;
  * @author Xinxin Shi
  */
 
-public class HomeIncreaseAdapter extends ListBaseAdapter<HomeCurrencyModel> {
-    public HomeIncreaseAdapter(Context context) {
+public class HomeUpDownAdapter extends ListBaseAdapter<HomeCurrencyModel> {
+    public HomeUpDownAdapter(Context context) {
         super(context);
     }
 
-//    public HomeIncreaseAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
+//    public HomeUpDownAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
 //        super(layoutResId, data);
 //    }
 //
@@ -42,7 +42,7 @@ public class HomeIncreaseAdapter extends ListBaseAdapter<HomeCurrencyModel> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_home_increase;
+        return R.layout.item_home_up_down;
     }
 
     @Override

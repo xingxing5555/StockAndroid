@@ -13,7 +13,7 @@ import com.cf.basketball.adapter.home.HomeViewPagerAdapter;
 import com.cf.basketball.databinding.ActivityHomeBinding;
 import com.cf.basketball.fragment.home.HomeBtcFragment;
 import com.cf.basketball.fragment.home.HomeHuobiFragment;
-import com.cf.basketball.fragment.home.HomeIncreaseFragment;
+import com.cf.basketball.fragment.home.HomeUpDownFragment;
 import com.cf.basketball.fragment.home.HomeMarketFragment;
 import com.cf.basketball.fragment.home.HomeOptionalFragment;
 import com.cf.basketball.net.NetManager;
@@ -90,7 +90,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private void getFragments() {
         fragmentList.add(new HomeOptionalFragment());
         fragmentList.add(new HomeMarketFragment());
-        fragmentList.add(new HomeIncreaseFragment());
+        fragmentList.add(new HomeUpDownFragment());
         fragmentList.add(new HomeBtcFragment());
         fragmentList.add(new HomeOptionalFragment());
         fragmentList.add(new HomeOptionalFragment());

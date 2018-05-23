@@ -1,6 +1,7 @@
 package com.cf.basketball.activity;
 
 import android.databinding.DataBindingUtil;
+import android.support.v7.widget.DividerItemDecoration;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -32,7 +33,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_search_container, new
                 DefaultSearchFragment()).commit();
         binding.rvSearchResult.setLayoutManager(createLinearLayoutManager());
-        binding.rvSearchResult.addItemDecoration(createItemDecoration(R.color.grey_d));
+        binding.rvSearchResult.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         binding.etSearch.addTextChangedListener(this);
     }
 
