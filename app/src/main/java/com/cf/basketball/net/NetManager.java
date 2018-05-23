@@ -11,11 +11,11 @@ import retrofit2.Response;
  * @author Xinxin Shi
  */
 
-public class NetManager implements Callback<String> {
+public class NetManager {
     private static NetManager instance;
     public OnRequestListener listener;
 
-    public NetManager() {
+    private NetManager() {
         RequestManager.initString();
     }
 
@@ -32,31 +32,37 @@ public class NetManager implements Callback<String> {
 
     public void getHomeTab(OnRequestListener listener) {
         this.listener = listener;
-        RequestManager.getService().getHomeTab().enqueue(this);
+        RequestManager.getService().getHomeTab().enqueue(createListener(listener));
     }
 
     public void getMineList(String token, int pageNum, int order, OnRequestListener listener) {
         this.listener = listener;
-        RequestManager.getService().getMineList(token, pageNum, order).enqueue(this);
+        RequestManager.getService().getMineList(token, pageNum, order).enqueue(createListener
+                (listener));
     }
 
     public void getUpDown(int pageNum, int order, OnRequestListener listener) {
         this.listener = listener;
-        RequestManager.getService().getUpDown(pageNum, order).enqueue(this);
+        RequestManager.getService().getUpDown(pageNum, order).enqueue(createListener(listener));
     }
 
     public void getCoinData(int pageNum, String id, OnRequestListener listener) {
         this.listener = listener;
-        RequestManager.getService().getCoinData(pageNum, id).enqueue(this);
+        RequestManager.getService().getCoinData(pageNum, id).enqueue(createListener(listener));
     }
 
-    @Override
-    public void onResponse(Call<String> call, Response<String> response) {
-        listener.onResponse(response.body());
+    public Callback<String> createListener(final OnRequestListener listener) {
+        return new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                listener.onResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                listener.onRequestFailure("错误日志：" + t.getMessage());
+            }
+        };
     }
 
-    @Override
-    public void onFailure(Call<String> call, Throwable t) {
-        listener.onRequestFailure("错误日志：" + t.getMessage());
-    }
 }

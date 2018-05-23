@@ -166,7 +166,6 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
 
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            LogUtils.e("====getMovementFlags====");
             int dragFlags = 0, swipeFlags = 0;
             if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
                 dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT |
@@ -182,8 +181,6 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder source,
                               RecyclerView.ViewHolder target) {
-            LogUtils.e("====onMove===");
-
             if (source.getItemViewType() != target.getItemViewType()) {
                 return false;
             } else {
@@ -201,7 +198,6 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
         public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder
                 viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            LogUtils.e("====onChildDraw===");
             binding.sryContainer.setPullRefreshEnabled(false);
             if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                 //滑动时改变Item的透明度

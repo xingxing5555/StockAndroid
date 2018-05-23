@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.cf.basketball.LoginActivity;
 import com.cf.basketball.R;
 import com.cf.basketball.adapter.home.HomeNavigationAdapter;
 import com.cf.basketball.adapter.home.HomeViewPagerAdapter;
@@ -104,7 +105,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_search:
-                startActivity(SearchActivity.class);
+                startActivity(LoginActivity.class);
                 break;
             default:
                 break;
@@ -130,7 +131,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onResponse(String json) {
-        LogUtils.e("json=" + json);
+        LogUtils.e("标签json=" + json);
     }
 
     @Override
