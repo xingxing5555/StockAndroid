@@ -1,30 +1,32 @@
 package com.example.admin.basic.base;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ScrollView;
 
+import com.example.admin.basic.R;
 import com.example.admin.basic.application.BaseApplication;
 import com.example.admin.basic.model.HomeCurrencyModel;
 import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.admin.basic.R;
 
 /**
  * @author Xinxin Shi
  */
 public abstract class BaseActivity extends AppCompatActivity {
     public static final int MLINE = 0;
-    public static final int FIVE_MLINE = 1;
-    public static final int DAY_KLINE = 2;
-    public static final int WEEK_KLINE = 3;
-    public static final int MONTH_KLINE = 4;
+    public static final int DAY_KLINE = 1;
+    public static final int WEEK_KLINE = 2;
+    public static final int MONTH_KLINE = 3;
     public static final String HS_MARKET = "hs";
     public static final String HK_MARKET = "hk";
     public static final String US_MARKET = "us";
@@ -98,5 +100,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void startActivity(Class activityCls) {
         startActivity(new Intent(this, activityCls));
+    }
+
+    public Bitmap shotScrollView(ScrollView scrollView) {
+        int h = 0;
+        Bitmap bitmap = null;
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+            scrollView.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h, Bitmap.Config.RGB_565);
+        final Canvas canvas = new Canvas(bitmap);
+        scrollView.draw(canvas);
+        return bitmap;
     }
 }

@@ -33,7 +33,8 @@ public abstract class StockLineView extends View implements ILineScatter {
     private boolean mDrawVerticalHighlightIndicator = false;
     private boolean mDrawHorizontalHighlightIndicator = false;
     private boolean isShowHighLightIndicator = true;
-    private int mHighLightColor = Color.rgb(255, 255, 255);
+    //    private int mHighLightColor = Color.rgb(255, 255, 255);
+    private int mHighLightColor =0xff999999;
     private float mHighlightLineWidth = 1f;
     protected float startX, startY, endX, endY;
     protected float volumeStartY;//量图的顶部Y值
@@ -127,25 +128,35 @@ public abstract class StockLineView extends View implements ILineScatter {
         }
 
         if (isHorizontalHighlightIndicatorEnabled() && isVerticalHighlightIndicatorEnabled()) {
-            canvas.drawCircle(currentX, currentY, 3, highlightCirclePaint);
+//            highlightCirclePaint.setColor(0x55CAE7FF);
+            highlightCirclePaint.setColor(Color.WHITE);
+            highlightCirclePaint.setStyle(Paint.Style.FILL);
+            highlightCirclePaint.setAntiAlias(true);
+            canvas.drawCircle(currentX, currentY, 8, highlightCirclePaint);
+            highlightCirclePaint.setColor(0xffCAE7FF);
+            highlightCirclePaint.setStyle(Paint.Style.STROKE);
+            highlightCirclePaint.setStrokeWidth(3);
+            highlightCirclePaint.setAntiAlias(true);
+            canvas.drawCircle(currentX, currentY, 8, highlightCirclePaint);
 
             ArrayList<String> content = new ArrayList<>();
-            if(this instanceof KlineView){
+            if (this instanceof KlineView) {
                 int dataIndex = getBeginFlag() + index;
                 content.add(String.format("时间:%s", times.get(dataIndex)));
                 content.add(String.format("现价:%s", klineDataList.get(dataIndex).get(1)));
-                content.add(String.format("涨幅:%s%s", klineDataList.get(dataIndex).get(5),"%"));
+                content.add(String.format("涨幅:%s%s", klineDataList.get(dataIndex).get(5), "%"));
                 content.add(String.format("开盘:%s", klineDataList.get(dataIndex).get(0)));
                 content.add(String.format("最高:%s", klineDataList.get(dataIndex).get(2)));
                 content.add(String.format("最低:%s", klineDataList.get(dataIndex).get(3)));
-                if(index > 0) {
+                if (index > 0) {
                     content.add(String.format("昨收:%s", klineDataList.get(dataIndex - 1).get(1)));
                 }
                 content.add(String.format("成交量:%s", klineDataList.get(dataIndex).get(4)));
-            }else{
+            } else {
                 content.add(String.format("时间:%s", times.get(index)));
                 content.add(String.format("现价:%s", minDataList.get(index).get(0)));
-                double zf = (minDataList.get(index).get(0) - minDataList.get(index).get(3))/minDataList.get(index).get(3) * 100;
+                double zf = (minDataList.get(index).get(0) - minDataList.get(index).get(3)) /
+                        minDataList.get(index).get(3) * 100;
                 content.add(String.format("涨幅:%.2f%s", zf, "%"));
                 content.add(String.format("昨收:%s", minDataList.get(index).get(3)));
                 content.add(String.format("成交量:%s", minDataList.get(index).get(1)));
@@ -156,20 +167,21 @@ public abstract class StockLineView extends View implements ILineScatter {
             float width = 120;
             float height = 90;
 
-            if(currentX < startX + (endX - startX)/2){
+            if (currentX < startX + (endX - startX) / 2) {
                 left = endX - width - 1;
             }
-            if(this instanceof KlineView){
+            if (this instanceof KlineView) {
                 height = 130;
             }
 
             Paint linePaint = new Paint();
             linePaint.setColor(Color.BLACK);
+            linePaint.setStyle(Paint.Style.FILL);
             RectF rect = new RectF(left, top, left + width + 1, top + height);
             canvas.drawRoundRect(rect, 5, 5, linePaint);
             linePaint.setTextSize(14);
             linePaint.setColor(Color.WHITE);
-            for(String item : content){
+            for (String item : content) {
                 canvas.drawText(item, left + 3, top + 15, linePaint);
                 top += 15;
             }
@@ -200,8 +212,8 @@ public abstract class StockLineView extends View implements ILineScatter {
             if (isKBottomClick(event)) {
                 result = true;
             } else {
-                if (isShowHighLightIndicator ||
-                        (isShowTitles && (isKRightRegionClick(event) || isKVolumeRegionClick(event)))) {
+                if (isShowHighLightIndicator || (isShowTitles && (isKRightRegionClick(event) ||
+                        isKVolumeRegionClick(event)))) {
                     return true;
                 }
             }
@@ -227,9 +239,11 @@ public abstract class StockLineView extends View implements ILineScatter {
             case MotionEvent.ACTION_MOVE:
                 mDrawVerticalHighlightIndicator = true;
                 mDrawHorizontalHighlightIndicator = true;
-                currentX = Math.max(Math.min(event.getX(), getStartX() + mOffsetX * (getLineData().size() - getBeginFlag() - 1)), getStartX());//控制边界问题
+                currentX = Math.max(Math.min(event.getX(), getStartX() + mOffsetX * (getLineData
+                        ().size() - getBeginFlag() - 1)), getStartX());//控制边界问题
                 int tempIndex = Math.round((currentX - getStartX()) / mOffsetX);
-                currentX = getStartX() + (tempIndex) * mOffsetX + (mainType == TYPE_MLINE ? 3 : +mOffsetX / 2);
+                currentX = getStartX() + (tempIndex) * mOffsetX + (mainType == TYPE_MLINE ? 3 :
+                        +mOffsetX / 2);
                 index = (int) ((currentX - getStartX()) / mOffsetX) - (isOneDayMLine ? 1 : 0);
                 Float tempCurrentY = getCurrentY(index);
                 if (tempCurrentY == null) {
@@ -250,6 +264,8 @@ public abstract class StockLineView extends View implements ILineScatter {
                 if (mIOnTouchActinListener != null) {
                     mIOnTouchActinListener.onTouchUp();
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -339,7 +355,8 @@ public abstract class StockLineView extends View implements ILineScatter {
 
     protected float scrollDelta;
     protected boolean isLongPressed = false;
-    GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+    GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector
+            .SimpleOnGestureListener() {
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -369,7 +386,7 @@ public abstract class StockLineView extends View implements ILineScatter {
                     } else if (isKVolumeRegionClick(e)) {
                         showVolumeDialog();
                         return true;
-                    }else{
+                    } else {
                         StockLineView.this.performClick();
                     }
                 }
@@ -388,25 +405,24 @@ public abstract class StockLineView extends View implements ILineScatter {
         }
 
 
-
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
-            if(distanceX > 0){
-                if(scrollDelta < 0){
+            if (distanceX > 0) {
+                if (scrollDelta < 0) {
                     scrollDelta = 0;
                 }
-                scrollDelta+=distanceX;
-                if(scrollDelta > 10){
+                scrollDelta += distanceX;
+                if (scrollDelta > 10) {
                     scrollToLeft();
                     scrollDelta = 0;
                 }
-            }else if(distanceX < 0){
-                if(scrollDelta > 0){
+            } else if (distanceX < 0) {
+                if (scrollDelta > 0) {
                     scrollDelta = 0;
                 }
-                scrollDelta+=distanceX;
-                if(scrollDelta < -10){
+                scrollDelta += distanceX;
+                if (scrollDelta < -10) {
                     scrollToRight();
                     scrollDelta = 0;
                 }
@@ -443,11 +459,11 @@ public abstract class StockLineView extends View implements ILineScatter {
         void onKLineRightTypeChanged(int type);
     }
 
-    public void scrollToLeft(){
+    public void scrollToLeft() {
 
     }
 
-    public void scrollToRight(){
+    public void scrollToRight() {
 
     }
 

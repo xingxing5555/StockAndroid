@@ -1,21 +1,17 @@
 package com.cf.basketball.activity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cf.basketball.R;
+import com.cf.basketball.adapter.currency.CurrencyLineAdapter;
 import com.cf.basketball.adapter.home.HomeCurrencyInfoDataAdapter;
 import com.cf.basketball.databinding.ActivityCurrencyInfoBinding;
 import com.cf.basketball.fragment.currency.CurrencyInfoBriefFragment;
@@ -24,7 +20,6 @@ import com.cf.basketball.fragment.currency.CurrencyInfoNewsFragment;
 import com.example.admin.basic.base.BaseActivity;
 import com.example.admin.basic.interfaces.OnItemClickListener;
 import com.example.admin.basic.interfaces.OnScrollChangedListener;
-import com.example.admin.basic.model.HSFiveDayModel;
 import com.example.admin.basic.model.HSKlineModel;
 import com.example.admin.basic.model.HSTodayModel;
 import com.example.admin.basic.net.RequestManager;
@@ -32,10 +27,11 @@ import com.example.admin.basic.stock.KlineView;
 import com.example.admin.basic.stock.MLineView;
 import com.example.admin.basic.stock.TabIndicatorViewV2;
 import com.example.admin.basic.utils.DateUtils;
+import com.example.admin.basic.utils.LogUtils;
+import com.example.admin.basic.view.MeasureRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -62,7 +58,6 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
     public int yearWeek = 2017;
     public int yearMonth = 2017;
     HSTodayModel hsModel;
-    HSFiveDayModel hsFiveModel;
     HSKlineModel hsDayKlineModel;
     HSKlineModel hsWeekKlineModel;
     HSKlineModel hsMonthKlineModel;
@@ -71,17 +66,18 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
     KlineView kDayLineView;
     KlineView kWeekLineView;
     KlineView kMonthLineView;
+    LinearLayout llLine;
+    MeasureRecyclerView mrvLine;
+    TextView tvLineTime;
 
-    Spinner spinner;
-    EditText editText;
-    String stockCode;
-    String curMarket;
+    String stockCode = "1399001";
+    String curMarket = HS_MARKET;
     boolean canRefresh;
     int currentChart;
-    Handler mHandler = new Handler();
 
     @Override
     public void initView() {
+        RequestManager.init();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_currency_info);
         currentTime = DateUtils.getCurrentTime();
         binding.rtlText.setTvToolbarContent(currentTime);
@@ -104,6 +100,10 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         kDayLineView = (KlineView) this.findViewById(R.id.kDayLineView);
         kWeekLineView = (KlineView) this.findViewById(R.id.kWeekLineView);
         kMonthLineView = (KlineView) this.findViewById(R.id.kMonthLineView);
+        llLine = (LinearLayout) this.findViewById(R.id.ll_line);
+        mrvLine = (MeasureRecyclerView) this.findViewById(R.id.mrv_line);
+        tvLineTime = (TextView) this.findViewById(R.id.tv_line_time);
+
         String[] title = getResources().getStringArray(R.array.currency_trend);
         tabIndicatorView.setTitles(Arrays.asList(title));
         tabIndicatorView.setOnTabSelectedListener(this);
@@ -113,56 +113,16 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         kMonthLineView.setOnClickListener(listener);
         binding.rlShare.setOnClickListener(this);
         binding.tvAddOptional.setOnClickListener(this);
-//        initSpinner();
+        mrvLine.setLayoutManager(createGridLayoutManager(3));
+        mrvLine.setAdapter(new CurrencyLineAdapter(this, R.layout.item_currency_kline, getData()));
     }
 
-    private void initSpinner() {
-        spinner = (Spinner) findViewById(R.id.spinner);
-        editText = (EditText) findViewById(R.id.editText);
-        //数据
-        ArrayList<String> data_list = new ArrayList<String>();
-        data_list.add("沪深");
-        data_list.add("港股");
-        data_list.add("美股");
-
-        //适配器
-        ArrayAdapter<String> arr_adapter = new ArrayAdapter<String>(this, android.R.layout
-                .simple_spinner_item, data_list);
-        //设置样式
-        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //加载适配器
-        spinner.setAdapter(arr_adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        curMarket = HS_MARKET;
-                        break;
-                    case 1:
-                        curMarket = HK_MARKET;
-                        break;
-                    case 2:
-                        curMarket = US_MARKET;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
 
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            CurrencyInfoActivity.this.setRequestedOrientation(ActivityInfo
-                    .SCREEN_ORIENTATION_LANDSCAPE);
+
+            startActivity(TrendChartActivity.class);
         }
     };
 
@@ -172,8 +132,17 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         yearDay = now.get(Calendar.YEAR);
         yearWeek = now.get(Calendar.YEAR);
         yearMonth = now.get(Calendar.YEAR);
+        currentChart = MLINE;
+        refresh();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        CurrencyInfoActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        CurrencyInfoActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+
+    }
 
     /**
      * ScrollView的滑动监听
@@ -236,6 +205,7 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         kWeekLineView.setVisibility(View.GONE);
         kMonthLineView.setVisibility(View.GONE);
         mLineView.setVisibility(View.GONE);
+        llLine.setVisibility(View.GONE);
         currentChart = position;
         changeChartView();
     }
@@ -250,20 +220,14 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         mLineView.setMarket(curMarket);
 //        buySellContainer.setVisibility(View.GONE);
 //        kLineTypeView.setVisibility(View.GONE);
+        refresh();
         switch (currentChart) {
             case MLINE:
                 mLineView.clearData();
                 mLineView.setVisibility(View.VISIBLE);
-                mLineView.setMlineType(MLineView.ONE_DAY_MINUTES_LINE);
-                if (hsModel != null) mLineView.setData(hsModel.parseData());
-                break;
-            case FIVE_MLINE:
-                mLineView.clearData();
-                mLineView.setVisibility(View.VISIBLE);
-                mLineView.setMlineType(MLineView.FIVE_DAY_MINUTES_LINE);
-                if (hsFiveModel != null)
-                    mLineView.setData(hsFiveModel.parseData(hsModel, curMarket));
+                llLine.setVisibility(View.VISIBLE);
 
+                if (hsModel != null) mLineView.setData(hsModel.parseData());
                 break;
             case DAY_KLINE:
                 kDayLineView.clearData();
@@ -303,9 +267,6 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
             case MLINE:
                 getTodayData(curMarket, stockCode, true);
                 break;
-            case FIVE_MLINE:
-                getTodayData(curMarket, stockCode, true);
-                break;
             case DAY_KLINE:
                 refreshDayData(curMarket, stockCode);
                 break;
@@ -314,6 +275,8 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
                 break;
             case MONTH_KLINE:
                 refreshMonthData(curMarket, stockCode);
+                break;
+            default:
                 break;
 
         }
@@ -327,11 +290,8 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
             public void onResponse(Call<HSTodayModel> call, Response<HSTodayModel> response) {
                 hsModel = response.body();
                 if (isRefresh) {
-                    if (currentChart == FIVE_MLINE) {
-                        mLineView.setData(hsFiveModel.parseData(hsModel, curMarket));
-                    } else if (currentChart == MLINE) {
-                        mLineView.setData(hsModel.parseData());
-                    }
+                    mLineView.setMlineType(MLineView.ONE_DAY_MINUTES_LINE);
+                    mLineView.setData(hsModel.parseData());
                     mLineView.postInvalidate();
                 } else {
                     changeChartView();
@@ -342,26 +302,11 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
 
             @Override
             public void onFailure(Call<HSTodayModel> call, Throwable t) {
-
+                LogUtils.e("错误日志：" + t.getMessage());
             }
         });
     }
 
-    private void getFiveDayData(String market, String stockCode) {
-        Call<HSFiveDayModel> call = RequestManager.getService().get4daysModelWithMarket(market,
-                stockCode);
-        call.enqueue(new Callback<HSFiveDayModel>() {
-            @Override
-            public void onResponse(Call<HSFiveDayModel> call, Response<HSFiveDayModel> response) {
-                hsFiveModel = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<HSFiveDayModel> call, Throwable t) {
-
-            }
-        });
-    }
 
     private void getDayData(final String market, final String stockCode, final boolean getMore) {
         Call<HSKlineModel> call = RequestManager.getService().getDayKlineModelWithMarket(market,
@@ -407,10 +352,14 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
                 if (response.body() == null) {
                     return;
                 }
-                if (hsDayKlineModel != null && hsDayKlineModel.getName().equals(response.body()
-                        .getName())) {
-                    hsDayKlineModel.refresNewestData(response.body().getData().get(response.body
-                            ().getData().size() - 1));
+                hsDayKlineModel = response.body();
+//                if (hsDayKlineModel != null && hsDayKlineModel.getName().equals(response.body()
+//                        .getName())) {
+                if (hsDayKlineModel != null) {
+//                    hsDayKlineModel.refresNewestData(response.body().getData().get(response.body
+//                            ().getData().size() - 1));
+                    kDayLineView.setData(hsDayKlineModel.parseData(), DAY_KLINE, false, KlineView
+                            .K_BOTTOM_TYPE_KDJ);
                     kDayLineView.postInvalidate();
                 }
                 canRefresh = true;
@@ -418,7 +367,7 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
 
             @Override
             public void onFailure(Call<HSKlineModel> call, Throwable t) {
-
+                LogUtils.e("错误日志：" + t.getMessage());
             }
         });
     }
@@ -467,10 +416,14 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
                 if (response.body() == null) {
                     return;
                 }
-                if (hsWeekKlineModel != null && hsWeekKlineModel.getName().equals(response.body()
-                        .getName())) {
-                    hsWeekKlineModel.refresNewestData(response.body().getData().get(response.body
-                            ().getData().size() - 1));
+                hsWeekKlineModel = response.body();
+//                if (hsWeekKlineModel != null && hsWeekKlineModel.getName().equals(response.body()
+//                        .getName())) {
+                if (hsWeekKlineModel != null) {
+                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false,
+                            KlineView.K_BOTTOM_TYPE_CJL);
+//                    hsWeekKlineModel.refresNewestData(response.body().getData().get(response.body
+//                            ().getData().size() - 1));
                     kWeekLineView.postInvalidate();
                 }
                 canRefresh = true;
@@ -528,10 +481,14 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
                 if (response.body() == null) {
                     return;
                 }
-                if (hsMonthKlineModel != null && hsMonthKlineModel.getName().equals(response.body
-                        ().getName())) {
-                    hsMonthKlineModel.refresNewestData(response.body().getData().get(response
-                            .body().getData().size() - 1));
+                hsMonthKlineModel = response.body();
+//                if (hsMonthKlineModel != null && hsMonthKlineModel.getName().equals(response.body
+//                        ().getName())) {
+                if (hsMonthKlineModel != null) {
+//                    hsMonthKlineModel.refresNewestData(response.body().getData().get(response
+//                            .body().getData().size() - 1));
+                    kMonthLineView.setData(hsMonthKlineModel.parseData(), MONTH_KLINE, false,
+                            KlineView.K_BOTTOM_TYPE_KDJ);
                     kMonthLineView.postInvalidate();
                 }
                 canRefresh = true;
@@ -562,8 +519,6 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
     }
 
 
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -579,16 +534,9 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         }
     }
 
-    public Bitmap shotScrollView(ScrollView scrollView) {
-        int h = 0;
-        Bitmap bitmap = null;
-        for (int i = 0; i < scrollView.getChildCount(); i++) {
-            h += scrollView.getChildAt(i).getHeight();
-            binding.svInfoContainer.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
-        }
-        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h, Bitmap.Config.RGB_565);
-        final Canvas canvas = new Canvas(bitmap);
-        scrollView.draw(canvas);
-        return bitmap;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtils.e("详情页的onResult");
     }
 }

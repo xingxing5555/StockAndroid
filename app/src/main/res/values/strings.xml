@@ -44,6 +44,14 @@
         <item>周K</item>
         <item>月K</item>
     </string-array>
+    <string-array name="currency_line">
+        <item>开：</item>
+        <item>高：</item>
+        <item>量：</item>
+        <item>收：</item>
+        <item>低：</item>
+        <item>幅：</item>
+    </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name_currency">币种名称</string>
     <string name="current_price">现价</string>

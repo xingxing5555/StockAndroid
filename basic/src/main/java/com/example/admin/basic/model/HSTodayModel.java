@@ -25,7 +25,7 @@ public class HSTodayModel {
     private String symbol;
     private String name;
     private double yestclose;
-    private int lastVolume;
+    private double lastVolume;
     private String date;
     private List<List<String>> data;
 
@@ -61,7 +61,7 @@ public class HSTodayModel {
         this.yestclose = yestclose;
     }
 
-    public int getLastVolume() {
+    public double getLastVolume() {
         return lastVolume;
     }
 

@@ -7,20 +7,17 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.admin.basic.model.HSFiveDayModel;
 import com.example.admin.basic.model.HSKlineModel;
 import com.example.admin.basic.model.HSTodayModel;
+import com.example.admin.basic.net.RequestManager;
 import com.example.admin.basic.stock.KlineView;
 import com.example.admin.basic.stock.MLineView;
 import com.example.admin.basic.stock.TabIndicatorViewV2;
-import com.example.admin.basic.net.RequestManager;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -123,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         kDayLineView.setOnClickListener(listener);
         kWeekLineView.setOnClickListener(listener);
         kMonthLineView.setOnClickListener(listener);
-        initView();
+//        initView();
     }
 
     public void reset() {
@@ -165,46 +162,46 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
             }
         }
     };
-
-    private void initView() {
-        spinner = (Spinner) findViewById(R.id.spinner);
-        editText = (EditText) findViewById(R.id.editText);
-        //数据
-        ArrayList<String> data_list = new ArrayList<String>();
-        data_list.add("沪深");
-        data_list.add("港股");
-        data_list.add("美股");
-
-        //适配器
-        ArrayAdapter<String> arr_adapter = new ArrayAdapter<String>(this, android.R.layout
-                .simple_spinner_item, data_list);
-        //设置样式
-        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //加载适配器
-        spinner.setAdapter(arr_adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        curMarket = HS_MARKET;
-                        break;
-                    case 1:
-                        curMarket = HK_MARKET;
-                        break;
-                    case 2:
-                        curMarket = US_MARKET;
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
+//
+//    private void initView() {
+//        spinner = (Spinner) findViewById(R.id.spinner);
+//        editText = (EditText) findViewById(R.id.editText);
+//        //数据
+//        ArrayList<String> data_list = new ArrayList<String>();
+//        data_list.add("沪深");
+//        data_list.add("港股");
+//        data_list.add("美股");
+//
+//        //适配器
+//        ArrayAdapter<String> arr_adapter = new ArrayAdapter<String>(this, android.R.layout
+//                .simple_spinner_item, data_list);
+//        //设置样式
+//        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        //加载适配器
+//        spinner.setAdapter(arr_adapter);
+//
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                switch (position) {
+//                    case 0:
+//                        curMarket = HS_MARKET;
+//                        break;
+//                    case 1:
+//                        curMarket = HK_MARKET;
+//                        break;
+//                    case 2:
+//                        curMarket = US_MARKET;
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
