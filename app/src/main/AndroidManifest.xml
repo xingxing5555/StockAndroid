@@ -32,8 +32,7 @@
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.CurrencyInfoActivity"
-            android:configChanges="orientation|screenSize" />
+            android:name=".activity.CurrencyInfoActivity" />
         <activity
             android:name=".activity.BtcInfoActivity"
             android:screenOrientation="portrait" />

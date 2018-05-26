@@ -38,6 +38,7 @@ public class HomeMarketFragment extends BaseRecyclerViewFragment {
     public void refresh() {
         list.addAll(0, createData());
         adapter.notifyDataSetChanged();
+        mRecyclerView.refreshComplete(0);
     }
 
     @Override

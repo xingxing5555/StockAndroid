@@ -3,17 +3,18 @@ package com.cf.basketball.activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cf.basketball.R;
 import com.cf.basketball.adapter.currency.CurrencyLineAdapter;
 import com.cf.basketball.adapter.home.HomeCurrencyInfoDataAdapter;
-import com.cf.basketball.databinding.ActivityCurrencyInfoBinding;
 import com.cf.basketball.fragment.currency.CurrencyInfoBriefFragment;
 import com.cf.basketball.fragment.currency.CurrencyInfoMarketFragment;
 import com.cf.basketball.fragment.currency.CurrencyInfoNewsFragment;
@@ -29,6 +30,9 @@ import com.example.admin.basic.stock.TabIndicatorViewV2;
 import com.example.admin.basic.utils.DateUtils;
 import com.example.admin.basic.utils.LogUtils;
 import com.example.admin.basic.view.MeasureRecyclerView;
+import com.example.admin.basic.view.ObservableScrollView;
+import com.example.admin.basic.view.RxToolBar;
+import com.example.admin.basic.view.SwitchLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,7 +52,13 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         OnItemClickListener, TabIndicatorViewV2.OnTabSelectedListener, KlineView
                 .GetMoreDataCallback, View.OnClickListener {
 
-    private ActivityCurrencyInfoBinding binding;
+
+    private RxToolBar rtlText;
+    private ObservableScrollView svInfoContainer;
+    private RecyclerView rvInfoData;
+    private SwitchLayout slCurrencyNavigation;
+    private RelativeLayout rlShare;
+    private TextView tvAddOptional;
     private String currentTime;
     private FragmentManager fragmentManager;
     private CurrencyInfoNewsFragment currencyInfoNewsFragment;
@@ -69,22 +79,30 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
     LinearLayout llLine;
     MeasureRecyclerView mrvLine;
     TextView tvLineTime;
+    ImageView ivClose;
 
     String stockCode = "1399001";
     String curMarket = HS_MARKET;
     boolean canRefresh;
     int currentChart;
+    private LinearLayout llInfoContent;
+    private boolean isLand = false;
 
     @Override
     public void initView() {
         RequestManager.init();
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_currency_info);
+        setContentView(R.layout.activity_currency_info);
+        llInfoContent = (LinearLayout) findViewById(R.id.ll_info_content);
         currentTime = DateUtils.getCurrentTime();
-        binding.rtlText.setTvToolbarContent(currentTime);
-        binding.svInfoContainer.setOnScrollChangedListener(this);
-        binding.rvInfoData.setLayoutManager(createGridLayoutManager(2));
-        binding.rvInfoData.setAdapter(new HomeCurrencyInfoDataAdapter(this, getData()));
-        binding.slCurrencyNavigation.setOnItemClickListener(this);
+        rtlText = (RxToolBar) findViewById(R.id.rtl_text);
+        rtlText.setTvToolbarContent(currentTime);
+        svInfoContainer = (ObservableScrollView) findViewById(R.id.sv_info_container);
+        svInfoContainer.setOnScrollChangedListener(this);
+        rvInfoData = (RecyclerView) findViewById(R.id.rv_info_data);
+        rvInfoData.setLayoutManager(createGridLayoutManager(2));
+        rvInfoData.setAdapter(new HomeCurrencyInfoDataAdapter(this, getData()));
+        slCurrencyNavigation = (SwitchLayout) findViewById(R.id.sl_currency_navigation);
+        slCurrencyNavigation.setOnItemClickListener(this);
         fragmentManager = getSupportFragmentManager();
         currencyInfoNewsFragment = new CurrencyInfoNewsFragment();
         currencyInfoBriefFragment = new CurrencyInfoBriefFragment();
@@ -103,7 +121,16 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         llLine = (LinearLayout) this.findViewById(R.id.ll_line);
         mrvLine = (MeasureRecyclerView) this.findViewById(R.id.mrv_line);
         tvLineTime = (TextView) this.findViewById(R.id.tv_line_time);
-
+        ivClose = (ImageView) findViewById(R.id.iv_close);
+        if (ivClose != null) {
+            ivClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CurrencyInfoActivity.this.setRequestedOrientation(ActivityInfo
+                            .SCREEN_ORIENTATION_PORTRAIT);
+                }
+            });
+        }
         String[] title = getResources().getStringArray(R.array.currency_trend);
         tabIndicatorView.setTitles(Arrays.asList(title));
         tabIndicatorView.setOnTabSelectedListener(this);
@@ -111,18 +138,27 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         kDayLineView.setOnClickListener(listener);
         kWeekLineView.setOnClickListener(listener);
         kMonthLineView.setOnClickListener(listener);
-        binding.rlShare.setOnClickListener(this);
-        binding.tvAddOptional.setOnClickListener(this);
+        rlShare = (RelativeLayout) findViewById(R.id.rl_share);
+        rlShare.setOnClickListener(this);
+        tvAddOptional = (TextView) findViewById(R.id.tv_add_optional);
+        tvAddOptional.setOnClickListener(this);
         mrvLine.setLayoutManager(createGridLayoutManager(3));
-        mrvLine.setAdapter(new CurrencyLineAdapter(this, R.layout.item_currency_kline, getData()));
+        LogUtils.e("isLand==" + isLand);
+        if (isLand) {
+            mrvLine.setAdapter(new CurrencyLineAdapter(this, R.layout.item_currency_kline_land,
+                    getData()));
+        } else {
+            mrvLine.setAdapter(new CurrencyLineAdapter(this, R.layout.item_currency_kline,
+                    getData()));
+        }
     }
 
 
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
-            startActivity(TrendChartActivity.class);
+            CurrencyInfoActivity.this.setRequestedOrientation(ActivityInfo
+                    .SCREEN_ORIENTATION_LANDSCAPE);
         }
     };
 
@@ -136,13 +172,7 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         refresh();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        CurrencyInfoActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        CurrencyInfoActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
-    }
 
     /**
      * ScrollView的滑动监听
@@ -152,12 +182,12 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
      */
     @Override
     public void onScrollChanged(int top, int oldTop) {
-        if (top >= binding.llInfoContent.getBottom()) {
-            binding.rtlText.setTvToolbarContent("交易量什么的啊");
-            binding.rtlText.setDownVisible(true);
+        if (top >= llInfoContent.getBottom()) {
+            rtlText.setTvToolbarContent("交易量什么的啊");
+            rtlText.setDownVisible(true);
         } else {
-            binding.rtlText.setTvToolbarContent(currentTime);
-            binding.rtlText.setDownVisible(false);
+            rtlText.setTvToolbarContent(currentTime);
+            rtlText.setDownVisible(false);
         }
     }
 
@@ -171,8 +201,9 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
         super.onConfigurationChanged(newConfig);
         int mCurrentOrientation = getResources().getConfiguration().orientation;
         if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            startActivity(TrendChartActivity.class);
-            return;
+            isLand = true;
+        } else {
+            isLand = false;
         }
 
     }
@@ -527,7 +558,7 @@ public class CurrencyInfoActivity extends BaseActivity implements OnScrollChange
                 break;
             case R.id.rl_share:
                 //TODO 用于分享的本页图片
-                Bitmap bitmap = shotScrollView(binding.svInfoContainer);
+                Bitmap bitmap = shotScrollView(svInfoContainer);
                 break;
             default:
                 break;

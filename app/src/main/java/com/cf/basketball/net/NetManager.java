@@ -36,19 +36,20 @@ public class NetManager {
     }
 
     public void getMineList(String token, int pageNum, int order, OnRequestListener listener) {
-        this.listener = listener;
         RequestManager.getService().getMineList(token, pageNum, order).enqueue(createListener
                 (listener));
     }
 
     public void getUpDown(int pageNum, int order, OnRequestListener listener) {
-        this.listener = listener;
         RequestManager.getService().getUpDown(pageNum, order).enqueue(createListener(listener));
     }
 
     public void getCoinData(int pageNum, String id, OnRequestListener listener) {
-        this.listener = listener;
         RequestManager.getService().getCoinData(pageNum, id).enqueue(createListener(listener));
+    }
+
+    public void getSearchData(String token,OnRequestListener listener){
+        RequestManager.getService().getSearchData(token).enqueue(createListener(listener));
     }
 
     public Callback<String> createListener(final OnRequestListener listener) {

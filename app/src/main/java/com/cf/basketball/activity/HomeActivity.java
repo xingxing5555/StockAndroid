@@ -7,16 +7,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.cf.basketball.LoginActivity;
 import com.cf.basketball.R;
 import com.cf.basketball.adapter.home.HomeNavigationAdapter;
 import com.cf.basketball.adapter.home.HomeViewPagerAdapter;
 import com.cf.basketball.databinding.ActivityHomeBinding;
 import com.cf.basketball.fragment.home.HomeBtcFragment;
 import com.cf.basketball.fragment.home.HomeHuobiFragment;
-import com.cf.basketball.fragment.home.HomeUpDownFragment;
 import com.cf.basketball.fragment.home.HomeMarketFragment;
 import com.cf.basketball.fragment.home.HomeOptionalFragment;
+import com.cf.basketball.fragment.home.HomeUpDownFragment;
 import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.base.BaseActivity;
 import com.example.admin.basic.interfaces.OnItemClickListener;
@@ -93,11 +92,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         fragmentList.add(new HomeMarketFragment());
         fragmentList.add(new HomeUpDownFragment());
         fragmentList.add(new HomeBtcFragment());
-        fragmentList.add(new HomeOptionalFragment());
-        fragmentList.add(new HomeOptionalFragment());
+        fragmentList.add(new HomeBtcFragment());
+        fragmentList.add(new HomeBtcFragment());
         fragmentList.add(new HomeHuobiFragment());
-        fragmentList.add(new HomeOptionalFragment());
-        fragmentList.add(new HomeOptionalFragment());
+        fragmentList.add(new HomeHuobiFragment());
+        fragmentList.add(new HomeHuobiFragment());
     }
 
 
@@ -105,7 +104,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_search:
-                startActivity(LoginActivity.class);
+                startActivity(SearchActivity.class);
                 break;
             default:
                 break;

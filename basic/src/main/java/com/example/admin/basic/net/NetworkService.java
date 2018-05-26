@@ -70,7 +70,7 @@ public interface NetworkService {
     @GET("v1/tabs")
     Call<String> getHomeTab();
 
-    @GET("v1/coins/mine")
+    @GET("v1/exchanges/mine")
     Call<String> getMineList(@Query("token") String token, @Query("pageNum") int pageNum, @Query
             ("order") int order);
 
@@ -79,4 +79,7 @@ public interface NetworkService {
 
     @GET("v1/coins/{id}")
     Call<String> getCoinData(@Query("pageNum") int pageNum, @Path("id") String id);
+
+    @GET("v1/searchpage")
+    Call<String> getSearchData(@Query("token") String token);
 }

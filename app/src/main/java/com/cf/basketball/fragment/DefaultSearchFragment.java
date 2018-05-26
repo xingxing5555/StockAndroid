@@ -13,9 +13,12 @@ import com.cf.basketball.activity.CurrencyInfoActivity;
 import com.cf.basketball.adapter.search.DefaultSearchAdapter;
 import com.cf.basketball.adapter.search.TradeSearchAdapter;
 import com.cf.basketball.databinding.FragmentDefaultSearchBinding;
+import com.cf.basketball.net.NetManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.admin.basic.model.TradeModel;
 import com.example.admin.basic.base.BaseFragment;
+import com.example.admin.basic.interfaces.OnRequestListener;
+import com.example.admin.basic.model.TradeModel;
+import com.example.admin.basic.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,7 @@ import java.util.List;
  * @author xinxin Shi
  */
 public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdapter
-        .OnItemClickListener {
+        .OnItemClickListener, OnRequestListener {
 
 
     private FragmentDefaultSearchBinding binding;
@@ -52,6 +55,7 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
     }
 
     private void initData() {
+        NetManager.getInstance().getSearchData(token, this);
         getData();
     }
 
@@ -86,5 +90,15 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
         if (!getActivity().isDestroyed()) {
             getActivity().finish();
         }
+    }
+
+    @Override
+    public void onResponse(String json) {
+        LogUtils.e("搜索：" + json);
+    }
+
+    @Override
+    public void onRequestFailure(String errorMsg) {
+        LogUtils.e(errorMsg);
     }
 }

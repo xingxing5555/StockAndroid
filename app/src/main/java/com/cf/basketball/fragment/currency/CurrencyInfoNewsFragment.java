@@ -61,22 +61,13 @@ public class CurrencyInfoNewsFragment extends BaseFragment implements BaseQuickA
 
 
     public void getData() {
-        list.add(new CurrencyInfoNewsModel("的简繁垃圾房拉斯嘎嘎叫房间爱是否拉风", "2小时前", "https://timgsa.baidu" +
-                ".com/timg?image&quality=80&size=b9999_10000&sec=1526042675790&di" +
-                "=5bc14bb61eb2e48cdb2a360672255e9f&imgtype=0&src=http%3A%2F%2Fimg5.duitang" + ""
-                + ".com%2Fuploads%2Fitem%2F201509%2F25%2F20150925110719_HtTCj.jpeg"));
-        list.add(new CurrencyInfoNewsModel("的简繁垃圾房拉斯嘎嘎叫房间爱是否拉风", "2小时前", "https://timgsa.baidu" +
-                ".com/timg?image&quality=80&size=b9999_10000&sec=1526042675790&di" +
-                "=5bc14bb61eb2e48cdb2a360672255e9f&imgtype=0&src=http%3A%2F%2Fimg5.duitang" + ""
-                + ".com%2Fuploads%2Fitem%2F201509%2F25%2F20150925110719_HtTCj.jpeg"));
-        list.add(new CurrencyInfoNewsModel("的简繁垃圾房拉斯嘎嘎叫房间爱是否拉风", "2小时前", "https://timgsa.baidu" +
-                ".com/timg?image&quality=80&size=b9999_10000&sec=1526042675790&di" +
-                "=5bc14bb61eb2e48cdb2a360672255e9f&imgtype=0&src=http%3A%2F%2Fimg5.duitang" + ""
-                + ".com%2Fuploads%2Fitem%2F201509%2F25%2F20150925110719_HtTCj.jpeg"));
-        list.add(new CurrencyInfoNewsModel("的简繁垃圾房拉斯嘎嘎叫房间爱是否拉风", "2小时前", "https://timgsa.baidu" +
-                ".com/timg?image&quality=80&size=b9999_10000&sec=1526042675790&di" +
-                "=5bc14bb61eb2e48cdb2a360672255e9f&imgtype=0&src=http%3A%2F%2Fimg5.duitang" + ""
-                + ".com%2Fuploads%2Fitem%2F201509%2F25%2F20150925110719_HtTCj.jpeg"));
+        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
+        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
+        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
+        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
+        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
+        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
+        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
     }
 
     @Override
