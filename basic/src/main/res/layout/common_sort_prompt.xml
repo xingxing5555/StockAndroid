@@ -62,7 +62,7 @@
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_toRightOf="@id/tv_increase"
                 android:background="@drawable/seletor_btn_sort"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </RelativeLayout>
         >
     </LinearLayout>

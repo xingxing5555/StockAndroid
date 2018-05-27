@@ -1,27 +1,23 @@
 package com.cf.basketball.adapter.search;
 
-import android.support.annotation.Nullable;
-
 import com.cf.basketball.R;
-import com.example.admin.basic.model.TradeModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-
-import java.util.List;
+import com.example.admin.basic.model.search.DefaultSearchModel;
 
 /**
  * @author Xinxin Shi
  */
 
-public class TradeSearchAdapter extends BaseQuickAdapter<TradeModel, BaseViewHolder> {
+public class TradeSearchAdapter extends BaseQuickAdapter<DefaultSearchModel.DataBean.ExchangesBean, BaseViewHolder> {
 
-    public TradeSearchAdapter(int layoutResId, @Nullable List<TradeModel> data) {
-        super(layoutResId, data);
+    public TradeSearchAdapter(int layoutResId) {
+        super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, TradeModel item) {
+    protected void convert(BaseViewHolder helper, DefaultSearchModel.DataBean.ExchangesBean item) {
         helper.setText(R.id.tv_trade_name, item.getName());
-        helper.setText(R.id.tv_trade_volume, item.getVolume());
+        helper.setText(R.id.tv_trade_volume, item.getDesc());
     }
 }

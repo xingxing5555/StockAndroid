@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -18,7 +19,12 @@ import android.view.ViewGroup;
 import com.cf.basketball.R;
 import com.cf.basketball.adapter.home.HomeBtcAdapter;
 import com.cf.basketball.databinding.FragmentBtcChartBinding;
+import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.base.BaseFragment;
+import com.example.admin.basic.constants.Constants;
+import com.example.admin.basic.interfaces.OnRequestListener;
+import com.example.admin.basic.model.market.MarketMarketModel;
+import com.example.admin.basic.utils.LogUtils;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -26,6 +32,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +42,18 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class BtcMarketFragment extends BaseFragment {
+public class BtcMarketFragment extends BaseFragment implements OnRequestListener {
     private FragmentBtcChartBinding binding;
     private ArrayList<PieData> mPieDatas = new ArrayList<>();
     private HomeBtcAdapter adapter;
+    private String id;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        id = getArguments().getString("id");
+        NetManager.getInstance().getMarketMarket(id, this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
@@ -55,7 +69,6 @@ public class BtcMarketFragment extends BaseFragment {
         binding.mrvList.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
         adapter = new HomeBtcAdapter(getContext());
-        adapter.setDataList(createData());
         binding.mrvList.setAdapter(adapter);
         initPieChart();
     }
@@ -97,6 +110,23 @@ public class BtcMarketFragment extends BaseFragment {
         binding.picChart.highlightValue(index.getEntryForIndex(0).getX(), index.getEntryForIndex
                 (0).getY(), 0);
         binding.picChart.invalidate();
+    }
+
+    @Override
+    public void onResponse(String tag, String json) {
+        LogUtils.e("市场：" + json);
+        MarketMarketModel marketModel = new Gson().fromJson(json, MarketMarketModel.class);
+        if (marketModel == null || marketModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+            return;
+        }
+        MarketMarketModel.DataBean data = marketModel.getData();
+        adapter.setDataList(data.getCoins());
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRequestFailure(String errorMsg) {
+
     }
 
     private SpannableString generateCenterSpannableText(String firstText, String percentText) {

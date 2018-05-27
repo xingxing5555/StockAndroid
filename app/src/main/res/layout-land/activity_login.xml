@@ -18,6 +18,7 @@
                 tools:context="com.cf.basketball.LoginActivity">
 
                 <LinearLayout
+                    android:id="@+id/ll_line"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -97,13 +98,29 @@
                     android:layout_height="@dimen/dp_373"
                     android:layout_weight="0.318">
 
-                    <com.example.admin.basic.stock.MLineView
-                        android:id="@+id/mLineView"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:visibility="visible" />
+                        android:orientation="vertical">
 
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/dp_20">
+
+
+                        </LinearLayout>
+
+                        <com.example.admin.basic.stock.MLineView
+                            android:id="@+id/mLineView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:visibility="visible" />
+                    </LinearLayout>
 
                     <com.example.admin.basic.stock.KlineView
                         android:id="@+id/kDayLineView"

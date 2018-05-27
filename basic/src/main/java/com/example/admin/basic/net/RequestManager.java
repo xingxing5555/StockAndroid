@@ -20,6 +20,7 @@ public class RequestManager {
     private static Retrofit mRetrofit;
 
     private static NetworkService mService;
+    private static NetworkService jsonService;
 
 //    public static RequestManager getInstance(){
 //        if(_self == null){
@@ -29,6 +30,7 @@ public class RequestManager {
 //    }
 
     public static void init() {
+        String BaseUrl = "http://img1.money.126.net/data/";
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
 //                .addInterceptor( new AppInterceptor2())//增加App级别的拦截器，可以在较底层处理请求和返回的数据  new
 // AppInterceptor

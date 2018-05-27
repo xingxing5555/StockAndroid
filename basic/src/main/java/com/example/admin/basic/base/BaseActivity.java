@@ -23,6 +23,7 @@ import java.util.List;
  * @author Xinxin Shi
  */
 public abstract class BaseActivity extends AppCompatActivity {
+    public static final String token="0";
     public static final int MLINE = 0;
     public static final int DAY_KLINE = 1;
     public static final int WEEK_KLINE = 2;

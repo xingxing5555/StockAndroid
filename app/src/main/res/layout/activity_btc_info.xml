@@ -11,6 +11,7 @@
         tools:context="com.cf.basketball.activity.BtcInfoActivity">
 
         <com.example.admin.basic.view.RxToolBar
+            android:id="@+id/rtl_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44"
             app:toolbarContent="时间啊什么的"
@@ -85,6 +86,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tv_btc_foreign_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/ll_show"

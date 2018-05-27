@@ -28,11 +28,13 @@ public class PercentageView extends RelativeLayout {
     private String percentValue, defaultText;
     double percentWidth;
     private View view;
+    TextView percentTextView;
 
     public PercentageView(Context context) {
         super(context);
         init(context, null);
     }
+
 
     public PercentageView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -54,15 +56,17 @@ public class PercentageView extends RelativeLayout {
         defaultText = array.getString(R.styleable.PercentageView_defaultText);
         array.recycle();
         setBackgroundDrawable(defaultPercentBackground);
-        String[] split = percentValue.split("%");
-        percentWidth = Double.parseDouble(split[0]);
+        if (!TextUtils.isEmpty(percentValue)) {
+            String[] split = percentValue.split("%");
+            percentWidth = Double.parseDouble(split[0]);
+        }
         view = new View(context);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
                 .MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(lp);
         view.setBackgroundDrawable(percentBackground);
         addView(view);
-        TextView percentTextView = new TextView(context);
+        percentTextView = new TextView(context);
         percentTextView.setTextColor(context.getResources().getColor(R.color.white));
         percentTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
         percentTextView.setGravity(Gravity.CENTER);
@@ -93,8 +97,18 @@ public class PercentageView extends RelativeLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
         int i = (int) ((getMeasuredWidth() * percentWidth) / 100);
+        LogUtils.e("MeaseureWidth=" + getMeasuredWidth()+",i="+i);
         lp.width = i;
         lp.height = getMeasuredHeight() - 1;
         view.setLayoutParams(lp);
+    }
+
+    public void setPercentValue(String percentValue) {
+        this.percentValue = percentValue;
+        if (!TextUtils.isEmpty(percentValue)) {
+            percentTextView.setText(percentValue);
+            String[] split = percentValue.split("%");
+            percentWidth = Double.parseDouble(split[0]);
+        }
     }
 }

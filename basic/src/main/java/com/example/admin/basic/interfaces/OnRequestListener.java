@@ -5,7 +5,7 @@ package com.example.admin.basic.interfaces;
  */
 
 public interface OnRequestListener {
-    void onResponse(String json);
+    void onResponse(String tag, String json);
 
     void onRequestFailure(String errorMsg);
 }

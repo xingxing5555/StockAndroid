@@ -21,7 +21,7 @@ import com.example.admin.basic.R;
  */
 
 public class BaseFragment extends Fragment {
-    public  String token="";
+    public  String token="0";
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

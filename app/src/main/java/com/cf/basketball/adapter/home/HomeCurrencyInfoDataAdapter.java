@@ -24,8 +24,11 @@ public class HomeCurrencyInfoDataAdapter extends RecyclerView.Adapter<HomeCurren
     private final String[] stringArray;
     private List<String> dataList;
 
-    public HomeCurrencyInfoDataAdapter(Context context, List<String> dataList) {
+    public HomeCurrencyInfoDataAdapter(Context context) {
         stringArray = context.getResources().getStringArray(R.array.info_data_name);
+    }
+
+    public void setDataList(List<String> dataList) {
         this.dataList = dataList;
     }
 

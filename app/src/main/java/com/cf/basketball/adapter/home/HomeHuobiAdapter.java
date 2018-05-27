@@ -47,7 +47,7 @@ public class HomeHuobiAdapter  extends ListBaseAdapter<HomeCurrencyModel> {
     public void onBindItemHolder(SuperViewHolder holder, int position) {
         TextView tvHuobiName = holder.getView(R.id.tv_huobi_name);
         TextView tvHuobiSource = holder.getView(R.id.tv_huobi_source);
-        TextView tvHuobiVolume = holder.getView(R.id.tv_market_price);
+        TextView tvHuobiVolume = holder.getView(R.id.tv_market);
         TextView tvHuobiPrice = holder.getView(R.id.tv_huobi_price);
         TextView tvHuobiForeignPrice = holder.getView(R.id.tv_huobi_foreign_price);
         Button btnHuobi = holder.getView(R.id.btn_huobi);

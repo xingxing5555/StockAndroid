@@ -6,10 +6,16 @@ import android.support.annotation.Nullable;
 
 import com.cf.basketball.activity.BtcInfoActivity;
 import com.cf.basketball.adapter.home.HomeMarketAdapter;
+import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
-import com.example.admin.basic.model.HomeCurrencyModel;
+import com.example.admin.basic.constants.Constants;
+import com.example.admin.basic.interfaces.OnRequestListener;
+import com.example.admin.basic.model.home.HomeMarketModel;
+import com.example.admin.basic.utils.LogUtils;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,16 +23,17 @@ import java.util.List;
  *
  * @author xinxin Shi
  */
-public class HomeMarketFragment extends BaseRecyclerViewFragment {
+public class HomeMarketFragment extends BaseRecyclerViewFragment implements OnRequestListener {
 
 
-    private List<HomeCurrencyModel> list;
+    private List<HomeMarketModel.DataBean.CoinsBean> list=new ArrayList<>();
     private HomeMarketAdapter adapter;
+    private int pageNum = 1, order;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        list = createData();
+        NetManager.getInstance().getMarketList(pageNum, order, this);
     }
 
 
@@ -36,15 +43,13 @@ public class HomeMarketFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void refresh() {
-        list.addAll(0, createData());
-        adapter.notifyDataSetChanged();
-        mRecyclerView.refreshComplete(0);
+        pageNum++;
+        NetManager.getInstance().getMarketList(pageNum, order, this);
     }
 
     @Override
     public LRecyclerViewAdapter getLRecyclerViewAdapter() {
         adapter = new HomeMarketAdapter(getContext());
-        adapter.setDataList(list);
         return new LRecyclerViewAdapter(adapter);
     }
 
@@ -53,4 +58,22 @@ public class HomeMarketFragment extends BaseRecyclerViewFragment {
         startActivity(BtcInfoActivity.class);
     }
 
+    @Override
+    public void onResponse(String tag,String json) {
+        LogUtils.e("市值：" + json);
+        HomeMarketModel model = new Gson().fromJson(json, HomeMarketModel.class);
+        if (model == null || model.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+            return;
+        }
+        List<HomeMarketModel.DataBean.CoinsBean> coins = model.getData().getCoins();
+        list.addAll(coins);
+        adapter.setDataList(list);
+        adapter.notifyDataSetChanged();
+        mRecyclerView.refreshComplete(0);
+    }
+
+    @Override
+    public void onRequestFailure(String errorMsg) {
+        LogUtils.e("市值" + errorMsg);
+    }
 }

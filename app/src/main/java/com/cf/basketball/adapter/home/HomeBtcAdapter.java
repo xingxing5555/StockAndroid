@@ -6,7 +6,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cf.basketball.R;
-import com.example.admin.basic.model.HomeCurrencyModel;
+import com.example.admin.basic.model.market.MarketMarketModel;
+import com.example.admin.basic.utils.CommonUtils;
 import com.example.admin.basic.view.ListBaseAdapter;
 import com.example.admin.basic.view.SuperViewHolder;
 
@@ -16,7 +17,7 @@ import com.example.admin.basic.view.SuperViewHolder;
  * @author Xinxin Shi
  */
 
-public class HomeBtcAdapter extends ListBaseAdapter<HomeCurrencyModel> {
+public class HomeBtcAdapter extends ListBaseAdapter<MarketMarketModel.DataBean.CoinsBean> {
 
     public HomeBtcAdapter(Context context) {
         super(context);
@@ -51,21 +52,20 @@ public class HomeBtcAdapter extends ListBaseAdapter<HomeCurrencyModel> {
     public void onBindItemHolder(SuperViewHolder holder, int position) {
         TextView tvBtcName = holder.getView(R.id.tv_btc_name);
         TextView tvBtcSource = holder.getView(R.id.tv_btc_source);
-        TextView tvBtcVolume = holder.getView(R.id.tv_market_price);
+        TextView tvBtcVolume = holder.getView(R.id.tv_market);
         TextView tvBtcPrice = holder.getView(R.id.tv_btc_price);
         TextView tvBtcForeignPrice = holder.getView(R.id.tv_btc_foreign_price);
         Button btnBtc = holder.getView(R.id.btn_btc);
-        HomeCurrencyModel item = getDataList().get(position);
+        MarketMarketModel.DataBean.CoinsBean item = getDataList().get(position);
         tvBtcName.setText(item.getName());
-        tvBtcSource.setText(item.getType());
-        tvBtcVolume.setText(item.getVolume());
-        tvBtcPrice.setText(item.getPrice());
-        tvBtcForeignPrice.setText(item.getForeignPrice());
-        btnBtc.setText(item.getIncrease());
-        if (TextUtils.equals("0", item.getState())) {
-            btnBtc.setSelected(false);
-        } else {
-            btnBtc.setSelected(true);
-        }
+        tvBtcSource.setText(item.getChange());
+        tvBtcVolume.setText(TextUtils.concat("交易量", item.getVolume()));
+        tvBtcPrice.setText(item.getPrice1());
+        tvBtcForeignPrice.setText(item.getPrice2());
+        String updown = item.getUpdown();
+        btnBtc.setText(updown);
+        boolean plus = CommonUtils.isMinus(updown);
+        btnBtc.setSelected(plus);
+        tvBtcPrice.setEnabled(plus);
     }
 }

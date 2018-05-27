@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cf.basketball.R;
 import com.example.admin.basic.application.BaseApplication;
 import com.example.admin.basic.interfaces.OnItemClickListener;
+import com.example.admin.basic.model.home.HomeTabModel;
 
 import java.util.List;
 
@@ -20,21 +21,22 @@ import java.util.List;
  * @author Xinxin Shi
  */
 
-public class HomeNavigationAdapter extends RecyclerView.Adapter<HomeNavigationAdapter.ViewHolder> {
+public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.ViewHolder> {
     private Context context;
-    private List<String> dataList;
+    private List<HomeTabModel.DataBean.TabsBean> dataList;
     private int selectedPosition = -1;
     private OnItemClickListener onItemClickListener;
     private View selectedView;
 
-    public HomeNavigationAdapter(Context context, List<String> dataList) {
+    public HomeTabAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setDataList(List<HomeTabModel.DataBean.TabsBean> dataList) {
         this.dataList = dataList;
     }
 
-
-    public void setOnItemClickListener(OnItemClickListener
-                                               onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -46,7 +48,8 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter<HomeNavigationAd
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.setData(dataList.get(position));
+        HomeTabModel.DataBean.TabsBean tabsBean = dataList.get(position);
+        holder.setData(tabsBean.getName());
 //        设置选中状态
         if ((selectedPosition == -1 && position == 0) || selectedPosition == position) {
             selectedPosition = position;
@@ -91,8 +94,8 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter<HomeNavigationAd
             rlNavigation = (RelativeLayout) itemView.findViewById(R.id.rl_navigation);
         }
 
-        public void setData(String title) {
-            tvNavigationTitle.setText(title);
+        public void setData(String tabName) {
+            tvNavigationTitle.setText(tabName);
         }
     }
 }

@@ -31,6 +31,8 @@
     <string name="currency_news">新闻</string>
     <string name="currency_brief">简况</string>
     <string name="currency_market">市场</string>
+    <string name="success">操作成功</string>
+    <string name="failure">操作失败</string>
 
     <string-array name="market">
         <item>沪深</item>

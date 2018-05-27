@@ -8,7 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.home.HomeNavigationAdapter;
+import com.cf.basketball.adapter.home.HomeTabAdapter;
 import com.cf.basketball.adapter.home.HomeViewPagerAdapter;
 import com.cf.basketball.databinding.ActivityHomeBinding;
 import com.cf.basketball.fragment.home.HomeBtcFragment;
@@ -18,13 +18,15 @@ import com.cf.basketball.fragment.home.HomeOptionalFragment;
 import com.cf.basketball.fragment.home.HomeUpDownFragment;
 import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.base.BaseActivity;
+import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.interfaces.OnItemClickListener;
 import com.example.admin.basic.interfaces.OnRequestListener;
+import com.example.admin.basic.model.home.HomeTabModel;
 import com.example.admin.basic.utils.LogUtils;
 import com.example.admin.basic.utils.ToastUtils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,8 +37,7 @@ import java.util.List;
 public class HomeActivity extends BaseActivity implements View.OnClickListener, OnRequestListener {
 
     private ActivityHomeBinding binding;
-    private HomeNavigationAdapter adapter;
-    private String[] navigationTitleArray;
+    private HomeTabAdapter adapter;
     private LinearLayoutManager layoutManager;
     private List<Fragment> fragmentList = new ArrayList<>();
     private long exitTime;
@@ -47,8 +48,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         //     顶部导航栏配置
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         binding.rvTopTitle.setLayoutManager(layoutManager);
-        navigationTitleArray = getResources().getStringArray(R.array.home_navigation_title);
-        adapter = new HomeNavigationAdapter(this, Arrays.asList(navigationTitleArray));
+        adapter = new HomeTabAdapter(this);
         binding.rvTopTitle.setAdapter(adapter);
         binding.ivSearch.setOnClickListener(this);
         adapter.setOnItemClickListener(new OnItemClickListener() {
@@ -57,10 +57,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 binding.vpHomeContainer.setCurrentItem(item);
             }
         });
-//        底部滑动ViewPager配置
-        getFragments();
-        binding.vpHomeContainer.setAdapter(new HomeViewPagerAdapter(getSupportFragmentManager(),
-                fragmentList));
+
         binding.vpHomeContainer.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int
@@ -84,19 +81,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void initData() {
         NetManager.getInstance().getHomeTab(this);
-    }
-
-
-    private void getFragments() {
-        fragmentList.add(new HomeOptionalFragment());
-        fragmentList.add(new HomeMarketFragment());
-        fragmentList.add(new HomeUpDownFragment());
-        fragmentList.add(new HomeBtcFragment());
-        fragmentList.add(new HomeBtcFragment());
-        fragmentList.add(new HomeBtcFragment());
-        fragmentList.add(new HomeHuobiFragment());
-        fragmentList.add(new HomeHuobiFragment());
-        fragmentList.add(new HomeHuobiFragment());
     }
 
 
@@ -129,12 +113,47 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Override
-    public void onResponse(String json) {
+    public void onResponse(String tag,String json) {
         LogUtils.e("标签json=" + json);
+        HomeTabModel model = new Gson().fromJson(json, HomeTabModel.class);
+        if (model == null || model.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+            return;
+        }
+        List<HomeTabModel.DataBean.TabsBean> tabs = model.getData().getTabs();
+        adapter.setDataList(tabs);
+        adapter.notifyDataSetChanged();
+        getFragments(tabs);
     }
 
     @Override
     public void onRequestFailure(String errorMsg) {
         LogUtils.e(errorMsg);
+    }
+
+    private void getFragments(List<HomeTabModel.DataBean.TabsBean> list) {
+        fragmentList.clear();
+        for (HomeTabModel.DataBean.TabsBean bean : list) {
+            switch (bean.getType()) {
+                case 0:
+                    fragmentList.add(new HomeOptionalFragment());
+                    break;
+                case 1:
+                    fragmentList.add(new HomeMarketFragment());
+                    break;
+                case 2:
+                    fragmentList.add(new HomeUpDownFragment());
+                    break;
+                case 3:
+                    fragmentList.add(new HomeBtcFragment());
+                    break;
+                case 4:
+                    fragmentList.add(new HomeHuobiFragment());
+                    break;
+                default:
+                    break;
+            }
+        }
+        binding.vpHomeContainer.setAdapter(new HomeViewPagerAdapter(getSupportFragmentManager(),
+                fragmentList));
     }
 }

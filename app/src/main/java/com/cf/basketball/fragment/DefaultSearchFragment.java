@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.cf.basketball.R;
 import com.cf.basketball.activity.CurrencyInfoActivity;
 import com.cf.basketball.adapter.search.DefaultSearchAdapter;
+import com.cf.basketball.adapter.search.HistorySearchAdapter;
 import com.cf.basketball.adapter.search.TradeSearchAdapter;
 import com.cf.basketball.databinding.FragmentDefaultSearchBinding;
 import com.cf.basketball.net.NetManager;
@@ -18,7 +19,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseFragment;
 import com.example.admin.basic.interfaces.OnRequestListener;
 import com.example.admin.basic.model.TradeModel;
+import com.example.admin.basic.model.search.DefaultSearchModel;
 import com.example.admin.basic.utils.LogUtils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +38,10 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
     private FragmentDefaultSearchBinding binding;
     private List<String> dataList = new ArrayList<>();
     private List<TradeModel> tradeList = new ArrayList<>();
-    private DefaultSearchAdapter historyAdapter;
+    private HistorySearchAdapter historyAdapter;
     private DefaultSearchAdapter hotAdapter;
     private TradeSearchAdapter tradeAdapter;
+    private List<DefaultSearchModel.DataBean.HotCointsBean> hotCoints;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +59,7 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
     }
 
     private void initData() {
-        NetManager.getInstance().getSearchData(token, this);
+        NetManager.getInstance().getDefaultSearchData(token, this);
         getData();
     }
 
@@ -63,9 +67,9 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
         binding.mrvSearchHistoryList.setLayoutManager(createGridLayoutManager(5));
         binding.mrvSearchHotList.setLayoutManager(createGridLayoutManager(5));
         binding.mrvSearchTradeList.setLayoutManager(createLayoutManager(true));
-        historyAdapter = new DefaultSearchAdapter(R.layout.item_default_search_btn, dataList);
-        hotAdapter = new DefaultSearchAdapter(R.layout.item_default_search_btn, dataList);
-        tradeAdapter = new TradeSearchAdapter(R.layout.item_trade_search, tradeList);
+        historyAdapter = new HistorySearchAdapter(R.layout.item_default_search_btn);
+        hotAdapter = new DefaultSearchAdapter(R.layout.item_default_search_btn);
+        tradeAdapter = new TradeSearchAdapter(R.layout.item_trade_search);
         binding.mrvSearchHistoryList.setAdapter(historyAdapter);
         binding.mrvSearchHotList.setAdapter(hotAdapter);
         binding.mrvSearchTradeList.setAdapter(tradeAdapter);
@@ -93,8 +97,20 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
     }
 
     @Override
-    public void onResponse(String json) {
+    public void onResponse(String tag, String json) {
         LogUtils.e("搜索：" + json);
+        DefaultSearchModel defaultSearchModel = new Gson().fromJson(json, DefaultSearchModel.class);
+        DefaultSearchModel.DataBean data = defaultSearchModel.getData();
+        List<String> history = data.getHistory();
+        hotCoints = data.getHotCoints();
+        List<DefaultSearchModel.DataBean.ExchangesBean> exchanges = data.getExchanges();
+        historyAdapter.setNewData(history);
+        historyAdapter.notifyDataSetChanged();
+        hotAdapter.setNewData(hotCoints);
+        hotAdapter.notifyDataSetChanged();
+        tradeAdapter.setNewData(exchanges);
+        tradeAdapter.notifyDataSetChanged();
+
     }
 
     @Override

@@ -39,6 +39,7 @@
         <TextView
             android:id="@+id/tv_increase_price"
             style="@style/TextRed13"
+            android:textColor="@drawable/selector_market_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

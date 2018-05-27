@@ -67,19 +67,87 @@ public interface NetworkService {
             String year, @Path("stockCode") String stockCode);
 
 
+    /**
+     * 首页导航栏标签
+     *
+     * @return Call对象
+     */
     @GET("v1/tabs")
     Call<String> getHomeTab();
+
+    @GET("v1/exchanges/mine/order")
+    Call<String> changeOrder(@Query("token") String token, @Query("ids") String ids);
 
     @GET("v1/exchanges/mine")
     Call<String> getMineList(@Query("token") String token, @Query("pageNum") int pageNum, @Query
             ("order") int order);
 
-    @GET("v1/coins/updown")
+    /**
+     * 首页市值
+     *
+     * @param pageNum 页码
+     * @param order   排序
+     * @return Call对象
+     */
+    @GET("v1/coins/value")
+    Call<String> getMarketList(@Query("pageNum") int pageNum, @Query("order") int order);
+
+    /**
+     * 添加/删除自选货币
+     *
+     * @param token 用户token
+     * @param id    标识
+     * @param event 事件
+     * @return Call对象
+     */
+    @GET("v1/exchanges/mine/add_del")
+    Call<String> addOrDelCurrency(@Query("token") String token, @Query("id") String id, @Query
+            ("event") String event);
+
+    /**
+     * 首页涨幅
+     *
+     * @param pageNum 页码
+     * @param order   排序
+     * @return Call对象
+     */
+    @GET("v1/exchanges/updown")
     Call<String> getUpDown(@Query("pageNum") int pageNum, @Query("order") int order);
 
     @GET("v1/coins/{id}")
     Call<String> getCoinData(@Query("pageNum") int pageNum, @Path("id") String id);
 
     @GET("v1/searchpage")
-    Call<String> getSearchData(@Query("token") String token);
+    Call<String> getDefaultSearchData(@Query("token") String token);
+
+    @GET("v1/search")
+    Call<String> getSearchKeyData(@Query("key") String key, @Query("token") String token);
+
+    //    货币详情
+
+    @GET("v1/exchanges/base")
+    Call<String> getCurrencyInfo(@Query("id") String id);
+
+    @GET("v1/exchanges/mline")
+    Call<String> getMline(@Query("id") String id);
+
+    @GET("v1/exchanges/kline")
+    Call<String> getKline(@Query("id") String id,@Query("klineType")int klineType);
+
+    @GET("v1/market/{id}")
+    Call<String> getCurrencyMarketList(@Query("pageNum") int pageNum, @Path("id") String id);
+
+    @GET("v1/exchanges/detail")
+    Call<String> getCurrencyMarketData(@Query("id") String id);
+
+    //    市值详情
+
+    @GET("v1/market/coin")
+    Call<String> getMarketInfo(@Query("id") String id);
+
+    @GET("v1/market/desc")
+    Call<String> getMarketDesc(@Query("id") String id);
+
+    @GET("v1/market/{id}")
+    Call<String> getMarketMarket(@Path("id") String id);
 }

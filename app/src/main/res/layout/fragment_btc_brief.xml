@@ -36,13 +36,13 @@
                     android:textSize="@dimen/sp_12" />
 
                 <com.example.admin.basic.view.PercentageView
+                    android:id="@+id/pv_market"
                     android:layout_width="226dp"
                     android:layout_height="@dimen/dp_36"
                     android:layout_alignParentRight="true"
                     app:defaultBackground="@drawable/shape_percent_light_green_bg"
-                    app:defaultText="#1"
                     app:percentBackground="@drawable/shape_percent_dark_green_bg"
-                    app:percentValue="33.6%" />
+                   />
             </RelativeLayout>
 
             <RelativeLayout
@@ -66,12 +66,13 @@
                     android:textSize="@dimen/sp_12" />
 
                 <com.example.admin.basic.view.PercentageView
+                    android:id="@+id/pv_circulation"
                     android:layout_width="226dp"
                     android:layout_height="@dimen/dp_36"
                     android:layout_alignParentRight="true"
                     app:defaultBackground="@drawable/shape_percent_light_blue_bg"
                     app:percentBackground="@drawable/shape_percent_dark_blue_bg"
-                    app:percentValue="86.67%" />
+                    />
             </RelativeLayout>
 
             <RelativeLayout
@@ -95,12 +96,13 @@
                     android:textSize="@dimen/sp_12" />
 
                 <com.example.admin.basic.view.PercentageView
+                    android:id="@+id/pv_change_hand"
                     android:layout_width="226dp"
                     android:layout_height="@dimen/dp_36"
                     android:layout_alignParentRight="true"
                     app:defaultBackground="@drawable/shape_percent_light_red_bg"
                     app:percentBackground="@drawable/shape_percent_dark_red_bg"
-                    app:percentValue="3.67%" />
+                     />
             </RelativeLayout>
 
 

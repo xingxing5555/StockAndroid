@@ -133,7 +133,7 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
 
 
     @Override
-    public void onResponse(String json) {
+    public void onResponse(String tag,String json) {
         binding.sryContainer.refreshComplete(pageNum);
         LogUtils.e("自选 json=" + json);
     }
@@ -144,13 +144,7 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
         LogUtils.e(errorMsg);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
+
 
     private ItemTouchHelper.Callback mCallback = new ItemTouchHelper.Callback() {
 
@@ -216,5 +210,13 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
     public void onRefresh() {
         pageNum++;
         NetManager.getInstance().getMineList(token, pageNum, order, this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

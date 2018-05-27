@@ -42,7 +42,7 @@ public class HomeBtcFragment extends BaseRecyclerViewFragment {
     @Override
     public LRecyclerViewAdapter getLRecyclerViewAdapter() {
         homeBTCAdapter = new HomeBtcAdapter(getContext());
-        homeBTCAdapter.setDataList(list);
+//        homeBTCAdapter.setDataList(list);
         return new LRecyclerViewAdapter(homeBTCAdapter);
     }
 

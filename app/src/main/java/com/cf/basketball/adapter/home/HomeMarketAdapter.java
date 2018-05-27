@@ -6,7 +6,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cf.basketball.R;
-import com.example.admin.basic.model.HomeCurrencyModel;
+import com.example.admin.basic.constants.Constants;
+import com.example.admin.basic.model.home.HomeMarketModel;
+import com.example.admin.basic.utils.CommonUtils;
 import com.example.admin.basic.view.ListBaseAdapter;
 import com.example.admin.basic.view.SuperViewHolder;
 
@@ -16,32 +18,17 @@ import com.example.admin.basic.view.SuperViewHolder;
  * @author Xinxin Shi
  */
 
-public class HomeMarketAdapter extends ListBaseAdapter<HomeCurrencyModel> {
+public class HomeMarketAdapter extends ListBaseAdapter<HomeMarketModel.DataBean.CoinsBean> {
+
     public HomeMarketAdapter(Context context) {
         super(context);
     }
 
-//    public HomeMarketAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
-//        super(layoutResId, data);
-//    }
-//
-//    @Override
-//    protected void convert(BaseViewHolder helper, HomeCurrencyModel item) {
-//        if (helper.getAdapterPosition() > 2) {
-//            helper.itemView.findViewById(R.id.tv_rank).setEnabled(false);
-//        }
-//        helper.setText(R.id.tv_rank, String.valueOf(helper.getAdapterPosition() + 1));
-//        helper.setText(R.id.tv_market_name, item.getName());
-//        helper.setText(R.id.tv_market_total_value, item.getVolume());
-//        helper.setText(R.id.tv_market_price, item.getPrice());
-//        helper.setText(R.id.btn_increase, item.getIncrease());
-//        if (TextUtils.equals("0", item.getState())) {
-//            helper.itemView.findViewById(R.id.btn_increase).setSelected(false);
-//        } else {
-//            helper.itemView.findViewById(R.id.btn_increase).setSelected(true);
-//        }
-//    }
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
 
     @Override
     public int getLayoutId() {
@@ -53,21 +40,21 @@ public class HomeMarketAdapter extends ListBaseAdapter<HomeCurrencyModel> {
         TextView tvRank = holder.getView(R.id.tv_rank);
         TextView tvMarketName = holder.getView(R.id.tv_market_name);
         TextView tvMarketTotalValue = holder.getView(R.id.tv_market_total_value);
-        TextView tvMarketPrice = holder.getView(R.id.tv_market_price);
+        TextView tvMarketPrice = holder.getView(R.id.tv_market);
         Button btnIncrease = holder.getView(R.id.btn_increase);
         if (position > 2) {
             tvRank.setEnabled(false);
-        }
-        HomeCurrencyModel item = getDataList().get(position);
-        tvRank.setText(String.valueOf(position + 1));
-        tvMarketName.setText(item.getName());
-        tvMarketTotalValue.setText(item.getVolume());
-        tvMarketPrice.setText(item.getPrice());
-        btnIncrease.setText(item.getIncrease());
-        if (TextUtils.equals("0", item.getState())) {
-            btnIncrease.setSelected(false);
         } else {
-            btnIncrease.setSelected(true);
+            tvRank.setEnabled(true);
         }
+        HomeMarketModel.DataBean.CoinsBean bean = getDataList().get(position);
+        tvRank.setText(String.valueOf(position + 1));
+        tvMarketName.setText(bean.getName());
+        tvMarketTotalValue.setText(TextUtils.concat(Constants.SIGN_MONEY, bean.getValue()));
+        tvMarketPrice.setText(TextUtils.concat(Constants.SIGN_MONEY, bean.getPrice()));
+        btnIncrease.setText(bean.getUpdown());
+        boolean minus = CommonUtils.isMinus(bean.getUpdown());
+        btnIncrease.setSelected(minus);
+        tvMarketPrice.setEnabled(minus);
     }
 }

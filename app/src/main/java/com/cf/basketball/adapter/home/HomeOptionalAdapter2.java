@@ -8,11 +8,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cf.basketball.R;
+import com.cf.basketball.net.NetManager;
+import com.example.admin.basic.constants.Constants;
+import com.example.admin.basic.interfaces.OnRequestListener;
 import com.example.admin.basic.model.HomeCurrencyModel;
+import com.example.admin.basic.model.home.CommonStateModel;
 import com.example.admin.basic.utils.LogUtils;
+import com.example.admin.basic.utils.ToastUtils;
 import com.example.admin.basic.view.ListBaseAdapter;
 import com.example.admin.basic.view.SuperViewHolder;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.google.gson.Gson;
 
 import java.util.Collections;
 
@@ -46,7 +52,7 @@ public class HomeOptionalAdapter2 extends ListBaseAdapter<HomeCurrencyModel> {
         HomeCurrencyModel item = getDataList().get(position);
         TextView tvIncreaseSource = (TextView) holder.getView(R.id.tv_increase_source);
         TextView tvIncreaseName = (TextView) holder.getView(R.id.tv_increase_name);
-        TextView tvIncreaseVolume = (TextView) holder.getView(R.id.tv_market_price);
+        TextView tvIncreaseVolume = (TextView) holder.getView(R.id.tv_market);
         TextView tvIncreasePrice = (TextView) holder.getView(R.id.tv_increase_price);
         TextView tvIncreaseForeignPrice = (TextView) holder.getView(R.id.tv_increase_foreign_price);
         Button btnIncrease = (Button) holder.getView(R.id.btn_increase);
@@ -80,6 +86,21 @@ public class HomeOptionalAdapter2 extends ListBaseAdapter<HomeCurrencyModel> {
 
         mLRecyclerViewAdapter.notifyItemMoved(source.getAdapterPosition(), target
                 .getAdapterPosition());
+        NetManager.getInstance().changeOrder("0", "36", new OnRequestListener() {
+            @Override
+            public void onResponse(String tag, String json) {
+                CommonStateModel model = new Gson().fromJson(json, CommonStateModel.class);
+                if (model == null || model.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+                    return;
+                }
+                ToastUtils.toastShot(mContext, mContext.getString(R.string.success));
+            }
+
+            @Override
+            public void onRequestFailure(String errorMsg) {
+
+            }
+        });
     }
 
     public int getViewHolderPosition(RecyclerView.ViewHolder viewHolder) {

@@ -1,7 +1,6 @@
 package com.cf.basketball.adapter.search;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,7 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cf.basketball.R;
-import com.example.admin.basic.model.HomeCurrencyModel;
+import com.example.admin.basic.constants.Constants;
+import com.example.admin.basic.model.search.SearchModel;
+import com.example.admin.basic.utils.CommonUtils;
+import com.example.admin.basic.utils.LogUtils;
 
 import java.util.List;
 
@@ -27,18 +29,20 @@ import java.util.List;
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private List<HomeCurrencyModel> list;
+    private List<SearchModel.DataBean.CoinsBean> list;
     private OnSearchListener onSearchListener;
 
     public void setOnSearchListener(OnSearchListener onSearchListener) {
         this.onSearchListener = onSearchListener;
     }
 
-    public SearchResultAdapter(Context context, @Nullable List<HomeCurrencyModel> data) {
+    public SearchResultAdapter(Context context) {
         inflater = LayoutInflater.from(context);
-        this.list = data;
     }
 
+    public void setList(List<SearchModel.DataBean.CoinsBean> list) {
+        this.list = list;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,32 +51,35 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        HomeCurrencyModel model = list.get(position);
+        SearchModel.DataBean.CoinsBean model = list.get(position);
         holder.tvSearchResultName.setText(model.getName());
-        holder.tvSearchResultSource.setText(model.getType());
-        holder.tvMarketVolume.setText(model.getVolume());
-        holder.tvSearchResultPrice.setText(model.getPrice());
-        holder.tvSearchResultForeignPrice.setText(model.getForeignPrice());
-        holder.btnSearchResult.setText(model.getIncrease());
-        if (TextUtils.equals("0", model.getState())) {
-            holder.btnSearchResult.setSelected(false);
-            holder.cbSelected.setChecked(false);
-        } else {
-            holder.btnSearchResult.setSelected(true);
-            holder.cbSelected.setChecked(true);
-        }
+        holder.tvSearchResultCurrency.setText(TextUtils.concat("/", model.getCurrency()));
+        holder.tvMarket.setText(model.getMarket());
+        holder.tvSearchResultPrice.setText(model.getPrice1());
+        holder.tvSearchResultForeignPrice.setText(model.getPrice2());
+        holder.btnSearchResult.setText(model.getRate());
+        String updown = model.getRate();
+        boolean minus = CommonUtils.isMinus(updown);
+        holder.btnSearchResult.setSelected(minus);
+        holder.tvSearchResultPrice.setEnabled(minus);
+        holder.cbSelected.setChecked(model.isIsSelfSelected());
         holder.cbSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                LogUtils.e("监听一直细长的女                                 ");
                 if (onSearchListener != null) {
+                    LogUtils.e("已执行");
                     if (isChecked) {
 //                        删除货币
-                        onSearchListener.onAddOrSubChangeListener(holder.getAdapterPosition(), 2);
+                        onSearchListener.onAddOrSubChangeListener(holder.getAdapterPosition(),
+                                Constants.EVENT_DEL);
                     } else {
 //                        添加货币
-                        onSearchListener.onAddOrSubChangeListener(holder.getAdapterPosition(), 1);
+                        onSearchListener.onAddOrSubChangeListener(holder.getAdapterPosition(),
+                                Constants.EVENT_ADD);
                     }
+                } else {
+                    LogUtils.e("onSearchListener is null");
                 }
 
                 holder.cbSelected.setChecked(isChecked);
@@ -94,8 +101,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvSearchResultName, tvSearchResultSource, tvMarketVolume,
-                tvSearchResultPrice;
+        private TextView tvSearchResultName, tvSearchResultCurrency, tvMarket, tvSearchResultPrice;
         private TextView tvSearchResultForeignPrice;
         private Button btnSearchResult;
         private CheckBox cbSelected;
@@ -104,8 +110,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         public ViewHolder(View itemView) {
             super(itemView);
             tvSearchResultName = (TextView) itemView.findViewById(R.id.tv_search_result_name);
-            tvSearchResultSource = (TextView) itemView.findViewById(R.id.tv_search_result_source);
-            tvMarketVolume = (TextView) itemView.findViewById(R.id.tv_market_price);
+            tvSearchResultCurrency = (TextView) itemView.findViewById(R.id
+                    .tv_search_result_currency);
+            tvMarket = (TextView) itemView.findViewById(R.id.tv_market);
             tvSearchResultPrice = (TextView) itemView.findViewById(R.id.tv_search_result_price);
             tvSearchResultForeignPrice = (TextView) itemView.findViewById(R.id
                     .tv_search_result_foreign_price);
@@ -128,8 +135,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
          * 添加/删除的事件
          *
          * @param position 位置
-         * @param state    状态 1：添加 ；2：删除
+         * @param event    状态 1：添加 ；2：删除
          */
-        void onAddOrSubChangeListener(int position, int state);
+        void onAddOrSubChangeListener(int position, String event);
     }
 }
