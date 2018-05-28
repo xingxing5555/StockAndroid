@@ -32,9 +32,11 @@ public class HomeOptionalAdapter2 extends ListBaseAdapter<HomeCurrencyModel> {
 
     private View view;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
+    private String token;
 
-    public HomeOptionalAdapter2(Context context) {
+    public HomeOptionalAdapter2(Context context, String token) {
         super(context);
+        this.token = token;
     }
 
     public void setmLRecyclerViewAdapter(LRecyclerViewAdapter mLRecyclerViewAdapter) {
@@ -86,7 +88,8 @@ public class HomeOptionalAdapter2 extends ListBaseAdapter<HomeCurrencyModel> {
 
         mLRecyclerViewAdapter.notifyItemMoved(source.getAdapterPosition(), target
                 .getAdapterPosition());
-        NetManager.getInstance().changeOrder("0", "36", new OnRequestListener() {
+
+        NetManager.getInstance().changeOrder(token, "36", new OnRequestListener() {
             @Override
             public void onResponse(String tag, String json) {
                 CommonStateModel model = new Gson().fromJson(json, CommonStateModel.class);

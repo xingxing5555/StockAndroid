@@ -64,12 +64,13 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
     public TextView tvInfoRate;
     public TextView tvInfoTradeTotal;
     public HomeCurrencyInfoDataAdapter homeInfoDataAdapter;
-    private String id;
+    public String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getIntent().getStringExtra("id");
+        LogUtils.e("当前的id" + id);
     }
 
     @Override

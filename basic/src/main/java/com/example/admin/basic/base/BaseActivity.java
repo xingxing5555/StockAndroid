@@ -23,7 +23,7 @@ import java.util.List;
  * @author Xinxin Shi
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    public static final String token="0";
+    public static final String token = "0";
     public static final int MLINE = 0;
     public static final int DAY_KLINE = 1;
     public static final int WEEK_KLINE = 2;
@@ -52,9 +52,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected RecyclerView.ItemDecoration createItemDecoration(int colorRes) {
-       return new DividerDecoration.Builder(this).setHeight(R.dimen
-                .dp_1)
-                .setColorResource(colorRes).build();
+        return new DividerDecoration.Builder(this).setHeight(R.dimen.dp_1).setColorResource
+                (colorRes).build();
     }
 
 
@@ -79,11 +78,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public List<HomeCurrencyModel> createData() {
         List<HomeCurrencyModel> list = new ArrayList<>();
-        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
+        list.add(new HomeCurrencyModel(0,"火币", "BTC/USD", "¥56352.54", "8856.825",
                 "交易量27163.070BT", "-4.81%", "0"));
-        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
+        list.add(new HomeCurrencyModel(1,"火币", "BTC/USD", "¥56352.54", "8856.825",
                 "交易量27163.070BT", "-4.81%", "1"));
-        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
+        list.add(new HomeCurrencyModel(2,"火币", "BTC/USD", "¥56352.54", "8856.825",
                 "交易量27163.070BT", "-4.81%", "1"));
         return list;
     }
@@ -101,6 +100,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void startActivity(Class activityCls) {
         startActivity(new Intent(this, activityCls));
+    }
+
+    public void startActivity(String id, Class activityCls) {
+        Intent intent = new Intent(this, activityCls);
+        intent.putExtra("id",id);
+        startActivity(intent);
     }
 
     public Bitmap shotScrollView(ScrollView scrollView) {

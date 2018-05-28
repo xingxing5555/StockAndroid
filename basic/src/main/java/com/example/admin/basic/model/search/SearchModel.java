@@ -63,7 +63,7 @@ public class SearchModel {
 
             private String name;
             private String currency;
-            private int id;
+            private String id;
             private String market;
             private String volume;
             private String change;
@@ -88,11 +88,11 @@ public class SearchModel {
                 this.currency = currency;
             }
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 

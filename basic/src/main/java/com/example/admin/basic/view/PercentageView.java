@@ -97,7 +97,6 @@ public class PercentageView extends RelativeLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
         int i = (int) ((getMeasuredWidth() * percentWidth) / 100);
-        LogUtils.e("MeaseureWidth=" + getMeasuredWidth()+",i="+i);
         lp.width = i;
         lp.height = getMeasuredHeight() - 1;
         view.setLayoutParams(lp);

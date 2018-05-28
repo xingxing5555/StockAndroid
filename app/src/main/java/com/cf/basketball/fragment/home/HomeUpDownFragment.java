@@ -61,7 +61,8 @@ public class HomeUpDownFragment extends BaseRecyclerViewFragment implements OnRe
 
     @Override
     public void onItemClickListener(int position) {
-        startActivity(CurrencyInfoActivity.class);
+        int id = list.get(position).getId();
+        startActivity(String.valueOf(id), CurrencyInfoActivity.class);
     }
 
     private void downData() {

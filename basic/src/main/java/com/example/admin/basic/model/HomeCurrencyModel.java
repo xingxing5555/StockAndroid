@@ -7,6 +7,7 @@ package com.example.admin.basic.model;
  */
 
 public class HomeCurrencyModel {
+    private int id;
     private String name;
     private String type;
     private String price;
@@ -15,15 +16,16 @@ public class HomeCurrencyModel {
     private String increase;
     private String state;
 
-    public HomeCurrencyModel(String name, String type, String price, String foreignPrice, String
-            volume, String increase,String state) {
+    public HomeCurrencyModel(int id, String name, String type, String price, String foreignPrice,
+                             String volume, String increase, String state) {
+        this.id = id;
         this.name = name;
         this.type = type;
         this.price = price;
         this.foreignPrice = foreignPrice;
         this.volume = volume;
         this.increase = increase;
-        this.state=state;
+        this.state = state;
     }
 
     public String getName() {
@@ -80,5 +82,13 @@ public class HomeCurrencyModel {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

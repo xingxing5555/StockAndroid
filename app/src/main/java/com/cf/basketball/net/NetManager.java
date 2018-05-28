@@ -123,6 +123,10 @@ public class NetManager {
         RequestManager.getService().getMarketMarket(id).enqueue(createListener("", listener));
     }
 
+    public void getHomeBtcList(int pageNum, String id, OnRequestListener listener) {
+        RequestManager.getService().getMarketMarket(id).enqueue(createListener("", listener));
+    }
+
 
     private Callback<String> createListener(final String tag, final OnRequestListener listener) {
         return new Callback<String>() {

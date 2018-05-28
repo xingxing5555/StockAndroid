@@ -1,6 +1,7 @@
 package com.cf.basketball.fragment;
 
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,9 +17,9 @@ import com.cf.basketball.adapter.search.TradeSearchAdapter;
 import com.cf.basketball.databinding.FragmentDefaultSearchBinding;
 import com.cf.basketball.net.NetManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.admin.basic.application.BaseApplication;
 import com.example.admin.basic.base.BaseFragment;
 import com.example.admin.basic.interfaces.OnRequestListener;
-import com.example.admin.basic.model.TradeModel;
 import com.example.admin.basic.model.search.DefaultSearchModel;
 import com.example.admin.basic.utils.LogUtils;
 import com.google.gson.Gson;
@@ -36,12 +37,11 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
 
 
     private FragmentDefaultSearchBinding binding;
-    private List<String> dataList = new ArrayList<>();
-    private List<TradeModel> tradeList = new ArrayList<>();
     private HistorySearchAdapter historyAdapter;
     private DefaultSearchAdapter hotAdapter;
     private TradeSearchAdapter tradeAdapter;
     private List<DefaultSearchModel.DataBean.HotCointsBean> hotCoints;
+    private List<DefaultSearchModel.DataBean.ExchangesBean> tradeList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +60,6 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
 
     private void initData() {
         NetManager.getInstance().getDefaultSearchData(token, this);
-        getData();
     }
 
     private void initView() {
@@ -74,26 +73,39 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
         binding.mrvSearchHotList.setAdapter(hotAdapter);
         binding.mrvSearchTradeList.setAdapter(tradeAdapter);
         historyAdapter.setOnItemClickListener(this);
-        hotAdapter.setOnItemClickListener(this);
-        tradeAdapter.setOnItemClickListener(this);
+        hotAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (hotCoints == null || hotCoints.isEmpty()) {
+                    return;
+                }
+                String id = hotCoints.get(position).getId();
+                startActivityToInfo(id);
+            }
+        });
+        tradeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (tradeList == null || tradeList.isEmpty()) {
+                    return;
+                }
+                String id = tradeList.get(position).getId();
+                startActivityToInfo(id);
+            }
+        });
     }
 
-
-    public void getData() {
-        for (int i = 0; i < 10; i++) {
-            dataList.add("BTC");
-        }
-        for (int i = 0; i < 3; i++) {
-            tradeList.add(new TradeModel("火币", "交易量为10000"));
-        }
-    }
-
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        startActivity(CurrencyInfoActivity.class);
+    private void startActivityToInfo(String id) {
+        startActivity(id, CurrencyInfoActivity.class);
         if (!getActivity().isDestroyed()) {
             getActivity().finish();
         }
+    }
+
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
     }
 
     @Override
@@ -103,12 +115,12 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
         DefaultSearchModel.DataBean data = defaultSearchModel.getData();
         List<String> history = data.getHistory();
         hotCoints = data.getHotCoints();
-        List<DefaultSearchModel.DataBean.ExchangesBean> exchanges = data.getExchanges();
+        tradeList = data.getExchanges();
         historyAdapter.setNewData(history);
         historyAdapter.notifyDataSetChanged();
         hotAdapter.setNewData(hotCoints);
         hotAdapter.notifyDataSetChanged();
-        tradeAdapter.setNewData(exchanges);
+        tradeAdapter.setNewData(tradeList);
         tradeAdapter.notifyDataSetChanged();
 
     }

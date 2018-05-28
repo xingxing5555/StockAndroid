@@ -50,7 +50,7 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
     private int pageNum = 1;
     private int order = 0;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
-    private String token = "fsafasfd";
+    private String token = "0";
     private View view;
 
     @Override
@@ -77,7 +77,7 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
         binding.sryContainer.addItemDecoration(createItemDecoration(R.color.grey_d));
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(mCallback);
         mItemTouchHelper.attachToRecyclerView(binding.sryContainer);
-        adapter = new HomeOptionalAdapter2(getContext());
+        adapter = new HomeOptionalAdapter2(getContext(),token);
         adapter.setDataList(list);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(adapter);
         adapter.setmLRecyclerViewAdapter(mLRecyclerViewAdapter);
@@ -85,6 +85,7 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
         binding.sryContainer.setOnRefreshListener(this);
         binding.sryContainer.setLoadMoreEnabled(false);
         binding.slSort.setOnSortChangeListener(this);
+
         view = LayoutInflater.from(getActivity()).inflate(R.layout.foot_add_currency, null, false);
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
                 .MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

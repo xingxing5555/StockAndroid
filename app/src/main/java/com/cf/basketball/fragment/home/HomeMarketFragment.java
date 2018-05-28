@@ -26,7 +26,7 @@ import java.util.List;
 public class HomeMarketFragment extends BaseRecyclerViewFragment implements OnRequestListener {
 
 
-    private List<HomeMarketModel.DataBean.CoinsBean> list=new ArrayList<>();
+    private List<HomeMarketModel.DataBean.CoinsBean> list = new ArrayList<>();
     private HomeMarketAdapter adapter;
     private int pageNum = 1, order;
 
@@ -55,11 +55,12 @@ public class HomeMarketFragment extends BaseRecyclerViewFragment implements OnRe
 
     @Override
     public void onItemClickListener(int position) {
-        startActivity(BtcInfoActivity.class);
+        int id = list.get(position).getId();
+        startActivity(String.valueOf(id), BtcInfoActivity.class);
     }
 
     @Override
-    public void onResponse(String tag,String json) {
+    public void onResponse(String tag, String json) {
         LogUtils.e("市值：" + json);
         HomeMarketModel model = new Gson().fromJson(json, HomeMarketModel.class);
         if (model == null || model.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {

@@ -35,8 +35,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     private ActivitySearchBinding binding;
     private SearchResultAdapter adapter;
-    private String id = "36";
-//    private List<SearchModel.DataBean.CoinsBean> list=new ArrayList<>();
+    private List<SearchModel.DataBean.CoinsBean> coins;
 
     @Override
     public void initView() {
@@ -82,7 +81,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             binding.rvSearchResult.setVisibility(View.GONE);
             return;
         }
-        NetManager.getInstance().getSearchKeyData(key,token,this);
+        NetManager.getInstance().getSearchKeyData(key, token, this);
         adapter.setOnSearchListener(this);
     }
 
@@ -94,14 +93,19 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onItemClickListener(int position) {
-        startActivity(CurrencyInfoActivity.class);
+        LogUtils.e("position="+position+";id="+coins.get(position).getId());
+        startActivity(coins.get(position).getId(),CurrencyInfoActivity.class);
         finish();
     }
 
     @Override
     public void onAddOrSubChangeListener(int position, String event) {
         LogUtils.e("position=" + position + ";state=" + event);
-        NetManager.getInstance().addOrDelCurrency(token, id, event, this);
+        if (coins == null || coins.isEmpty()) {
+            return;
+        }
+        String id = coins.get(position).getId();
+        NetManager .getInstance().addOrDelCurrency(token, id, event, this);
         EventBus.getDefault().post(createData().get(position));
     }
 
@@ -125,7 +129,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 return;
             }
             binding.rvSearchResult.setVisibility(View.VISIBLE);
-            List<SearchModel.DataBean.CoinsBean> coins = searchModel.getData().getCoins();
+            coins = searchModel.getData().getCoins();
 //            list.clear();
 //            list.addAll(coins);
             adapter.setList(coins);

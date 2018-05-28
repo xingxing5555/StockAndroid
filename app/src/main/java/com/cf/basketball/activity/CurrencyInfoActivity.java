@@ -42,7 +42,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     String curMarket = HS_MARKET;
     boolean canRefresh;
     int currentChart;
-    String id = "36";
+    //    String id = "36";
     private CurrencyInfoModel.DataBean data;
 
     @Override
@@ -68,7 +68,9 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
                 mLineView.setVisibility(View.VISIBLE);
                 llLine.setVisibility(View.VISIBLE);
 
-                if (hsModel != null) mLineView.setData(hsModel.parseData());
+                if (hsModel != null) {
+                    mLineView.setData(hsModel.parseData());
+                }
                 break;
             case DAY_KLINE:
                 kDayLineView.clearData();
@@ -379,7 +381,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
 
     /**
      * @param tag
-     * @param json
+     * @param  json
      */
     @Override
     public void onResponse(String tag, String json) {

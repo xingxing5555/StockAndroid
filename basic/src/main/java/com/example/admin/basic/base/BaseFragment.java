@@ -49,16 +49,21 @@ public class BaseFragment extends Fragment {
 
     public List<HomeCurrencyModel> createData() {
         List<HomeCurrencyModel> list = new ArrayList<>();
-        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
+        list.add(new HomeCurrencyModel(0,"火币", "BTC/USD", "¥56352.54", "8856.825",
                 "交易量27163.070BT", "-4.81%", "0"));
-        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
+        list.add(new HomeCurrencyModel(1,"火币", "BTC/USD", "¥56352.54", "8856.825",
                 "交易量27163.070BT", "-4.81%", "1"));
-        list.add(new HomeCurrencyModel("火币", "BTC/USD", "¥56352.54", "8856.825",
+        list.add(new HomeCurrencyModel(2,"火币", "BTC/USD", "¥56352.54", "8856.825",
                 "交易量27163.070BT", "-4.81%", "1"));
         return list;
     }
 
     public void startActivity(Class toClass) {
         startActivity(new Intent(BaseApplication.getInstance(), toClass));
+    }
+    public void startActivity(String id,Class toClass) {
+        Intent intent = new Intent(BaseApplication.getInstance(), toClass);
+        intent.putExtra("id",id);
+        startActivity(intent);
     }
 }
