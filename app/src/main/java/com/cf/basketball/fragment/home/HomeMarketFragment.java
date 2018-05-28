@@ -50,6 +50,7 @@ public class HomeMarketFragment extends BaseRecyclerViewFragment implements OnRe
     @Override
     public LRecyclerViewAdapter getLRecyclerViewAdapter() {
         adapter = new HomeMarketAdapter(getContext());
+        adapter.setDataList(list);
         return new LRecyclerViewAdapter(adapter);
     }
 

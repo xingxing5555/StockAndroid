@@ -53,6 +53,7 @@ public class HomeBtcFragment extends BaseRecyclerViewFragment implements OnReque
     @Override
     public LRecyclerViewAdapter getLRecyclerViewAdapter() {
         homeBTCAdapter = new HomeBtcAdapter(getContext());
+        homeBTCAdapter.setDataList(list);
         return new LRecyclerViewAdapter(homeBTCAdapter);
     }
 
