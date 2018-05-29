@@ -1,4 +1,4 @@
-package com.example.admin.basic.model.market;
+package com.example.admin.basic.model.home;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * @author Xinxin Shi
  */
 
-public class MarketMarketModel {
+public class HomeType3Model {
 
     private int code;
     private String msg;
@@ -37,17 +37,7 @@ public class MarketMarketModel {
     }
 
     public static class DataBean {
-
-        private int nextPage;
         private List<CoinsBean> coins;
-
-        public int getNextPage() {
-            return nextPage;
-        }
-
-        public void setNextPage(int nextPage) {
-            this.nextPage = nextPage;
-        }
 
         public List<CoinsBean> getCoins() {
             return coins;
@@ -59,17 +49,19 @@ public class MarketMarketModel {
 
         public static class CoinsBean {
             /**
-             * name : DTA
-             * id : 430
-             * volume : 373968194.5834968
-             * change : ETH
-             * price1 : ￥0.08364965
-             * price2 : 0.00002178
-             * updown : -1.49%
+             * name : BTC
+             * id : 14
+             * market : 币安
+             * volume : 23134.14
+             * change : USDT
+             * price1 : ￥48235.956678
+             * price2 : 0.022247
+             * updown : -0.21%
              */
 
             private String name;
             private int id;
+            private String market;
             private String volume;
             private String change;
             private String price1;
@@ -90,6 +82,14 @@ public class MarketMarketModel {
 
             public void setId(int id) {
                 this.id = id;
+            }
+
+            public String getMarket() {
+                return market;
+            }
+
+            public void setMarket(String market) {
+                this.market = market;
             }
 
             public String getVolume() {

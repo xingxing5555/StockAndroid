@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.cf.basketball.activity.CurrencyInfoActivity;
-import com.cf.basketball.adapter.home.HomeBtcAdapter;
+import com.cf.basketball.adapter.home.HomeType4Adapter;
 import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.base.BaseRecyclerViewFragment;
 import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.interfaces.OnRequestListener;
-import com.example.admin.basic.model.market.MarketMarketModel;
+import com.example.admin.basic.model.home.HomeType4Model;
+import com.example.admin.basic.utils.LogUtils;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.google.gson.Gson;
 
@@ -18,43 +19,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * BTC
+ * 火币
  *
  * @author xinxin Shi
  */
-public class HomeBtcFragment extends BaseRecyclerViewFragment implements OnRequestListener {
+public class HomeType4Fragment extends BaseRecyclerViewFragment implements OnRequestListener {
 
-    private HomeBtcAdapter homeBTCAdapter;
-    private List<MarketMarketModel.DataBean.CoinsBean> list = new ArrayList<>();
+    private List<HomeType4Model.DataBean.CoinsBean> list = new ArrayList<>();
+    private HomeType4Adapter adapter;
     private int pageNum = 1;
-    private String id = "3";
+    private String id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogUtils.e("火币 =" + id);
+        id = getArguments().getString("id");
         downData();
     }
 
     private void downData() {
-        NetManager.getInstance().getHomeBtcList(pageNum, id, this);
+        NetManager.getInstance().getHomeHuobiList(pageNum, id, this);
     }
 
     @Override
     public void initView() {
+
     }
 
     @Override
     public void refresh() {
         pageNum++;
         downData();
-
     }
 
     @Override
     public LRecyclerViewAdapter getLRecyclerViewAdapter() {
-        homeBTCAdapter = new HomeBtcAdapter(getContext());
-        homeBTCAdapter.setDataList(list);
-        return new LRecyclerViewAdapter(homeBTCAdapter);
+        adapter = new HomeType4Adapter(getContext());
+        adapter.setDataList(list);
+        return new LRecyclerViewAdapter(adapter);
     }
 
     @Override
@@ -65,20 +68,20 @@ public class HomeBtcFragment extends BaseRecyclerViewFragment implements OnReque
 
     @Override
     public void onResponse(String tag, String json) {
-        MarketMarketModel marketMarketModel = new Gson().fromJson(json, MarketMarketModel.class);
-        if (marketMarketModel == null || marketMarketModel.getCode() != Constants
-                .NET_REQUEST_SUCCESS_CODE) {
+        LogUtils.e("火币：" + json);
+        HomeType4Model huobiModel = new Gson().fromJson(json, HomeType4Model.class);
+        if (huobiModel == null || huobiModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
             return;
         }
-        List<MarketMarketModel.DataBean.CoinsBean> coins = marketMarketModel.getData().getCoins();
+        List<HomeType4Model.DataBean.CoinsBean> coins = huobiModel.getData().getCoins();
         list.addAll(coins);
-        homeBTCAdapter.setDataList(list);
+        adapter.setDataList(list);
+        adapter.notifyDataSetChanged();
         mRecyclerView.refreshComplete(0);
-        homeBTCAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onRequestFailure(String errorMsg) {
-
+        mRecyclerView.refreshComplete(0);
     }
 }

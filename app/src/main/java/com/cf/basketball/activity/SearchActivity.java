@@ -54,7 +54,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void initData() {
-
+//        EventBus.getDefault().register(this);
+//        EventBus.getDefault().post(Constants.EVENT_REFRESH);
     }
 
     @Override
@@ -68,6 +69,15 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+    public void setSearchContent(String searchContent) {
+        binding.etSearch.setText(searchContent);
+    }
+
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void addEvent(String searchContent) {
+//
+//    }
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -75,7 +85,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        LogUtils.e("====onTextChanged=====");
         String key = binding.etSearch.getText().toString().trim();
         if (key.isEmpty()) {
             binding.rvSearchResult.setVisibility(View.GONE);
@@ -93,8 +103,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onItemClickListener(int position) {
-        LogUtils.e("position="+position+";id="+coins.get(position).getId());
-        startActivity(coins.get(position).getId(),CurrencyInfoActivity.class);
+        LogUtils.e("position=" + position + ";id=" + coins.get(position).getId());
+        startActivity(coins.get(position).getId(), CurrencyInfoActivity.class);
         finish();
     }
 
@@ -105,8 +115,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             return;
         }
         String id = coins.get(position).getId();
-        NetManager .getInstance().addOrDelCurrency(token, id, event, this);
-        EventBus.getDefault().post(createData().get(position));
+        NetManager.getInstance().addOrDelCurrency(token, id, event, this);
+//        EventBus.getDefault().post(Constants.EVENT_REFRESH);
     }
 
     @Override
@@ -116,6 +126,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             CommonStateModel model = new Gson().fromJson(json, CommonStateModel.class);
             if (model == null || model.getCode() == Constants.NET_REQUEST_SUCCESS_CODE) {
                 ToastUtils.toastShot(this, getString(R.string.success));
+                EventBus.getDefault().post(Constants.EVENT_REFRESH);
                 return;
             }
             ToastUtils.toastShot(this, getString(R.string.failure));
@@ -130,8 +141,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             }
             binding.rvSearchResult.setVisibility(View.VISIBLE);
             coins = searchModel.getData().getCoins();
-//            list.clear();
-//            list.addAll(coins);
             adapter.setList(coins);
             adapter.setOnSearchListener(this);
             adapter.notifyDataSetChanged();
@@ -142,4 +151,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     public void onRequestFailure(String errorMsg) {
 
     }
+
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        EventBus.getDefault().unregister(this);
+//    }
 }

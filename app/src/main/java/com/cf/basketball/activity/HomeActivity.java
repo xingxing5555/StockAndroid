@@ -1,6 +1,7 @@
 package com.cf.basketball.activity;
 
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +12,8 @@ import com.cf.basketball.R;
 import com.cf.basketball.adapter.home.HomeTabAdapter;
 import com.cf.basketball.adapter.home.HomeViewPagerAdapter;
 import com.cf.basketball.databinding.ActivityHomeBinding;
-import com.cf.basketball.fragment.home.HomeBtcFragment;
-import com.cf.basketball.fragment.home.HomeHuobiFragment;
+import com.cf.basketball.fragment.home.HomeType3Fragment;
+import com.cf.basketball.fragment.home.HomeType4Fragment;
 import com.cf.basketball.fragment.home.HomeMarketFragment;
 import com.cf.basketball.fragment.home.HomeOptionalFragment;
 import com.cf.basketball.fragment.home.HomeUpDownFragment;
@@ -113,7 +114,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Override
-    public void onResponse(String tag,String json) {
+    public void onResponse(String tag, String json) {
         LogUtils.e("标签json=" + json);
         HomeTabModel model = new Gson().fromJson(json, HomeTabModel.class);
         if (model == null || model.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
@@ -144,10 +145,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     fragmentList.add(new HomeUpDownFragment());
                     break;
                 case 3:
-                    fragmentList.add(new HomeBtcFragment());
+                    LogUtils.e("首页btc=" + bean.getId());
+                    HomeType3Fragment fragment = new HomeType3Fragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", String.valueOf(bean.getId()));
+                    fragment.setArguments(bundle);
+                    fragmentList.add(fragment);
                     break;
                 case 4:
-                    fragmentList.add(new HomeHuobiFragment());
+                    LogUtils.e("首页火币=" + bean.getId());
+                    HomeType4Fragment huobiFragment = new HomeType4Fragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("id", String.valueOf(bean.getId()));
+                    huobiFragment.setArguments(bundle1);
+                    fragmentList.add(huobiFragment);
                     break;
                 default:
                     break;

@@ -104,18 +104,17 @@ public interface NetworkService {
     Call<String> addOrDelCurrency(@Query("token") String token, @Query("id") String id, @Query
             ("event") String event);
 
-    /**
-     * 首页涨幅
-     *
-     * @param pageNum 页码
-     * @param order   排序
-     * @return Call对象
-     */
+//   首页
+
+
     @GET("v1/exchanges/updown")
     Call<String> getUpDown(@Query("pageNum") int pageNum, @Query("order") int order);
 
+    @GET("v1/market/{id}")
+    Call<String> getHomeHuobiList(@Path("id") String id, @Query("pageNum") int pageNum);
+
     @GET("v1/coins/{id}")
-    Call<String> getCoinData(@Query("pageNum") int pageNum, @Path("id") String id);
+    Call<String> getCoinData(@Path("id") String id, @Query("pageNum") int pageNum);
 
     @GET("v1/searchpage")
     Call<String> getDefaultSearchData(@Query("token") String token);
@@ -132,7 +131,7 @@ public interface NetworkService {
     Call<String> getMline(@Query("id") String id);
 
     @GET("v1/exchanges/kline")
-    Call<String> getKline(@Query("id") String id,@Query("klineType")int klineType);
+    Call<String> getKline(@Query("id") String id, @Query("klineType") int klineType);
 
     @GET("v1/market/{id}")
     Call<String> getCurrencyMarketList(@Query("pageNum") int pageNum, @Path("id") String id);
@@ -148,6 +147,7 @@ public interface NetworkService {
     @GET("v1/market/desc")
     Call<String> getMarketDesc(@Query("id") String id);
 
-    @GET("v1/market/{id}")
-    Call<String> getMarketMarket(@Path("id") String id);
+
+    @GET("v1/market/market")
+    Call<String> getBtcMarket(@Query("id") String id);
 }

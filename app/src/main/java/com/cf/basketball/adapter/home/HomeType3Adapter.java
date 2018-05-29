@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cf.basketball.R;
-import com.example.admin.basic.model.market.MarketMarketModel;
+import com.example.admin.basic.model.home.HomeType3Model;
 import com.example.admin.basic.utils.CommonUtils;
 import com.example.admin.basic.view.ListBaseAdapter;
 import com.example.admin.basic.view.SuperViewHolder;
@@ -17,31 +17,11 @@ import com.example.admin.basic.view.SuperViewHolder;
  * @author Xinxin Shi
  */
 
-public class HomeBtcAdapter extends ListBaseAdapter<MarketMarketModel.DataBean.CoinsBean> {
+public class HomeType3Adapter extends ListBaseAdapter<HomeType3Model.DataBean.CoinsBean> {
 
-    public HomeBtcAdapter(Context context) {
+    public HomeType3Adapter(Context context) {
         super(context);
     }
-
-//    public HomeBtcAdapter(int layoutResId, @Nullable List<HomeCurrencyModel> data) {
-//        super(layoutResId, data);
-//    }
-
-//    @Override
-//    protected void convert(BaseViewHolder helper, HomeCurrencyModel item) {
-//        helper.setText(R.id.tv_btc_name, item.getName());
-//        helper.setText(R.id.tv_btc_source, item.getType());
-//        helper.setText(R.id.tv_market_volume, item.getVolume());
-//        helper.setText(R.id.tv_btc_price, item.getPrice());
-//        helper.setText(R.id.tv_btc_foreign_price, item.getForeignPrice());
-//        helper.setText(R.id.btn_btc, item.getIncrease());
-//        if (TextUtils.equals("0", item.getState())) {
-//            helper.itemView.findViewById(R.id.btn_btc).setSelected(false);
-//        } else {
-//            helper.itemView.findViewById(R.id.btn_btc).setSelected(true);
-//        }
-//    }
-
 
     @Override
     public int getLayoutId() {
@@ -56,7 +36,7 @@ public class HomeBtcAdapter extends ListBaseAdapter<MarketMarketModel.DataBean.C
         TextView tvBtcPrice = holder.getView(R.id.tv_btc_price);
         TextView tvBtcForeignPrice = holder.getView(R.id.tv_btc_foreign_price);
         Button btnBtc = holder.getView(R.id.btn_btc);
-        MarketMarketModel.DataBean.CoinsBean item = getDataList().get(position);
+        HomeType3Model.DataBean.CoinsBean item = getDataList().get(position);
         tvBtcName.setText(item.getName());
         tvBtcSource.setText(item.getChange());
         tvBtcVolume.setText(TextUtils.concat("交易量", item.getVolume()));

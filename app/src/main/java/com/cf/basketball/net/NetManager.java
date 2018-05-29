@@ -1,5 +1,7 @@
 package com.cf.basketball.net;
 
+import android.text.TextUtils;
+
 import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.interfaces.OnRequestListener;
 import com.example.admin.basic.net.RequestManager;
@@ -31,6 +33,8 @@ public class NetManager {
         return instance;
     }
 
+//    首页接口
+
     public void getHomeTab(OnRequestListener listener) {
         RequestManager.getService().getHomeTab().enqueue(createListener("", listener));
     }
@@ -48,8 +52,13 @@ public class NetManager {
         RequestManager.getService().getUpDown(pageNum, order).enqueue(createListener("", listener));
     }
 
+    public void getHomeHuobiList(int pageNum, String id, OnRequestListener listener) {
+        RequestManager.getService().getHomeHuobiList(id, pageNum).enqueue(createListener("",
+                listener));
+    }
+
     public void getCoinData(int pageNum, String id, OnRequestListener listener) {
-        RequestManager.getService().getCoinData(pageNum, id).enqueue(createListener("", listener));
+        RequestManager.getService().getCoinData(id, pageNum).enqueue(createListener("", listener));
     }
 
 
@@ -92,11 +101,15 @@ public class NetManager {
                 .TAG_CURRENCY_INFO, listener));
     }
 
-    public void getMLine(String id,OnRequestListener listener){
-        RequestManager.getService().getMline(id).enqueue(createListener(Constants.TAG_CURRENCY_MLINE,listener));
+    public void getMLine(String id, OnRequestListener listener) {
+        RequestManager.getService().getMline(id).enqueue(createListener(Constants
+                .TAG_CURRENCY_MLINE, listener));
     }
-    public void getKLine(String id,int klineType,OnRequestListener listener){
-        RequestManager.getService().getKline(id,klineType).enqueue(createListener(Constants.TAG_CURRENCY_KLINE,listener));
+
+    public void getKLine(String id, int klineType, OnRequestListener listener) {
+        RequestManager.getService().getKline(id, klineType).enqueue(createListener(TextUtils
+                .concat(Constants.TAG_CURRENCY_KLINE, String.valueOf(klineType)).toString(),
+                listener));
     }
 
     public void getCurrencyMarketList(int pageNum, String id, OnRequestListener listener) {
@@ -104,9 +117,8 @@ public class NetManager {
                 listener));
     }
 
-    public void getCurrencyMarketData(String id,OnRequestListener listener){
-        RequestManager.getService().getCurrencyMarketData(id).enqueue(createListener("",
-                listener));
+    public void getCurrencyMarketData(String id, OnRequestListener listener) {
+        RequestManager.getService().getCurrencyMarketData(id).enqueue(createListener("", listener));
     }
 
 // 市值详情
@@ -115,16 +127,12 @@ public class NetManager {
         RequestManager.getService().getMarketInfo(id).enqueue(createListener("", listener));
     }
 
+    public void getBtcMarket(String id, OnRequestListener listener) {
+        RequestManager.getService().getBtcMarket(id).enqueue(createListener("", listener));
+    }
+
     public void getMarketDesc(String id, OnRequestListener listener) {
         RequestManager.getService().getMarketDesc(id).enqueue(createListener("", listener));
-    }
-
-    public void getMarketMarket(String id, OnRequestListener listener) {
-        RequestManager.getService().getMarketMarket(id).enqueue(createListener("", listener));
-    }
-
-    public void getHomeBtcList(int pageNum, String id, OnRequestListener listener) {
-        RequestManager.getService().getMarketMarket(id).enqueue(createListener("", listener));
     }
 
 

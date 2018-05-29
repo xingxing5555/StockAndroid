@@ -21,7 +21,6 @@ import com.cf.basketball.fragment.currency.CurrencyInfoNewsFragment;
 import com.example.admin.basic.base.BaseActivity;
 import com.example.admin.basic.interfaces.OnItemClickListener;
 import com.example.admin.basic.interfaces.OnScrollChangedListener;
-import com.example.admin.basic.net.RequestManager;
 import com.example.admin.basic.stock.KlineView;
 import com.example.admin.basic.stock.MLineView;
 import com.example.admin.basic.stock.TabIndicatorViewV2;
@@ -31,8 +30,6 @@ import com.example.admin.basic.view.MeasureRecyclerView;
 import com.example.admin.basic.view.ObservableScrollView;
 import com.example.admin.basic.view.RxToolBar;
 import com.example.admin.basic.view.SwitchLayout;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.Arrays;
 
@@ -66,6 +63,7 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
     public HomeCurrencyInfoDataAdapter homeInfoDataAdapter;
     public String id;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +74,6 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
     @Override
     public void initView() {
         setContentView(R.layout.activity_currency_info);
-        RequestManager.init();
         tvInfoPrice = (TextView) findViewById(R.id.tv_info_price);
         tvInfoForeignPrice = (TextView) findViewById(R.id.tv_info_foregin_price);
         tvInfoRate = (TextView) findViewById(R.id.tv_info_increase);
@@ -181,7 +178,8 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_add_optional:
-                EventBus.getDefault().post(createData().get(0));
+                addOrDel();
+
                 break;
             case R.id.rl_share:
                 //TODO 用于分享的本页图片
@@ -247,4 +245,6 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
     public abstract void onTitleContentChange(boolean isTime);
 
     public abstract void init();
+
+    public abstract void addOrDel();
 }

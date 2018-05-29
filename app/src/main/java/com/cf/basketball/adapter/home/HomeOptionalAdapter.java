@@ -11,8 +11,9 @@ import com.cf.basketball.R;
 import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.interfaces.OnRequestListener;
-import com.example.admin.basic.model.HomeCurrencyModel;
 import com.example.admin.basic.model.home.CommonStateModel;
+import com.example.admin.basic.model.home.HomeOptionalModel;
+import com.example.admin.basic.utils.CommonUtils;
 import com.example.admin.basic.utils.LogUtils;
 import com.example.admin.basic.utils.ToastUtils;
 import com.example.admin.basic.view.ListBaseAdapter;
@@ -28,14 +29,16 @@ import java.util.Collections;
  * @author Xinxin Shi
  */
 
-public class HomeOptionalAdapter2 extends ListBaseAdapter<HomeCurrencyModel> {
+public class HomeOptionalAdapter extends ListBaseAdapter<HomeOptionalModel.DataBean.CoinsBean> {
 
     private View view;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private String token;
+    private Context context;
 
-    public HomeOptionalAdapter2(Context context, String token) {
+    public HomeOptionalAdapter(Context context, String token) {
         super(context);
+        this.context = context;
         this.token = token;
     }
 
@@ -51,25 +54,23 @@ public class HomeOptionalAdapter2 extends ListBaseAdapter<HomeCurrencyModel> {
 
     @Override
     public void onBindItemHolder(SuperViewHolder holder, int position) {
-        HomeCurrencyModel item = getDataList().get(position);
-        TextView tvIncreaseSource = (TextView) holder.getView(R.id.tv_increase_source);
-        TextView tvIncreaseName = (TextView) holder.getView(R.id.tv_increase_name);
-        TextView tvIncreaseVolume = (TextView) holder.getView(R.id.tv_market);
-        TextView tvIncreasePrice = (TextView) holder.getView(R.id.tv_increase_price);
-        TextView tvIncreaseForeignPrice = (TextView) holder.getView(R.id.tv_increase_foreign_price);
-        Button btnIncrease = (Button) holder.getView(R.id.btn_increase);
-        tvIncreaseSource.setText(item.getName());
-        tvIncreaseName.setText(item.getType());
-        tvIncreaseVolume.setText(item.getVolume());
-        tvIncreasePrice.setText(item.getPrice());
-        tvIncreaseForeignPrice.setText(item.getForeignPrice());
-        btnIncrease.setText(item.getIncrease());
-        if (TextUtils.equals("0", item.getState())) {
-            btnIncrease.setSelected(false);
-        } else {
-            btnIncrease.setSelected(true);
-        }
-
+        HomeOptionalModel.DataBean.CoinsBean item = getDataList().get(position);
+        TextView tvIncreaseSource = holder.getView(R.id.tv_increase_source);
+        TextView tvIncreaseName = holder.getView(R.id.tv_increase_name);
+        TextView tvIncreaseVolume = holder.getView(R.id.tv_market);
+        TextView tvIncreasePrice = holder.getView(R.id.tv_increase_price);
+        TextView tvIncreaseForeignPrice = holder.getView(R.id.tv_increase_foreign_price);
+        Button btnIncrease = holder.getView(R.id.btn_increase);
+        tvIncreaseName.setText(TextUtils.concat(item.getName(), "/", item.getChange()));
+        tvIncreaseSource.setText(item.getMarket());
+        tvIncreaseVolume.setText(TextUtils.concat(context.getString(R.string.volume, item
+                .getVolume())));
+        tvIncreasePrice.setText(item.getPrice1());
+        tvIncreaseForeignPrice.setText(item.getPrice2());
+        btnIncrease.setText(item.getUpdown());
+        boolean minus = CommonUtils.isMinus(item.getUpdown());
+        btnIncrease.setSelected(minus);
+        tvIncreasePrice.setEnabled(minus);
     }
 
     public void onItemDragMoving(RecyclerView.ViewHolder source, RecyclerView.ViewHolder target) {
@@ -88,8 +89,11 @@ public class HomeOptionalAdapter2 extends ListBaseAdapter<HomeCurrencyModel> {
 
         mLRecyclerViewAdapter.notifyItemMoved(source.getAdapterPosition(), target
                 .getAdapterPosition());
-
-        NetManager.getInstance().changeOrder(token, "36", new OnRequestListener() {
+//        String ids = CommonUtils.changeLocation(getDataList(), source.getAdapterPosition(),
+//                target.getAdapterPosition());
+        String ids = CommonUtils.getIds(getDataList());
+        LogUtils.e("ids=" + ids);
+        NetManager.getInstance().changeOrder(token, ids, new OnRequestListener() {
             @Override
             public void onResponse(String tag, String json) {
                 CommonStateModel model = new Gson().fromJson(json, CommonStateModel.class);

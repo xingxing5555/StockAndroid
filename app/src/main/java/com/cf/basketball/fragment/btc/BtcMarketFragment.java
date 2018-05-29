@@ -17,13 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cf.basketball.R;
-import com.cf.basketball.adapter.home.HomeBtcAdapter;
+import com.cf.basketball.adapter.btc.BtcMarketListAdapter;
 import com.cf.basketball.databinding.FragmentBtcChartBinding;
 import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.base.BaseFragment;
 import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.interfaces.OnRequestListener;
-import com.example.admin.basic.model.market.MarketMarketModel;
+import com.example.admin.basic.model.market.BtcMarketModel;
 import com.example.admin.basic.utils.LogUtils;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -45,14 +45,14 @@ import java.util.List;
 public class BtcMarketFragment extends BaseFragment implements OnRequestListener {
     private FragmentBtcChartBinding binding;
     private ArrayList<PieData> mPieDatas = new ArrayList<>();
-    private HomeBtcAdapter adapter;
-    private String id;
+    private BtcMarketListAdapter adapter;
+    private String id = "36";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments().getString("id");
-        NetManager.getInstance().getMarketMarket(id, this);
+        NetManager.getInstance().getBtcMarket(id, this);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
         binding.mrvList.setLayoutManager(createLayoutManager(true));
         binding.mrvList.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
-        adapter = new HomeBtcAdapter(getContext());
+        adapter = new BtcMarketListAdapter(getContext());
         binding.mrvList.setAdapter(adapter);
         initPieChart();
     }
@@ -115,13 +115,15 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
     @Override
     public void onResponse(String tag, String json) {
         LogUtils.e("市场：" + json);
-        MarketMarketModel marketModel = new Gson().fromJson(json, MarketMarketModel.class);
+        BtcMarketModel marketModel = new Gson().fromJson(json, BtcMarketModel.class);
         if (marketModel == null || marketModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
             return;
         }
-        MarketMarketModel.DataBean data = marketModel.getData();
-        adapter.setDataList(data.getCoins());
+        BtcMarketModel.DataBean data = marketModel.getData();
+        List<BtcMarketModel.DataBean.MarketsBean> markets = data.getMarkets();
+        adapter.setDataList(markets);
         adapter.notifyDataSetChanged();
+        binding.tvTurnVolume.setText(data.getAmount());
     }
 
     @Override

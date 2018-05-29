@@ -3,17 +3,22 @@ package com.cf.basketball.activity;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cf.basketball.R;
 import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.interfaces.OnRequestListener;
 import com.example.admin.basic.model.HSKlineModel;
 import com.example.admin.basic.model.HSTodayModel;
 import com.example.admin.basic.model.currency.CurrencyInfoModel;
+import com.example.admin.basic.model.home.CommonStateModel;
 import com.example.admin.basic.net.RequestManager;
 import com.example.admin.basic.stock.KlineView;
 import com.example.admin.basic.stock.MLineView;
 import com.example.admin.basic.utils.LogUtils;
+import com.example.admin.basic.utils.ToastUtils;
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,7 +47,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     String curMarket = HS_MARKET;
     boolean canRefresh;
     int currentChart;
-    //    String id = "36";
+    String id = "36";
     private CurrencyInfoModel.DataBean data;
 
     @Override
@@ -56,11 +61,21 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
         NetManager.getInstance().getCurrencyInfo(id, this);
     }
 
+    /**
+     * 添加或删除到自选
+     */
+    @Override
+    public void addOrDel() {
+        NetManager.getInstance().addOrDelCurrency(token, id, Constants.EVENT_ADD, this);
+
+    }
+
     @Override
     public void changeChartView(int currentChart) {
         mLineView.setMarket(curMarket);
 //        buySellContainer.setVisibility(View.GONE);
 //        kLineTypeView.setVisibility(View.GONE);
+        this.currentChart = currentChart;
         refresh();
         switch (currentChart) {
             case MLINE:
@@ -73,13 +88,20 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
                 }
                 break;
             case DAY_KLINE:
-                kDayLineView.clearData();
-                kDayLineView.setVisibility(View.VISIBLE);
+                kWeekLineView.clearData();
+                kWeekLineView.setVisibility(View.VISIBLE);
 //                kLineTypeView.setVisibility(View.VISIBLE);
-                if (hsDayKlineModel != null) {
-                    kDayLineView.setData(hsDayKlineModel.parseData(), DAY_KLINE, false, KlineView
-                            .K_BOTTOM_TYPE_KDJ);
+                if (hsWeekKlineModel != null) {
+                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false,
+                            KlineView.K_BOTTOM_TYPE_CJL);
                 }
+//                kDayLineView.clearData();
+//                kDayLineView.setVisibility(View.VISIBLE);
+////                kLineTypeView.setVisibility(View.VISIBLE);
+//                if (hsDayKlineModel != null) {
+//                    kDayLineView.setData(hsDayKlineModel.parseData(), DAY_KLINE, false, KlineView
+//                            .K_BOTTOM_TYPE_KDJ);
+//                }
                 break;
             case WEEK_KLINE:
                 kWeekLineView.clearData();
@@ -121,6 +143,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
 
 
     private void refresh() {
+        RequestManager.init();
         canRefresh = false;
         switch (currentChart) {
             case MLINE:
@@ -128,12 +151,16 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
                 getTodayData(curMarket, stockCode, true);
                 break;
             case DAY_KLINE:
-                refreshDayData(curMarket, stockCode);
+                NetManager.getInstance().getKLine(id, currentChart - 1, this);
+//                refreshDayData(curMarket, stockCode);
+                refreshWeekData(curMarket, stockCode);
                 break;
             case WEEK_KLINE:
+                NetManager.getInstance().getKLine(id, currentChart - 1, this);
                 refreshWeekData(curMarket, stockCode);
                 break;
             case MONTH_KLINE:
+                NetManager.getInstance().getKLine(id, currentChart - 1, this);
                 refreshMonthData(curMarket, stockCode);
                 break;
             default:
@@ -204,6 +231,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
 
     private void refreshDayData(final String market, final String stockCode) {
         Calendar now = Calendar.getInstance();
+        RequestManager.init();
         Call<HSKlineModel> call = RequestManager.getService().getDayKlineModelWithMarket(market,
                 String.valueOf(now.get(Calendar.YEAR)), stockCode);
         call.enqueue(new Callback<HSKlineModel>() {
@@ -381,7 +409,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
 
     /**
      * @param tag
-     * @param  json
+     * @param json
      */
     @Override
     public void onResponse(String tag, String json) {
@@ -402,12 +430,36 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
             homeInfoDataAdapter.notifyDataSetChanged();
         }
 
-        if (TextUtils.equals(tag, Constants.TAG_CURRENCY_MLINE)) {
-//TODO 实时图
+        if (TextUtils.equals(tag, Constants.TAG_ADD_DEL_EVENT)) {
+            LogUtils.e("添加详情：" + json);
+            CommonStateModel stateModel = new Gson().fromJson(json, CommonStateModel.class);
+            if (stateModel == null || stateModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+                ToastUtils.toastShot(CurrencyInfoActivity.this, getString(R.string.failure));
+                return;
+            }
+            ToastUtils.toastShot(CurrencyInfoActivity.this, getString(R.string.success));
+            EventBus.getDefault().post(Constants.EVENT_REFRESH);
         }
 
-        if (TextUtils.equals(tag, Constants.TAG_CURRENCY_KLINE)) {
-//       TODO     K图
+        if (TextUtils.equals(tag, Constants.TAG_CURRENCY_MLINE)) {
+//TODO 实时图
+            LogUtils.e("实时图：" + json);
+        }
+
+        if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
+                (DAY_KLINE - 1)))) {
+//       TODO     日K图
+            LogUtils.e("K图0：" + json);
+        }
+        if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
+                (WEEK_KLINE - 1)))) {
+//       TODO     周K图
+            LogUtils.e("K图1：" + json);
+        }
+        if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
+                (MONTH_KLINE - 1)))) {
+//       TODO     月K图
+            LogUtils.e("K图2：" + json);
         }
     }
 
@@ -426,4 +478,5 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
         list.add(data.getSell1());
         return list;
     }
+
 }

@@ -5,7 +5,7 @@
     android:layout_height="@dimen/dp_30"
     android:layout_marginBottom="@dimen/dp_20"
     android:background="@drawable/shape_btn_search_grey"
-    android:text="btc"
+    android:textAllCaps="false"
     android:textColor="@color/grey_9"
     android:textSize="@dimen/sp_14">
 

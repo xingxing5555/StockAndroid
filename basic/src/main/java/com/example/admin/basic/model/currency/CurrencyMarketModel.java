@@ -8,12 +8,6 @@ import java.util.List;
 
 public class CurrencyMarketModel {
 
-    /**
-     * code : 200
-     * msg :
-     * data : {"details":[]}
-     */
-
     private int code;
     private String msg;
     private DataBean data;
@@ -43,14 +37,50 @@ public class CurrencyMarketModel {
     }
 
     public static class DataBean {
-        private List<?> details;
+        private List<DetailsBean> details;
 
-        public List<?> getDetails() {
+        public List<DetailsBean> getDetails() {
             return details;
         }
 
-        public void setDetails(List<?> details) {
+        public void setDetails(List<DetailsBean> details) {
             this.details = details;
+        }
+
+        public static class DetailsBean {
+            /**
+             * time : 18:58:07
+             * price : 0.006814
+             * volume : 0.91
+             */
+
+            private String time;
+            private String price;
+            private String volume;
+
+            public String getTime() {
+                return time;
+            }
+
+            public void setTime(String time) {
+                this.time = time;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getVolume() {
+                return volume;
+            }
+
+            public void setVolume(String volume) {
+                this.volume = volume;
+            }
         }
     }
 }

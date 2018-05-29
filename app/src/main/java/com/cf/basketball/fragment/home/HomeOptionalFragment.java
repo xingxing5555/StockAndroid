@@ -18,22 +18,25 @@ import android.widget.RelativeLayout;
 import com.cf.basketball.R;
 import com.cf.basketball.activity.CurrencyInfoActivity;
 import com.cf.basketball.activity.SearchActivity;
-import com.cf.basketball.adapter.home.HomeOptionalAdapter2;
+import com.cf.basketball.adapter.home.HomeOptionalAdapter;
 import com.cf.basketball.databinding.FragmentHomeOptionalBinding;
 import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.base.BaseFragment;
+import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.interfaces.OnRequestListener;
-import com.example.admin.basic.model.HomeCurrencyModel;
+import com.example.admin.basic.model.home.HomeOptionalModel;
 import com.example.admin.basic.utils.LogUtils;
 import com.example.admin.basic.view.SortLayout;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,8 +48,8 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
         .OnSortChangeListener, OnRequestListener, OnRefreshListener {
 
     private FragmentHomeOptionalBinding binding;
-    private HomeOptionalAdapter2 adapter;
-    private List<HomeCurrencyModel> list;
+    private HomeOptionalAdapter adapter;
+    private List<HomeOptionalModel.DataBean.CoinsBean> list = new ArrayList<>();
     private int pageNum = 1;
     private int order = 0;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
@@ -57,8 +60,11 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+        downData();
+    }
+
+    private void downData() {
         NetManager.getInstance().getMineList(token, pageNum, order, this);
-        list = createData();
     }
 
     @Override
@@ -77,7 +83,7 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
         binding.sryContainer.addItemDecoration(createItemDecoration(R.color.grey_d));
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(mCallback);
         mItemTouchHelper.attachToRecyclerView(binding.sryContainer);
-        adapter = new HomeOptionalAdapter2(getContext(),token);
+        adapter = new HomeOptionalAdapter(getContext(), token);
         adapter.setDataList(list);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(adapter);
         adapter.setmLRecyclerViewAdapter(mLRecyclerViewAdapter);
@@ -117,26 +123,38 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void addEvent(HomeCurrencyModel messageEvent) {
-        LogUtils.e("Event is execute ");
-        list.add(messageEvent);
-        adapter.setDataList(list);
-        adapter.notifyDataSetChanged();
+    public void addEvent(Integer event) {
+        if (Constants.EVENT_REFRESH == event.intValue()) {
+            LogUtils.e("已获取到数据：" + event);
+            list.clear();
+            pageNum = 1;
+            downData();
+        }
     }
 
 
     @Override
     public void onSortChangeListener(int order) {
-        LogUtils.e("type=" + order);
+        list.clear();
+        pageNum = 1;
         this.order = order;
-        NetManager.getInstance().getMineList(token, pageNum, order, this);
+        downData();
     }
 
 
     @Override
-    public void onResponse(String tag,String json) {
-        binding.sryContainer.refreshComplete(pageNum);
+    public void onResponse(String tag, String json) {
         LogUtils.e("自选 json=" + json);
+        binding.sryContainer.refreshComplete(pageNum);
+        HomeOptionalModel optionalModel = new Gson().fromJson(json, HomeOptionalModel.class);
+        if (optionalModel == null || optionalModel.getCode() != Constants
+                .NET_REQUEST_SUCCESS_CODE) {
+            return;
+        }
+        List<HomeOptionalModel.DataBean.CoinsBean> coins = optionalModel.getData().getCoins();
+        list.addAll(coins);
+        adapter.setDataList(list);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -144,7 +162,6 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
         binding.sryContainer.refreshComplete(pageNum);
         LogUtils.e(errorMsg);
     }
-
 
 
     private ItemTouchHelper.Callback mCallback = new ItemTouchHelper.Callback() {
@@ -210,7 +227,7 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
     @Override
     public void onRefresh() {
         pageNum++;
-        NetManager.getInstance().getMineList(token, pageNum, order, this);
+        downData();
     }
 
     @Override

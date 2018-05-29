@@ -1,7 +1,6 @@
 package com.cf.basketball.fragment;
 
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,20 +10,20 @@ import android.view.ViewGroup;
 
 import com.cf.basketball.R;
 import com.cf.basketball.activity.CurrencyInfoActivity;
+import com.cf.basketball.activity.SearchActivity;
 import com.cf.basketball.adapter.search.DefaultSearchAdapter;
 import com.cf.basketball.adapter.search.HistorySearchAdapter;
 import com.cf.basketball.adapter.search.TradeSearchAdapter;
 import com.cf.basketball.databinding.FragmentDefaultSearchBinding;
 import com.cf.basketball.net.NetManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.admin.basic.application.BaseApplication;
 import com.example.admin.basic.base.BaseFragment;
 import com.example.admin.basic.interfaces.OnRequestListener;
 import com.example.admin.basic.model.search.DefaultSearchModel;
 import com.example.admin.basic.utils.LogUtils;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -42,6 +41,7 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
     private TradeSearchAdapter tradeAdapter;
     private List<DefaultSearchModel.DataBean.HotCointsBean> hotCoints;
     private List<DefaultSearchModel.DataBean.ExchangesBean> tradeList;
+    private List<String> history;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +72,12 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
         binding.mrvSearchHistoryList.setAdapter(historyAdapter);
         binding.mrvSearchHotList.setAdapter(hotAdapter);
         binding.mrvSearchTradeList.setAdapter(tradeAdapter);
-        historyAdapter.setOnItemClickListener(this);
+        historyAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ((SearchActivity) getActivity()).setSearchContent(history.get(position));
+            }
+        });
         hotAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -113,7 +118,7 @@ public class DefaultSearchFragment extends BaseFragment implements BaseQuickAdap
         LogUtils.e("搜索：" + json);
         DefaultSearchModel defaultSearchModel = new Gson().fromJson(json, DefaultSearchModel.class);
         DefaultSearchModel.DataBean data = defaultSearchModel.getData();
-        List<String> history = data.getHistory();
+        history = data.getHistory();
         hotCoints = data.getHotCoints();
         tradeList = data.getExchanges();
         historyAdapter.setNewData(history);

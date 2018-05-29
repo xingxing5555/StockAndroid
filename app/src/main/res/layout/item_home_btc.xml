@@ -10,15 +10,14 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/tv_btc_source"
             style="@style/TextBlack14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:layout_marginLeft="@dimen/dp_10" />
 
         <TextView
             android:id="@+id/tv_btc_name"
@@ -35,7 +34,8 @@
             style="@style/ItemInterval"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_btc_source" />
+            android:layout_below="@id/tv_btc_source"
+            android:layout_marginLeft="@dimen/dp_10" />
     </RelativeLayout>
 
     <!--中-->
@@ -50,8 +50,8 @@
             android:id="@+id/tv_btc_price"
             style="@style/TextRed13"
             android:layout_width="wrap_content"
-            android:textColor="@drawable/selector_market_text"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/selector_market_text" />
 
         <TextView
             android:id="@+id/tv_btc_foreign_price"

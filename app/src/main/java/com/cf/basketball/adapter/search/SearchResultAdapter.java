@@ -16,7 +16,6 @@ import com.cf.basketball.R;
 import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.model.search.SearchModel;
 import com.example.admin.basic.utils.CommonUtils;
-import com.example.admin.basic.utils.LogUtils;
 
 import java.util.List;
 
@@ -66,20 +65,17 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         holder.cbSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                LogUtils.e("监听一直细长的女                                 ");
                 if (onSearchListener != null) {
-                    LogUtils.e("已执行");
                     if (isChecked) {
-//                        删除货币
-                        onSearchListener.onAddOrSubChangeListener(holder.getAdapterPosition(),
-                                Constants.EVENT_DEL);
-                    } else {
 //                        添加货币
                         onSearchListener.onAddOrSubChangeListener(holder.getAdapterPosition(),
                                 Constants.EVENT_ADD);
+                    } else {
+                        //                        删除货币
+                        onSearchListener.onAddOrSubChangeListener(holder.getAdapterPosition(),
+                                Constants.EVENT_DEL);
+
                     }
-                } else {
-                    LogUtils.e("onSearchListener is null");
                 }
 
                 holder.cbSelected.setChecked(isChecked);

@@ -43,17 +43,19 @@ public class KlineView extends StockLineView {
     public final static int OPEN = 0;
     public final static int LOW = 3;
     public final static int CLOSE = 1;
-//    public final static int TIME = 4;
+    //    public final static int TIME = 4;
     public final static int VOLUME = 4;
 
     public final static int kline_bg = 0xff171B20;
-    public final static int kline_biankuang = 0xff373E47;
+    //    public final static int kline_biankuang = 0xff373E47;
+    public final static int kline_biankuang = 0xffDDDDDD;
     public final static int kline_hengzong_zuobiao = 0xff464646;
     public final static int kline_pingpan_color = 0xff323232;
     public final static int kline_dise_color = 0xffd4f0ff;
 
 
     public int MAX_DAYDATA_NUM = 40;
+    private final int Midden_line = 0xff999999;
 
     public void setDrawDaydataNum(int drawDaydataNum) {
         DRAW_DAYDATA_NUM = drawDaydataNum;
@@ -104,8 +106,10 @@ public class KlineView extends StockLineView {
     public int GroundColor = kline_bg;
 
     public int UpColor = 0xffFE4249;
+    public int VolumeUpColor = 0xe0FFCFCF;
 
     public int DownColor = 0xff01AA3B;
+    public int VolumeDownColor = 0xe0B2FFCA;
 
     private int PMA5Color = 0xff770094;
 
@@ -159,7 +163,7 @@ public class KlineView extends StockLineView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(nDayDatas > 0) {
+        if (nDayDatas > 0) {
             calcScales();
         }
 
@@ -184,15 +188,19 @@ public class KlineView extends StockLineView {
         rightPadding = 15;
         screenW = (int) (getWidth() - 2 + 0.1f);
         screenH = (int) (getHeight() + 0.1f);
-        startX = distanceX + 3;
+//        startX = distanceX + 3;
+        startX = 5;
 //        startY = 2 + 2 * FontHeight + baoliuY;
         startY = 5 + baoliuY;
-        endX = screenW - 2 + 0.1f - rightPadding;
+//        endX = screenW - 2 + 0.1f - rightPadding;
+        endX = screenW - distanceX;
         endY = screenH * 3 / 5;
         Width = endX - startX;
 //        volumeStartY = (int) (endY + FontHeight + 25 * density);
-        volumeStartY = (int) (endY + FontHeight + 5);
-        volumeEndY = screenH - 5;
+//        volumeStartY = (int) (endY + FontHeight + 5);
+        volumeStartY = endY;
+//        volumeEndY = screenH - 5;
+        volumeEndY = screenH - (FontHeight + 4);
         Left = startX;
         Height = endY - startY;
         volumeHeight = volumeEndY - volumeStartY;
@@ -204,20 +212,20 @@ public class KlineView extends StockLineView {
         paintHighLight(canvas);
     }
 
-    public void scrollToLeft(){
-        if(beginflag + DRAW_DAYDATA_NUM < nDayDatas){
+    public void scrollToLeft() {
+        if (beginflag + DRAW_DAYDATA_NUM < nDayDatas) {
             beginflag++;
         }
         this.postInvalidate();
     }
 
-    public void scrollToRight(){
-        if(beginflag > 0){
+    public void scrollToRight() {
+        if (beginflag > 0) {
             beginflag--;
         }
         this.postInvalidate();
-        if(beginflag < 20 && getMore){
-            if(callback != null){
+        if (beginflag < 20 && getMore) {
+            if (callback != null) {
                 callback.getMoreData(klineType);
             }
         }
@@ -267,14 +275,14 @@ public class KlineView extends StockLineView {
             isInitdata = false;
         }
         paint.setAntiAlias(true);
-        if (klineDataList.size() == 0) {
-            paintMainPanel(g);
-        } else {
+        paintMainPanel(g);
+        if (klineDataList.size() != 0) {
+//        } else {
             if (!isLongPressed) {
                 setVolumeLastIndex();
             }
-            paintMainPanel(g);
-            paintTopMessage(g);
+//            paintMainPanel(g);
+//            paintTopMessage(g);
             paintLZ(g);
             paintKD(g);
             paintBottom(g);
@@ -301,14 +309,17 @@ public class KlineView extends StockLineView {
 //        bottomValueStartX = startX + (isShowTitles ? volumesRF.width() + gapDistance : 0);
 //
 //        if (K_BOTTOM_TYPE == K_BOTTOM_TYPE_CJL) {
-//            txt = Util.translate_long_thousand(klineDataList.get(volumeIndex).get(VOLUME).longValue() / 100, 2, true).replaceAll(",", "") + "手";
+//            txt = Util.translate_long_thousand(klineDataList.get(volumeIndex).get(VOLUME)
+// .longValue() / 100, 2, true).replaceAll(",", "") + "手";
 //            titlesPaint.setColor(0xff5F5F5F);
 //            g.drawText(txt, bottomValueStartX, volumeStartY - 15, titlesPaint);
 //        } else if (K_BOTTOM_TYPE == K_BOTTOM_TYPE_KDJ || K_BOTTOM_TYPE == K_BOTTOM_TYPE_MACD) {
 //            if (K_BOTTOM_TYPE == K_BOTTOM_TYPE_KDJ) {
-//                txt = "K:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(6).floatValue());
+//                txt = "K:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(6)
+// .floatValue());
 //            } else {
-//                txt = "DIF:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(9).floatValue());
+//                txt = "DIF:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(9)
+// .floatValue());
 //            }
 //            titlesPaint.setColor(kColor);
 //            g.drawText(txt, bottomValueStartX, volumeStartY - 15, titlesPaint);
@@ -316,9 +327,11 @@ public class KlineView extends StockLineView {
 //            titlesPaint.getTextBounds(txt, 0, txt.length(), bounds);
 //            bottomValueStartX += (bounds.width() + gapDistance);
 //            if (K_BOTTOM_TYPE == K_BOTTOM_TYPE_KDJ) {
-//                txt = "D:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(7).floatValue());
+//                txt = "D:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(7)
+// .floatValue());
 //            } else {
-//                txt = "DEA:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(10).floatValue());
+//                txt = "DEA:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get
+// (10).floatValue());
 //            }
 //            titlesPaint.setColor(dColor);
 //            g.drawText(txt, bottomValueStartX, volumeStartY - 15, titlesPaint);
@@ -326,9 +339,11 @@ public class KlineView extends StockLineView {
 //            titlesPaint.getTextBounds(txt, 0, txt.length(), bounds);
 //            bottomValueStartX += (bounds.width() + gapDistance);
 //            if (K_BOTTOM_TYPE == K_BOTTOM_TYPE_KDJ) {
-//                txt = "J:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(8).floatValue());
+//                txt = "J:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(8)
+// .floatValue());
 //            } else {
-//                txt = "MACD:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get(11).floatValue());
+//                txt = "MACD:" + DoubleUtil.formatFloatDot2(klineDataList.get(volumeIndex).get
+// (11).floatValue());
 //            }
 //            titlesPaint.setColor(jColor);
 //            g.drawText(txt, bottomValueStartX, volumeStartY - 15, titlesPaint);
@@ -343,7 +358,8 @@ public class KlineView extends StockLineView {
 //        titlesPaint.setColor(0xffFEFEFE);
 //        titlesPaint.setTextAlign(Paint.Align.CENTER);
 //        FontMetrics fm = titlesPaint.getFontMetrics();
-//        rightsRF = new RectF(screenW - 65 * density, 4 * density, screenW - 15 * density, startY - 4 * density);
+//        rightsRF = new RectF(screenW - 65 * density, 4 * density, screenW - 15 * density,
+// startY - 4 * density);
 //        paint.setColor(0xff089FE6);
 //        g.drawRoundRect(rightsRF, 5, 5, paint);
 //        g.drawText(rightTitles.get(K_RIGHT_TYPE),
@@ -353,7 +369,8 @@ public class KlineView extends StockLineView {
 //    }
 //
 //    private void paintVolumeTitles(Canvas g) {
-//        volumesRF = new RectF(startX, volumeStartY - 22 * density, startX + 50 * density, volumeStartY - 2 * density);
+//        volumesRF = new RectF(startX, volumeStartY - 22 * density, startX + 50 * density,
+// volumeStartY - 2 * density);
 //        FontMetrics fm = titlesPaint.getFontMetrics();
 //        g.drawRoundRect(volumesRF, 5, 5, paint);
 //        g.drawText(volumeTitles.get(K_BOTTOM_TYPE),
@@ -443,9 +460,8 @@ public class KlineView extends StockLineView {
             float zhangfu_f = 0;
             if (YBNo - 1 > 0) {
 
-                zhangfu_f = (float) ((klineDataList.get(YBNo).get(CLOSE) - klineDataList
-                        .get(YBNo - 1).get(CLOSE))
-                        / klineDataList.get(YBNo - 1).get(CLOSE));
+                zhangfu_f = (float) ((klineDataList.get(YBNo).get(CLOSE) - klineDataList.get(YBNo
+                        - 1).get(CLOSE)) / klineDataList.get(YBNo - 1).get(CLOSE));
 
                 df = new DecimalFormat("0.00");
                 zhangfuString = df.format(zhangfu_f * 100f) + "%";
@@ -460,7 +476,8 @@ public class KlineView extends StockLineView {
             if (zhangfuString == null) {
                 return;
             }
-            g.drawText(zhangfuString, startX - Util.stringWidth(zhangfuString, paint), Hy1 + FontHeight - 5, paint);
+            g.drawText(zhangfuString, startX - Util.stringWidth(zhangfuString, paint), Hy1 +
+                    FontHeight - 5, paint);
         }
     }
 
@@ -477,7 +494,8 @@ public class KlineView extends StockLineView {
         if (nDayDatas < 1) {
             return;
         }
-        int length = beginflag + DRAW_DAYDATA_NUM > nDayDatas ? nDayDatas : beginflag + DRAW_DAYDATA_NUM;
+        int length = beginflag + DRAW_DAYDATA_NUM > nDayDatas ? nDayDatas : beginflag +
+                DRAW_DAYDATA_NUM;
 
         MaxPrice = klineDataList.get(beginflag).get(HIGH).floatValue();
         MinPrice = klineDataList.get(beginflag).get(LOW).floatValue();
@@ -555,23 +573,34 @@ public class KlineView extends StockLineView {
         float d, y;
         paint.setColor(GroundColor);
 
-//        Util.drawRect(startX, startY - baoliuY, Width, endY - startY + 2 * baoliuY, true, g, paint);
-//        Util.drawRect(startX, volumeStartY - baoliuY, Width, volumeEndY - volumeStartY + 2 * baoliuY, true, g, paint);
+//        Util.drawRect(startX, startY - baoliuY, Width, endY - startY + 2 * baoliuY, true, g,
+// paint);
+//        Util.drawRect(startX, volumeStartY - baoliuY, Width, volumeEndY - volumeStartY + 2 *
+// baoliuY, true, g, paint);
 
         paint.setColor(kline_biankuang);
-        Util.drawRect(startX, startY - baoliuY, Width, endY - startY, false, g, paint);
-        Util.drawRect(startX, volumeStartY - baoliuY, Width, volumeEndY - volumeStartY, false, g, paint);
+//        Util.drawRect(startX, startY - baoliuY, Width, endY - startY, false, g, paint);
+//        Util.drawRect(startX, volumeStartY - baoliuY, Width, volumeEndY - volumeStartY, false, g,
+//                paint);
+        Util.drawRect(startX, startY, Width, volumeEndY, false, g, paint);
         paint.setStyle(Style.STROKE);
         PathEffect effects = new DashPathEffect(new float[]{5, 5, 5, 5}, 1);
         paint.setPathEffect(effects);
-        d = (Height + 3) / 4;
-        for (int i = 1; i < 4; i++) {
-            y = startY + (i * d);
-            g.drawLine(startX, y, startX + Width, y, paint);
+        d = (endX - startX) / 6;
+//        背景的竖线
+        for (int i = 1; i < 6; i++) {
+            float x = startX + (i * d);
+            g.drawLine(x, startY, x, endY, paint);
         }
+//        中间的线
+        paint.setColor(Midden_line);
+        g.drawLine(startX, endY, screenW, endY + 5, paint);
 
-//        g.drawLine(startX + (endX - startX + 0.1f) / 3, startY, startX + (endX - startX + 0.1f) / 3.0f, endY, paint);
-//        g.drawLine(startX + (endX - startX + 0.1f) * 2 / 3, startY, startX + (endX - startX + 0.1f) * 2.0f / 3.0f, endY, paint);
+
+//        g.drawLine(startX + (endX - startX + 0.1f) / 3, startY, startX + (endX - startX + 0.1f)
+// / 3.0f, endY, paint);
+//        g.drawLine(startX + (endX - startX + 0.1f) * 2 / 3, startY, startX + (endX - startX +
+// 0.1f) * 2.0f / 3.0f, endY, paint);
 
     }
 
@@ -581,8 +610,7 @@ public class KlineView extends StockLineView {
         float bottom = endY - 10;
         float drawH = Height - 40;
         float maxToMin = mainMax - mainMin;
-        if (maxToMin == 0)
-            maxToMin = 1;
+        if (maxToMin == 0) maxToMin = 1;
         float tempC;
         float x1, y1, x2, y2, w, h;
         float d;
@@ -602,25 +630,27 @@ public class KlineView extends StockLineView {
             if (k == klineDataList.size()) {
                 break;
             }
-            if (klineDataList.get(k).get(OPEN) == 0 || klineDataList.get(k).get(HIGH) == 0 || klineDataList.get(k).get(LOW) == 0 || klineDataList.get(k).get(CLOSE) == 0) {
+            if (klineDataList.get(k).get(OPEN) == 0 || klineDataList.get(k).get(HIGH) == 0 ||
+                    klineDataList.get(k).get(LOW) == 0 || klineDataList.get(k).get(CLOSE) == 0) {
                 continue;
             }
             tempC = startX + d * 2 * i;
 
-            if (k > beginflag+5 && k < klineDataList.size() - 2) {
-                if (k % (int)(180/KLINE_WIDTH) == 0) {
+            if (k > beginflag + 5 && k < klineDataList.size() - 2) {
+                if (k % (int) (180 / KLINE_WIDTH) == 0) {
                     x1 = tempC + (d * 2 - 1) / 2;
                     y1 = startY;
                     x2 = x1;
                     y2 = endY;
-                    paint.setColor(kline_biankuang);
-                    g.drawLine(x1, y1, x2, y2, paint);
+//                    paint.setColor(kline_biankuang);
+//                    g.drawLine(x1, y1, x2, y2, paint);
                     paint.setColor(CharColor);
                     String endTime = times.get(k);
-                    g.drawText(endTime, x1 - Util.stringWidth(endTime, paint)/2, endY + FontHeight - 4, paint);
+//                    修改时间位置
+                    g.drawText(endTime, x1 - Util.stringWidth(endTime, paint) / 2, volumeEndY +
+                            FontHeight - 4, paint);
                 }
             }
-
 
 
             if (klineDataList.get(k).get(OPEN) < klineDataList.get(k).get(CLOSE)) {
@@ -647,7 +677,8 @@ public class KlineView extends StockLineView {
                 t = (int) ((drawH * (klineDataList.get(k).get(CLOSE) - mainMin)) / (maxToMin));
                 y1 = bottom - (t < 1 ? 1 : (int) t);
                 w = (d * 2 - 1);
-                t = (int) ((drawH * (klineDataList.get(k).get(CLOSE) - klineDataList.get(k).get(OPEN))) / (maxToMin));
+                t = (int) ((drawH * (klineDataList.get(k).get(CLOSE) - klineDataList.get(k).get
+                        (OPEN))) / (maxToMin));
                 h = t < 1 ? 1 : (int) t;
                 if (h > screenH) {
                     continue;
@@ -662,7 +693,8 @@ public class KlineView extends StockLineView {
                 t = (int) ((drawH * (klineDataList.get(k).get(CLOSE) - mainMin)) / (maxToMin));
                 y1 = bottom - (t < 1 ? 1 : (int) t);
                 w = (d * 2 - 1);
-                t = (int) ((drawH * (klineDataList.get(k).get(CLOSE) - klineDataList.get(k).get(OPEN))) / (maxToMin));
+                t = (int) ((drawH * (klineDataList.get(k).get(CLOSE) - klineDataList.get(k).get
+                        (OPEN))) / (maxToMin));
                 h = t < 1 ? 1 : (int) t;
                 if (h > screenH) {
                     continue;
@@ -676,7 +708,8 @@ public class KlineView extends StockLineView {
                 t = (int) ((drawH * (klineDataList.get(k).get(OPEN) - mainMin)) / (maxToMin));
                 y1 = bottom - (t < 1 ? 1 : (int) t);
                 w = (d * 2 - 1);
-                t = (int) ((drawH * (klineDataList.get(k).get(OPEN) - klineDataList.get(k).get(CLOSE))) / (maxToMin));
+                t = (int) ((drawH * (klineDataList.get(k).get(OPEN) - klineDataList.get(k).get
+                        (CLOSE))) / (maxToMin));
                 h = t < 1 ? 1 : (int) t;
                 if (y1 < startY) {
                     y1 = startY;
@@ -798,6 +831,7 @@ public class KlineView extends StockLineView {
         float y;
         String s;
         savepoint = 2;
+        paint.setColor(kline_biankuang);
         for (int i = 0; i < nScalesOfPrice; i++) {
             s = String.valueOf(ScalesOfPrice[nScalesOfPrice - 1 - i]);
             if (Double.parseDouble(s) >= 1000) {
@@ -812,7 +846,11 @@ public class KlineView extends StockLineView {
             } else {
                 y = startY + i * d - FontHeight / 2;
             }
-            Util.drawString(s, Left - Util.stringWidth(s, paint), y, 0, g, paint);
+//           修改右侧数据
+            Util.drawString(s, endX + 8, y, 0, g, paint);
+
+//            文字对应的横线
+            g.drawLine(startX, y + FontHeight / 2, endX + 5, y + FontHeight / 2, paint);
         }
     }
 
@@ -823,8 +861,30 @@ public class KlineView extends StockLineView {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTextSize(Util.sp2px(this.getContext(), TEXTSIZE));
+        //        成交量右侧数据
+        paint.setColor(VolumeColor);
+        float x, y;
+        String s;
+        s = Util.translate_long_thousand((long) maxVolume / 100, 2, true) + "手";
+        String[] content = s.split(",");
+//        x = endX - Util.stringWidth(content[0],paint);
+        x = endX;
+        y = volumeStartY + (volumeEndY - volumeStartY) / 2 ;
+        Util.drawString(content[0], x, y, 0, g, paint);
+        y = volumeStartY + (volumeEndY - volumeStartY) / 2 + FontHeight / 2;
+        paint.setColor(kline_biankuang);
+        g.drawLine(startX, y, endX + 5, y, paint);
+
+//        x = startX - Util.stringWidth(content[1],paint);
+        x = endX;
+        y = volumeEndY - FontHeight;
+        Util.drawString(content[1], x, y, 0, g, paint);
+        y = volumeEndY - FontHeight / 2;
+        paint.setColor(kline_biankuang);
+        g.drawLine(startX, y, endX + 5, y, paint);
+
         if (klineDataList != null) {
-            float x, y, w, h;
+            float  w, h;
             int length, index;
 
             if (beginflag == 1) {
@@ -841,52 +901,40 @@ public class KlineView extends StockLineView {
                     break;
                 }
 
-                if (klineDataList.get(k).get(OPEN) == 0
-                        || klineDataList.get(k).get(HIGH) == 0
-                        || klineDataList.get(k).get(LOW) == 0
-                        || klineDataList.get(k).get(CLOSE) == 0) {
+                if (klineDataList.get(k).get(OPEN) == 0 || klineDataList.get(k).get(HIGH) == 0 ||
+                        klineDataList.get(k).get(LOW) == 0 || klineDataList.get(k).get(CLOSE) ==
+                        0) {
                     break;
                 }
                 x = startX + KLINE_WIDTH * 2 * i;
 
 
-                h = (int) ((long) volumeHeight * 0.9
-                        * (long) klineDataList.get(k).get(VOLUME).longValue() / (long) maxVolume);
+                h = (int) ((long) volumeHeight * 0.9 * (long) klineDataList.get(k).get(VOLUME)
+                        .longValue() / (long) maxVolume);
                 y = tempA - h;
                 w = KLINE_WIDTH * 2 - 1;
 
                 if (klineDataList.get(k).get(OPEN) < klineDataList.get(k).get(CLOSE)) {
-                    paint.setColor(UpColor);
+                    paint.setColor(VolumeUpColor);
                     Util.drawRect(x, y, w, h, true, g, paint);
-                } else if (((int) (100 * klineDataList.get(k).get(OPEN))) == ((int) (100 * klineDataList.get(k).get(CLOSE)))) {
-                    if (k == 0
-                            || (k > 0 && ((int) (100 * klineDataList.get(k).get(CLOSE))) >= ((int) (100 * klineDataList.get(k - 1).get(CLOSE))))) {
-                        paint.setColor(UpColor);
+                } else if (((int) (100 * klineDataList.get(k).get(OPEN))) == ((int) (100 *
+                        klineDataList.get(k).get(CLOSE)))) {
+                    if (k == 0 || (k > 0 && ((int) (100 * klineDataList.get(k).get(CLOSE))) >= (
+                            (int) (100 * klineDataList.get(k - 1).get(CLOSE))))) {
+                        paint.setColor(VolumeUpColor);
                         Util.drawRect(x, y, w, h, true, g, paint);
                     } else {
-                        paint.setColor(DownColor);
+                        paint.setColor(VolumeDownColor);
                         Util.drawRect(x, y, w, h, true, g, paint);
                     }
                 } else {
-                    paint.setColor(DownColor);
+                    paint.setColor(VolumeDownColor);
                     Util.drawRect(x, y, w, h, true, g, paint);
                 }
             }
 
         }
 
-        paint.setColor(VolumeColor);
-        float x, y;
-        String s;
-        s = Util.translate_long_thousand((long) maxVolume / 100, 2, true) + "手";
-        String[] content = s.split(",");
-        x = startX - Util.stringWidth(content[0],paint);
-        y = volumeStartY;
-        Util.drawString(content[0], x, y, 0, g, paint);
-
-        x = startX - Util.stringWidth(content[1],paint);
-        y = volumeEndY - FontHeight;
-        Util.drawString(content[1], x, y, 0, g, paint);
 
     }
 
@@ -919,18 +967,24 @@ public class KlineView extends StockLineView {
             x2 = x1 + d * 2;
 
             paint.setColor(kColor);
-            yk1 = volumeStartY + (kdjMax - klineDataList.get(k).get(6).floatValue()) * kdjItemHeight;
-            yk2 = volumeStartY + (kdjMax - klineDataList.get(k + 1).get(6).floatValue()) * kdjItemHeight;
+            yk1 = volumeStartY + (kdjMax - klineDataList.get(k).get(6).floatValue()) *
+                    kdjItemHeight;
+            yk2 = volumeStartY + (kdjMax - klineDataList.get(k + 1).get(6).floatValue()) *
+                    kdjItemHeight;
             g.drawLine(x1 + d / 2.0f, yk1, x2 + d / 2.0f, yk2, paint);
 
             paint.setColor(dColor);
-            yd1 = volumeStartY + (kdjMax - klineDataList.get(k).get(7).floatValue()) * kdjItemHeight;
-            yd2 = volumeStartY + (kdjMax - klineDataList.get(k + 1).get(7).floatValue()) * kdjItemHeight;
+            yd1 = volumeStartY + (kdjMax - klineDataList.get(k).get(7).floatValue()) *
+                    kdjItemHeight;
+            yd2 = volumeStartY + (kdjMax - klineDataList.get(k + 1).get(7).floatValue()) *
+                    kdjItemHeight;
             g.drawLine(x1 + d / 2.0f, yd1, x2 + d / 2.0f, yd2, paint);
 
             paint.setColor(jColor);
-            yj1 = volumeStartY + (kdjMax - klineDataList.get(k).get(8).floatValue()) * kdjItemHeight;
-            yj2 = volumeStartY + (kdjMax - klineDataList.get(k + 1).get(8).floatValue()) * kdjItemHeight;
+            yj1 = volumeStartY + (kdjMax - klineDataList.get(k).get(8).floatValue()) *
+                    kdjItemHeight;
+            yj2 = volumeStartY + (kdjMax - klineDataList.get(k + 1).get(8).floatValue()) *
+                    kdjItemHeight;
             g.drawLine(x1, yj1, x2, yj2, paint);
         }
 
@@ -942,17 +996,20 @@ public class KlineView extends StockLineView {
         paint.setTextAlign(Paint.Align.LEFT);
         float x, y;
         x = Left - Util.stringWidth("80", paint);
-        y = (int) (volumeStartY + (kdjMax - 80) / (kdjMax - kdjMin) * kdjHeight - fm.descent + (fm.bottom - fm.top) / 2);
+        y = (int) (volumeStartY + (kdjMax - 80) / (kdjMax - kdjMin) * kdjHeight - fm.descent +
+                (fm.bottom - fm.top) / 2);
         g.drawText("80", x, y, paint);
-        y = (int) (volumeStartY + (kdjMax - 20) / (kdjMax - kdjMin) * kdjHeight - fm.descent + (fm.bottom - fm.top) / 2);
+        y = (int) (volumeStartY + (kdjMax - 20) / (kdjMax - kdjMin) * kdjHeight - fm.descent +
+                (fm.bottom - fm.top) / 2);
         g.drawText("20", x, y, paint);
-        /*y = (int) (volumeStartY + (kdjMax - 0) / (kdjMax - kdjMin) * kdjHeight *//*- (fm.bottom - fm.top)*//*);
+        /*y = (int) (volumeStartY + (kdjMax - 0) / (kdjMax - kdjMin) * kdjHeight *//*- (fm.bottom
+         - fm.top)*//*);
         g.drawText("0", x, y, paint);*/
     }
 
     /*画MACD*/
     private void paintMACD(Canvas g) {
-        if (klineDataList == null ||  klineDataList.size() == 0) {
+        if (klineDataList == null || klineDataList.size() == 0) {
             return;
         }
         int index, length;
@@ -980,16 +1037,20 @@ public class KlineView extends StockLineView {
             x2 = x1 + d * 2;
             if (k < klineDataList.size() - 1) {
                 paint.setColor(kColor);
-                yDif1 = volumeStartY + (macdMax - klineDataList.get(k).get(9).floatValue()) * macdItemHeight;
-                yDif2 = volumeStartY + (macdMax -  klineDataList.get(k+1).get(9).floatValue()) * macdItemHeight;
+                yDif1 = volumeStartY + (macdMax - klineDataList.get(k).get(9).floatValue()) *
+                        macdItemHeight;
+                yDif2 = volumeStartY + (macdMax - klineDataList.get(k + 1).get(9).floatValue()) *
+                        macdItemHeight;
                 g.drawLine(x1 + d / 2.0f, yDif1, x2 + d / 2.0f, yDif2, paint);
 
                 paint.setColor(dColor);
-                yDea1 = volumeStartY + (macdMax -  klineDataList.get(k).get(10).floatValue()) * macdItemHeight;
-                yDea2 = volumeStartY + (macdMax -  klineDataList.get(k+1).get(10).floatValue()) * macdItemHeight;
+                yDea1 = volumeStartY + (macdMax - klineDataList.get(k).get(10).floatValue()) *
+                        macdItemHeight;
+                yDea2 = volumeStartY + (macdMax - klineDataList.get(k + 1).get(10).floatValue())
+                        * macdItemHeight;
                 g.drawLine(x1, yDea1, x2, yDea2, paint);
             }
-            float macd =  klineDataList.get(k).get(11).floatValue();
+            float macd = klineDataList.get(k).get(11).floatValue();
             yMacd1 = volumeStartY + (macdMax - macd) * macdItemHeight;
             if (macd > 0) {
                 paint.setColor(getResources().getColor(android.R.color.holo_red_dark));
@@ -1030,7 +1091,7 @@ public class KlineView extends StockLineView {
         macdMin = Integer.MAX_VALUE;
         for (int i = from; i < klineDataList.size(); i++) {
             List<Double> list = klineDataList.get(i);
-            for(int j = 9; j < 12; j++) {
+            for (int j = 9; j < 12; j++) {
 
                 if (list.get(j) > macdMax) {
                     macdMax = list.get(j).floatValue();
@@ -1074,7 +1135,7 @@ public class KlineView extends StockLineView {
         this.postInvalidate();
     }
 
-    public void setMoreData(DayData data){
+    public void setMoreData(DayData data) {
         klineDataList = data.getKData();
         nDayDatas = data.getKData().size();
         times = data.getTimes();
@@ -1083,7 +1144,7 @@ public class KlineView extends StockLineView {
 
     public void setVolumeLastIndex() {
 //        if (K_BOTTOM_TYPE == K_BOTTOM_TYPE_CJL) {
-            this.volumeIndex = klineDataList.size() - 1;
+        this.volumeIndex = klineDataList.size() - 1;
 //        } else if (K_BOTTOM_TYPE == K_BOTTOM_TYPE_KDJ) {
 //            this.volumeIndex = kdjDataList.size() - 1;
 //        } else if (K_BOTTOM_TYPE == K_BOTTOM_TYPE_MACD) {
@@ -1135,14 +1196,16 @@ public class KlineView extends StockLineView {
         if (klineDataList.size() == 0) {
             return "";
         }
-        return "日期：" + DateUtils.getDateStr(klineDataList.get(getIndex()).get(4).longValue(), "yy-M-d");
+        return "日期：" + DateUtils.getDateStr(klineDataList.get(getIndex()).get(4).longValue(),
+                "yy-M-d");
     }
 
     public SpannableString getHigh() {
         if (klineDataList.size() == 0) {
             return new SpannableString("");
         }
-        return getSpannableString(klineDataList.get(getIndex()).get(0), klineDataList.get(getIndex()).get(6), "高：", "");
+        return getSpannableString(klineDataList.get(getIndex()).get(0), klineDataList.get
+                (getIndex()).get(6), "高：", "");
     }
 
 
@@ -1150,21 +1213,24 @@ public class KlineView extends StockLineView {
         if (klineDataList.size() == 0) {
             return new SpannableString("");
         }
-        return getSpannableString(klineDataList.get(getIndex()).get(1), klineDataList.get(getIndex()).get(6), "开：", "");
+        return getSpannableString(klineDataList.get(getIndex()).get(1), klineDataList.get
+                (getIndex()).get(6), "开：", "");
     }
 
     public SpannableString getLow() {
         if (klineDataList.size() == 0) {
             return new SpannableString("");
         }
-        return getSpannableString(klineDataList.get(getIndex()).get(2), klineDataList.get(getIndex()).get(6), "低：", "");
+        return getSpannableString(klineDataList.get(getIndex()).get(2), klineDataList.get
+                (getIndex()).get(6), "低：", "");
     }
 
     public SpannableString getClose() {
         if (klineDataList.size() == 0) {
             return new SpannableString("");
         }
-        return getSpannableString(klineDataList.get(getIndex()).get(3), klineDataList.get(getIndex()).get(6), "收：", "");
+        return getSpannableString(klineDataList.get(getIndex()).get(3), klineDataList.get
+                (getIndex()).get(6), "收：", "");
     }
 
     public SpannableString getChangeRateStr() {
@@ -1175,18 +1241,24 @@ public class KlineView extends StockLineView {
     }
 
     public double getChangeRate() {
-        return (klineDataList.get(getIndex()).get(3) - klineDataList.get(getIndex()).get(6)) / klineDataList.get(getIndex()).get(6) * 100;
+        return (klineDataList.get(getIndex()).get(3) - klineDataList.get(getIndex()).get(6)) /
+                klineDataList.get(getIndex()).get(6) * 100;
     }
 
     @NonNull
-    private SpannableString getSpannableString(double value, double baseValue, String valueName, String valueSuffix) {
-        SpannableString ss = new SpannableString(valueName + DoubleUtil.formatDoubleDot2(value) + valueSuffix);
+    private SpannableString getSpannableString(double value, double baseValue, String valueName,
+                                               String valueSuffix) {
+        SpannableString ss = new SpannableString(valueName + DoubleUtil.formatDoubleDot2(value) +
+                valueSuffix);
         if ((value - baseValue) < 0) {
-            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.holo_green_dark)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color
+                    .holo_green_dark)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         } else if ((value - baseValue) > 0) {
-            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.holo_red_dark)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color
+                    .holo_red_dark)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.darker_gray)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color
+                    .darker_gray)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return ss;
     }
@@ -1196,18 +1268,22 @@ public class KlineView extends StockLineView {
         SpannableString ss;
         if (value < 0) {
             ss = new SpannableString(valueName + DoubleUtil.formatDoubleDot2(value) + valueSuffix);
-            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.holo_green_dark)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color
+                    .holo_green_dark)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         } else if (value > 0) {
-            ss = new SpannableString(valueName + "+" + DoubleUtil.formatDoubleDot2(value) + valueSuffix);
-            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.holo_red_dark)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+            ss = new SpannableString(valueName + "+" + DoubleUtil.formatDoubleDot2(value) +
+                    valueSuffix);
+            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color
+                    .holo_red_dark)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
             ss = new SpannableString(valueName + DoubleUtil.formatDoubleDot2(value) + valueSuffix);
-            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.darker_gray)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color
+                    .darker_gray)), 0, ss.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return ss;
     }
 
-    public interface GetMoreDataCallback{
+    public interface GetMoreDataCallback {
         public void getMoreData(int klineType);
     }
 }

@@ -14,13 +14,14 @@ public class Constants {
 
     public final static String EVENT_ADD = "add";
     public final static String EVENT_DEL = "del";
+    public final static int EVENT_REFRESH = 2;
 
     public final static String TAG_ADD_DEL_EVENT = "addOrDelEvent";
     public final static String TAG_SEARCH = "search";
-    public final static String TAG_MINE= "mine";
-    public final static String TAG_CURRENCY_INFO= "currencyInfo";
-    public final static String TAG_CURRENCY_KLINE= "currencyKLine";
-    public final static String TAG_CURRENCY_MLINE= "currencyMLine";
+    public final static String TAG_MINE = "mine";
+    public final static String TAG_CURRENCY_INFO = "currencyInfo";
+    public final static String TAG_CURRENCY_KLINE = "currencyKLine";
+    public final static String TAG_CURRENCY_MLINE = "currencyMLine";
 
 
 }

@@ -14,8 +14,14 @@ import com.cf.basketball.adapter.currency.CurrencyInfoMarketAdapter;
 import com.cf.basketball.databinding.FragmentCurrencyInfoMarketBinding;
 import com.cf.basketball.net.NetManager;
 import com.example.admin.basic.base.BaseFragment;
+import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.interfaces.OnRequestListener;
+import com.example.admin.basic.model.currency.CurrencyMarketModel;
 import com.example.admin.basic.utils.LogUtils;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 货币详情-市场
@@ -27,6 +33,8 @@ public class CurrencyInfoMarketFragment extends BaseFragment implements OnReques
 
     private FragmentCurrencyInfoMarketBinding binding;
     private String id;
+    private CurrencyInfoMarketAdapter adapter;
+    private List<CurrencyMarketModel.DataBean.DetailsBean> details = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,14 +56,21 @@ public class CurrencyInfoMarketFragment extends BaseFragment implements OnReques
         binding.mrvMarketList.setLayoutManager(createLayoutManager(true));
         binding.mrvMarketList.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
-        binding.mrvMarketList.setAdapter(new CurrencyInfoMarketAdapter(R.layout
-                .item_currency_info_market, createData()));
+        adapter = new CurrencyInfoMarketAdapter(R.layout.item_currency_info_market, details);
+        binding.mrvMarketList.setAdapter(adapter);
     }
 
 
     @Override
     public void onResponse(String tag, String json) {
         LogUtils.e("货币市场：" + json);
+        CurrencyMarketModel model = new Gson().fromJson(json, CurrencyMarketModel.class);
+        if (model == null || model.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+            return;
+        }
+        details = model.getData().getDetails();
+        adapter.setNewData(details);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
