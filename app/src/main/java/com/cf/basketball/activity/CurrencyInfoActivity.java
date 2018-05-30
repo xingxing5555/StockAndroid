@@ -49,7 +49,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     String curMarket = HS_MARKET;
     boolean canRefresh;
     int currentChart;
-//    String id = "36";
+    //    String id = "36";
     private CurrencyInfoModel.DataBean data;
     private String last;
 
@@ -80,53 +80,8 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     @Override
     public void changeChartView(int currentChart) {
         mLineView.setMarket(curMarket);
-//        buySellContainer.setVisibility(View.GONE);
-//        kLineTypeView.setVisibility(View.GONE);
         this.currentChart = currentChart;
         refresh();
-//        switch (currentChart) {
-//            case MLINE:
-//
-//
-//                if (hsModel != null) {
-//                    mLineView.setData(hsModel.parseData());
-//                }
-//                break;
-//            case DAY_KLINE:
-//
-////                kLineTypeView.setVisibility(View.VISIBLE);
-//                if (hsWeekKlineModel != null) {
-//                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false,
-//                            KlineView.K_BOTTOM_TYPE_CJL);
-//                }
-////                kDayLineView.clearData();
-////                kDayLineView.setVisibility(View.VISIBLE);
-//////                kLineTypeView.setVisibility(View.VISIBLE);
-////                if (hsDayKlineModel != null) {
-////                    kDayLineView.setData(hsDayKlineModel.parseData(), DAY_KLINE, false,
-/// KlineView
-////                            .K_BOTTOM_TYPE_KDJ);
-////                }
-//                break;
-//            case WEEK_KLINE:
-//
-////                kLineTypeView.setVisibility(View.VISIBLE);
-//                if (hsWeekKlineModel != null) {
-//                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false,
-//                            KlineView.K_BOTTOM_TYPE_CJL);
-//                }
-//                break;
-//            case MONTH_KLINE:
-//
-////                kLineTypeView.setVisibility(View.VISIBLE);
-//                if (hsMonthKlineModel != null) {
-//                    kMonthLineView.setData(hsMonthKlineModel.parseData(), WEEK_KLINE, false,
-//                            KlineView.K_BOTTOM_TYPE_KDJ);
-//                }
-//                break;
-//            default:
-//                break;
-//        }
     }
 
     @Override

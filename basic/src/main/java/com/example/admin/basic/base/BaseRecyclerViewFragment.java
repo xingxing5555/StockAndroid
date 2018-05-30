@@ -12,7 +12,7 @@ import com.example.admin.basic.application.BaseApplication;
 import com.example.admin.basic.utils.LogUtils;
 import com.example.admin.basic.view.SortLayout;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
-import com.github.jdsjlzx.interfaces.OnRefreshListener;
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 
@@ -51,10 +51,10 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
         mRecyclerView.addItemDecoration(createItemDecoration(R.color.grey_d));
         LRecyclerViewAdapter lRecyclerViewAdapter = getLRecyclerViewAdapter();
         mRecyclerView.setAdapter(lRecyclerViewAdapter);
-        mRecyclerView.setLoadMoreEnabled(false);
-        mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
+        mRecyclerView.setPullRefreshEnabled(false);
+        mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onRefresh() {
+            public void onLoadMore() {
                 refresh();
             }
         });

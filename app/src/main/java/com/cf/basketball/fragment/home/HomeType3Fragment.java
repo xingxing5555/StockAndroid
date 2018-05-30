@@ -50,7 +50,6 @@ public class HomeType3Fragment extends BaseRecyclerViewFragment implements OnReq
     public void refresh() {
         pageNum++;
         downData();
-
     }
 
     @Override

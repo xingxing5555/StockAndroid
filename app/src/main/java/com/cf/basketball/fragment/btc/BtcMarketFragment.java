@@ -72,6 +72,7 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
         adapter = new BtcMarketListAdapter(getContext());
         binding.mrvList.setAdapter(adapter);
 
+
     }
 
     private void initPieChart(List<PieEntry> strings, String title, String percent) {
