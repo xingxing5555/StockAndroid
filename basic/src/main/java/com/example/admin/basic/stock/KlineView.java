@@ -105,17 +105,17 @@ public class KlineView extends StockLineView {
 
     public int GroundColor = kline_bg;
 
-    public int UpColor = 0xffFE4249;
-    public int VolumeUpColor = 0xe0FFCFCF;
+    public int UpColor = 0xff01AA3B;
+    public int VolumeUpColor = 0xff01AA3B;
 
-    public int DownColor = 0xff01AA3B;
-    public int VolumeDownColor = 0xe0B2FFCA;
+    public int DownColor = 0xffFE4249;
+    public int VolumeDownColor = 0xffFE4249;
 
-    private int PMA5Color = 0xff770094;
+    private int PMA5Color = 0xffD5C35C;
 
-    private int PMA10Color = 0xffFFF100;
+    private int PMA10Color = 0xffACDEED;
 
-    private int PMA20Color = 0xff0A5BEA;
+    private int PMA20Color = 0xffCEB6CD;
 
     public int VolumeColor = 0xffA9B4C7;
 
@@ -282,7 +282,7 @@ public class KlineView extends StockLineView {
                 setVolumeLastIndex();
             }
 //            paintMainPanel(g);
-//            paintTopMessage(g);
+            paintTopMessage(g);
             paintLZ(g);
             paintKD(g);
             paintBottom(g);
@@ -630,6 +630,10 @@ public class KlineView extends StockLineView {
             if (k == klineDataList.size()) {
                 break;
             }
+            if (k == klineDataList.size() - 1) {
+                System.out.println(k+"+++"+klineDataList.get(k).get(OPEN)+"+++"+klineDataList.get(k).get(CLOSE));
+            }
+
             if (klineDataList.get(k).get(OPEN) == 0 || klineDataList.get(k).get(HIGH) == 0 ||
                     klineDataList.get(k).get(LOW) == 0 || klineDataList.get(k).get(CLOSE) == 0) {
                 continue;
@@ -658,6 +662,7 @@ public class KlineView extends StockLineView {
             }
 
 
+//            System.out.println(klineDataList.get(k).get(OPEN)+"----"+klineDataList.get(k).get(CLOSE));
             if (klineDataList.get(k).get(OPEN) < klineDataList.get(k).get(CLOSE)) {
                 paint.setColor(UpColor);
             } else if (klineDataList.get(k).get(OPEN) == klineDataList.get(k).get(CLOSE)) {
@@ -665,6 +670,7 @@ public class KlineView extends StockLineView {
             } else {
                 paint.setColor(DownColor);
             }
+//            System.out.println(klineDataList.get(k).get(OPEN)+"----"+klineDataList.get(k).get(CLOSE)+"-----"+paint.getColor());
 
             x1 = tempC + (d * 2 - 1) / 2;
             y1 = (int) (bottom - (drawH * (klineDataList.get(k).get(HIGH) - mainMin)) / (maxToMin));
@@ -673,8 +679,8 @@ public class KlineView extends StockLineView {
             //draw竖线
             g.drawLine(x1, y1, x2, y2, paint);
 
-            int open = (int) (klineDataList.get(k).get(OPEN) * 100);
-            int close = (int) (klineDataList.get(k).get(CLOSE) * 100);
+            double open =  (klineDataList.get(k).get(OPEN));
+            double close =  (klineDataList.get(k).get(CLOSE));
 
             if (open < close) {
                 paint.setColor(UpColor);
@@ -788,8 +794,8 @@ public class KlineView extends StockLineView {
                 mString += df.format(smmaCurve5.SMMA[smmaCurve5.SMMA.length - 1]);
             }
         }
-        canvas.drawCircle(sx, sy - 6, 3, linePaint);// 小圆
-        linePaint.setColor(CharColor);
+//        canvas.drawCircle(sx, sy - 6, 3, linePaint);// 小圆
+//        linePaint.setColor(CharColor);
         canvas.drawText(mString, sx + 3 * density, sy, linePaint);
 
         sx += Util.stringWidth(mString, linePaint) + 20;
@@ -805,8 +811,8 @@ public class KlineView extends StockLineView {
                 mString += df.format(smmaCurve10.SMMA[smmaCurve10.SMMA.length - 1]);
             }
         }
-        canvas.drawCircle(sx, sy - 6, 3, linePaint);// 小圆
-        linePaint.setColor(CharColor);
+//        canvas.drawCircle(sx, sy - 6, 3, linePaint);// 小圆
+//        linePaint.setColor(CharColor);
         canvas.drawText(mString, sx + 3 * density, sy, linePaint);
 
         sx += Util.stringWidth(mString, linePaint) + 20;
@@ -822,8 +828,8 @@ public class KlineView extends StockLineView {
                 mString += df.format(smmaCurve20.SMMA[smmaCurve20.SMMA.length - 1]);
             }
         }
-        canvas.drawCircle(sx, sy - 6, 3, linePaint);// 小圆
-        linePaint.setColor(CharColor);
+//        canvas.drawCircle(sx, sy - 6, 3, linePaint);// 小圆
+//        linePaint.setColor(CharColor);
         canvas.drawText(mString, sx + 3 * density, sy, linePaint);
 
 
@@ -913,6 +919,9 @@ public class KlineView extends StockLineView {
                 }
                 x = startX + KLINE_WIDTH * 2 * i;
 
+                if (k == klineDataList.size() - 1) {
+                    System.out.println(k+"---"+klineDataList.get(k).get(OPEN)+"---"+klineDataList.get(k).get(CLOSE));
+                }
 
                 h = (int) ((long) volumeHeight * 0.9 * (long) klineDataList.get(k).get(VOLUME)
                         .longValue() / (long) maxVolume);
@@ -922,8 +931,7 @@ public class KlineView extends StockLineView {
                 if (klineDataList.get(k).get(OPEN) < klineDataList.get(k).get(CLOSE)) {
                     paint.setColor(VolumeUpColor);
                     Util.drawRect(x, y, w, h, true, g, paint);
-                } else if (((int) (100 * klineDataList.get(k).get(OPEN))) == ((int) (100 *
-                        klineDataList.get(k).get(CLOSE)))) {
+                } else if (klineDataList.get(k).get(OPEN) == klineDataList.get(k).get(CLOSE)) {
                     if (k == 0 || (k > 0 && ((int) (100 * klineDataList.get(k).get(CLOSE))) >= (
                             (int) (100 * klineDataList.get(k - 1).get(CLOSE))))) {
                         paint.setColor(VolumeUpColor);

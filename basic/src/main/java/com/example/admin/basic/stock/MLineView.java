@@ -548,7 +548,6 @@ public class MLineView extends StockLineView {
                     ColorYellow}, null, Shader.TileMode.MIRROR);
             paint.setShader(gradient);
             float trendHeight = (endY - startY) * 9 / 20;
-            System.out.println("trendHeight pjx： " + trendHeight);
             float offsetX = (endX - startX - 0.1f) / MAX_MDATA_NUM;
             float lastX = 0.0f, lastY = 0.0f;
             float left, top, right, bottom;
@@ -716,7 +715,6 @@ public class MLineView extends StockLineView {
                 float h = (float) (volHeight * minDataList.get(i).get(1) / (maxVolume));
 
                 top = bottom - h;
-                System.out.println("h: "+h+"  top: "+top);
 
                 canvas.drawLine(left, top, right, bottom, paint);
             }

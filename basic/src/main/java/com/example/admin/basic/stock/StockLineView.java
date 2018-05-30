@@ -127,22 +127,22 @@ public abstract class StockLineView extends View implements ILineScatter {
             mPath.lineTo(endX, currentY);
             canvas.drawPath(mPath, highlightPaint);
 //            手势后的左右显示提示内容
-//            String text = String.valueOf(klineDataList.get(dataIndex).get(1));
-            String text = "0950943";
+            String text = String.valueOf(klineDataList.get(dataIndex).get(1));
+//            String text = "0950943";
             float width = Util.stringWidth(text, textPaint);
             canvas.drawRect(startX, currentY - (FontHeight / 2 + 4), startX + width + 8, currentY
                     + FontHeight / 2 + 4, textPaint);
             textPaint.setColor(Color.WHITE);
             canvas.drawText(text, startX + 2, currentY + FontHeight / 2 - 8, textPaint);
 //            手势右侧数据
-//            String rate = String.format("%s%s", klineDataList.get(dataIndex).get(5), "%");
-            String rate = "0950943";
+            String rate = String.format("%s%s", klineDataList.get(dataIndex).get(5), "%");
+//            String rate = "0950943";
             width = Util.stringWidth(text, textPaint);
             textPaint.setColor(getScrollTextBg());
-            canvas.drawRect(endX - (width + 8), currentY - FontHeight / 2, endX, currentY +
-                    FontHeight / 2 + 4, textPaint);
+//            canvas.drawRect(endX - (width + 8), currentY - FontHeight / 2, endX, currentY +
+//                    FontHeight / 2 + 4, textPaint);
             textPaint.setColor(Color.WHITE);
-            canvas.drawText(rate, endX - (width + 4), currentY + FontHeight / 2 - 8, textPaint);
+//            canvas.drawText(rate, endX - (width + 4), currentY + FontHeight / 2 - 8, textPaint);
         }
         if (isVerticalHighlightIndicatorEnabled()) {
             mPath.reset();

@@ -89,6 +89,16 @@ public class KLineModel {
             private String low;
             private String time;
 
+            public String getVolume() {
+                return volume;
+            }
+
+            public void setVolume(String volume) {
+                this.volume = volume;
+            }
+
+            private String volume;
+
             public String getOpen() {
                 return open;
             }
@@ -133,7 +143,6 @@ public class KLineModel {
 
     public DayData parseData() {
 //        todo 添加volume参数
-        String volume = "0.12648834";
         dayData = new DayData();
         List<List<Double>> outData = new ArrayList<>();
         List<String> time = new ArrayList<>();
@@ -146,7 +155,7 @@ public class KLineModel {
             one.add(Double.parseDouble(data.get(i).getClose()));
             one.add(Double.parseDouble(data.get(i).getHigh()));
             one.add(Double.parseDouble(data.get(i).getLow()));
-            one.add(Double.parseDouble(volume));
+            one.add(Double.parseDouble(data.get(i).getVolume()));
             if (i == 0) {
                 one.add(Double.parseDouble(getData().getLast()));
             } else {
