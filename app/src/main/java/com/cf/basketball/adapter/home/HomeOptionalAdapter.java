@@ -63,8 +63,8 @@ public class HomeOptionalAdapter extends ListBaseAdapter<HomeOptionalModel.DataB
         Button btnIncrease = holder.getView(R.id.btn_increase);
         tvIncreaseName.setText(TextUtils.concat(item.getName(), "/", item.getChange()));
         tvIncreaseSource.setText(item.getMarket());
-        tvIncreaseVolume.setText(TextUtils.concat(context.getString(R.string.volume, item
-                .getVolume())));
+        tvIncreaseVolume.setText(TextUtils.concat(context.getString(R.string.volume), item
+                .getVolume()));
         tvIncreasePrice.setText(item.getPrice1());
         tvIncreaseForeignPrice.setText(item.getPrice2());
         btnIncrease.setText(item.getUpdown());
