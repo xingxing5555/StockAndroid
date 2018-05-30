@@ -1,179 +1,163 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.cf.basketball.activity.CurrencyInfoActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--顶部数据-->
-    <com.example.admin.basic.view.RxToolBar
-        android:id="@+id/rtl_text"
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_44"
-        android:visibility="gone"
-        app:toolbarTitle="BTC/USD" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-    <!--中间数据-->
-    <com.example.admin.basic.view.ObservableScrollView
-        android:id="@+id/sv_info_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="none">
-
+        <!--上方提示内容-->
         <LinearLayout
+            android:id="@+id/ll_line"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_6">
 
-            <LinearLayout
-                android:id="@+id/ll_info_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:paddingBottom="@dimen/dp_15"
-                    android:paddingTop="@dimen/dp_30">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="8856.825"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/sp_16" />
-
-                    <TextView
-                        android:id="@+id/tv_info_price"
-                        style="@style/TextGrey10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_info_foregin_price"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dp_4"
-                        android:text="(¥56352.54)" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_info_price"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:text="-399.13\t\t\t-4.12%"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/sp_10" />
-
-                    <TextView
-                        android:id="@+id/tv_info_trade_total"
-                        style="@style/TextGrey10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_info_increase"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:text="成交量  1.424万" />
-
-                </RelativeLayout>
-
-                <include layout="@layout/common_horizontal_line" />
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="6"
-                    android:gravity="center">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_info_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <include
-                layout="@layout/common_vertical_line"
-                android:visibility="gone" />
-
-            <include
-                android:id="@+id/view_trend"
-                layout="@layout/activity_login" />
-
-            <com.example.admin.basic.view.SwitchLayout
-                android:id="@+id/sl_currency_navigation"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_32"
-                android:visibility="gone" />
-
-            <FrameLayout
-                android:id="@+id/fl_currency_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-        </LinearLayout>
-
-    </com.example.admin.basic.view.ObservableScrollView>
-
-
-    <!--底部数据-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey_e"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <RelativeLayout
-            android:id="@+id/rl_share"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/iv_share"
-                android:layout_width="@dimen/dp_16"
-                android:layout_height="@dimen/dp_16"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/share" />
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_7"
-                android:layout_toRightOf="@id/iv_share"
-                android:text="@string/share"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_16" />
-        </RelativeLayout>
+                android:layout_marginLeft="@dimen/dp_14">
+
+                <TextView
+                    android:id="@+id/tv_trend_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="货币"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_trend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_trend_type"
+                    android:text="dfsf"
+                    android:textColor="@color/grey_9"
+                    android:textSize="@dimen/sp_12" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_14">
+
+                <TextView
+                    android:id="@+id/tv_info_foregin_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_info_increase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_info_foregin_price"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp_12" />
+            </RelativeLayout>
+
+            <com.example.admin.basic.view.MeasureRecyclerView
+                android:id="@+id/mrv_line"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dp_23"
+                android:src="@mipmap/icon_close" />
+        </LinearLayout>
+
+        <include layout="@layout/common_vertical_line" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_280"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp_20" />
+
+                <com.example.admin.basic.stock.MLineView
+                    android:id="@+id/mLineView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.example.admin.basic.stock.KlineView
+                    android:id="@+id/kDayLineView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:visibility="gone" />
+
+                <com.example.admin.basic.view.MeasureRecyclerView
+                    android:id="@+id/mrv_kline_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:visibility="gone" />
+            </LinearLayout>
 
 
-        <include layout="@layout/common_horizontal_line"></include>
+            <com.example.admin.basic.stock.KlineView
+                android:id="@+id/kWeekLineView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tv_add_optional"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/optional"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_16" />
+            <com.example.admin.basic.stock.KlineView
+                android:id="@+id/kMonthLineView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_line_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <com.example.admin.basic.stock.TabIndicatorViewV2
+            android:id="@+id/tabIndicatorView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_32"
+            android:background="@color/grey_e"
+            app:indicatorHeight="2dp"
+            app:indicatorPadding="@dimen/dp_25"
+            app:normalColor="@color/transparent"
+            app:normalTextColor="@color/grey_9"
+            app:selectedColor="@color/red"
+            app:selectedTextColor="@color/red"
+            app:textSize="@dimen/sp_14" />
+
     </LinearLayout>
-
-</LinearLayout>
+</layout>

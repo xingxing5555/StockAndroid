@@ -70,8 +70,8 @@ public class MarketDescModel {
 
         private String desc;
         private int rank;
-        private long volume;
-        private long circulation;
+        private String volume;
+        private String circulation;
         private String cost;
         private String time;
         private String url1;
@@ -97,19 +97,19 @@ public class MarketDescModel {
             this.rank = rank;
         }
 
-        public long getVolume() {
+        public String getVolume() {
             return volume;
         }
 
-        public void setVolume(long volume) {
+        public void setVolume(String volume) {
             this.volume = volume;
         }
 
-        public long getCirculation() {
+        public String getCirculation() {
             return circulation;
         }
 
-        public void setCirculation(long circulation) {
+        public void setCirculation(String circulation) {
             this.circulation = circulation;
         }
 

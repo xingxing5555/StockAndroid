@@ -18,6 +18,7 @@
         android:id="@+id/tv_line_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:singleLine="true"
         android:textColor="@drawable/selector_kline_land_enable"
         android:textSize="@dimen/sp_12" />
 </LinearLayout>

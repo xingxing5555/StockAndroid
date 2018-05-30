@@ -73,6 +73,12 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     }
 
     @Override
+    public void onClickKLineType(String type) {
+        // todo KLine 右侧的文字
+        LogUtils.e("type=" + type);
+    }
+
+    @Override
     public void changeChartView(int currentChart) {
         mLineView.setMarket(curMarket);
 //        buySellContainer.setVisibility(View.GONE);
@@ -151,8 +157,11 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
 //                getTodayData(curMarket, stockCode, true);
                 break;
             case DAY_KLINE:
-                kWeekLineView.clearData();
-                kWeekLineView.setVisibility(View.VISIBLE);
+                kDayLineView.clearData();
+                kDayLineView.setVisibility(View.VISIBLE);
+                if (mrvKlineType != null) {
+                    mrvKlineType.setVisibility(View.VISIBLE);
+                }
                 NetManager.getInstance().getKLine(id, currentChart - 1, this);
 //                refreshDayData(curMarket, stockCode);
 //                refreshWeekData(curMarket, stockCode);
@@ -189,14 +198,16 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
                 return;
             }
             data = model.getData();
-            rtlText.setToolbarTitle(data.getBarName());
-            rtlText.setTvToolbarContent(data.getTime());
+            if (rtlText != null) {
+                rtlText.setToolbarTitle(data.getBarName());
+                rtlText.setTvToolbarContent(data.getTime());
+                tvInfoPrice.setText(TextUtils.concat("(¥", data.getPrice2(), ")"));
+                homeInfoDataAdapter.setDataList(getInfoData());
+                homeInfoDataAdapter.notifyDataSetChanged();
+                tvInfoTradeTotal.setText(TextUtils.concat("成交量 " + data.getVolumn()));
+            }
             tvInfoForeignPrice.setText(data.getPrice1());
-            tvInfoPrice.setText(TextUtils.concat("(¥", data.getPrice2(), ")"));
             tvInfoRate.setText(TextUtils.concat(data.getUpdown() + "\t\t" + data.getRate()));
-            tvInfoTradeTotal.setText(TextUtils.concat("成交量 " + data.getVolumn()));
-            homeInfoDataAdapter.setDataList(getInfoData());
-            homeInfoDataAdapter.notifyDataSetChanged();
             currencyLineAdapter.setNewData(getKLineData());
             currencyLineAdapter.notifyDataSetChanged();
             tvLineTime.setText(data.getTime());
@@ -236,9 +247,9 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
             if (kLineModel == null || kLineModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
                 return;
             }
-            kWeekLineView.setData(kLineModel.parseData(), WEEK_KLINE, false, KlineView
+            kDayLineView.setData(kLineModel.parseData(), WEEK_KLINE, false, KlineView
                     .K_BOTTOM_TYPE_CJL);
-            kWeekLineView.postInvalidate();
+            kDayLineView.postInvalidate();
         }
         if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
                 (WEEK_KLINE - 1)))) {

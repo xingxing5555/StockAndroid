@@ -68,6 +68,12 @@
         <item>市场</item>
     </string-array>
 
+ <string-array name="item_currency_info_kline">
+        <item>VOL</item>
+        <item>MACD</item>
+        <item>KDJ</item>
+    </string-array>
+
     <string-array name="btc_info_project_title">
         <item >排行</item>
         <item >市值</item>

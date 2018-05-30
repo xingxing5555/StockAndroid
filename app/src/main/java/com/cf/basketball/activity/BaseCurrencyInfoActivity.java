@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,18 +14,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cf.basketball.R;
+import com.cf.basketball.adapter.currency.CurrencyKLineAdpater;
 import com.cf.basketball.adapter.currency.CurrencyLineAdapter;
 import com.cf.basketball.adapter.home.HomeCurrencyInfoDataAdapter;
 import com.cf.basketball.fragment.currency.CurrencyInfoBriefFragment;
 import com.cf.basketball.fragment.currency.CurrencyInfoMarketFragment;
 import com.cf.basketball.fragment.currency.CurrencyInfoNewsFragment;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseActivity;
 import com.example.admin.basic.interfaces.OnItemClickListener;
 import com.example.admin.basic.interfaces.OnScrollChangedListener;
 import com.example.admin.basic.stock.KlineView;
 import com.example.admin.basic.stock.MLineView;
 import com.example.admin.basic.stock.TabIndicatorViewV2;
-import com.example.admin.basic.utils.DateUtils;
 import com.example.admin.basic.utils.LogUtils;
 import com.example.admin.basic.view.MeasureRecyclerView;
 import com.example.admin.basic.view.ObservableScrollView;
@@ -65,6 +67,8 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
     public CurrencyLineAdapter currencyLineAdapter;
     public CurrencyLineAdapter landCurrencyLineAdapter;
     public TextView tvTrendName;
+    public MeasureRecyclerView mrvKlineType;
+    private CurrencyKLineAdpater kLineAdpater;
 
 
     @Override
@@ -82,32 +86,39 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
         tvInfoRate = (TextView) findViewById(R.id.tv_info_increase);
         tvInfoTradeTotal = (TextView) findViewById(R.id.tv_info_trade_total);
         llInfoContent = (LinearLayout) findViewById(R.id.ll_info_content);
-        currentTime = DateUtils.getCurrentTime();
-        rtlText = (RxToolBar) findViewById(R.id.rtl_text);
-        rtlText.setTvToolbarContent(currentTime);
-        svInfoContainer = (ObservableScrollView) findViewById(R.id.sv_info_container);
-        svInfoContainer.setOnScrollChangedListener(this);
         rvInfoData = (RecyclerView) findViewById(R.id.rv_info_data);
-        rvInfoData.setLayoutManager(createGridLayoutManager(2));
-        homeInfoDataAdapter = new HomeCurrencyInfoDataAdapter(this);
-        rvInfoData.setAdapter(homeInfoDataAdapter);
+        rtlText = (RxToolBar) findViewById(R.id.rtl_text);
+        rlShare = (RelativeLayout) findViewById(R.id.rl_share);
+        tvAddOptional = (TextView) findViewById(R.id.tv_add_optional);
         slCurrencyNavigation = (SwitchLayout) findViewById(R.id.sl_currency_navigation);
-        slCurrencyNavigation.setOnItemClickListener(this);
-        fragmentManager = getSupportFragmentManager();
-        currencyInfoNewsFragment = new CurrencyInfoNewsFragment();
-        currencyInfoBriefFragment = new CurrencyInfoBriefFragment();
-        currencyInfoMarketFragment = new CurrencyInfoMarketFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", id);
-        currencyInfoMarketFragment.setArguments(bundle);
-        currencyInfoBriefFragment.setArguments(bundle);
-        currencyInfoNewsFragment.setArguments(bundle);
-        fragmentManager.beginTransaction().add(R.id.fl_currency_container,
-                currencyInfoNewsFragment).add(R.id.fl_currency_container,
-                currencyInfoBriefFragment).add(R.id.fl_currency_container,
-                currencyInfoMarketFragment).show(currencyInfoNewsFragment).hide
-                (currencyInfoBriefFragment).hide(currencyInfoMarketFragment).commit();
+
+        if (rtlText != null) {
+            rtlText.setTvToolbarContent(currentTime);
+            svInfoContainer = (ObservableScrollView) findViewById(R.id.sv_info_container);
+            svInfoContainer.setOnScrollChangedListener(this);
+            rvInfoData.setLayoutManager(createGridLayoutManager(2));
+            homeInfoDataAdapter = new HomeCurrencyInfoDataAdapter(this);
+            rvInfoData.setAdapter(homeInfoDataAdapter);
+            slCurrencyNavigation.setOnItemClickListener(this);
+            fragmentManager = getSupportFragmentManager();
+            currencyInfoNewsFragment = new CurrencyInfoNewsFragment();
+            currencyInfoBriefFragment = new CurrencyInfoBriefFragment();
+            currencyInfoMarketFragment = new CurrencyInfoMarketFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("id", id);
+            currencyInfoMarketFragment.setArguments(bundle);
+            currencyInfoBriefFragment.setArguments(bundle);
+            currencyInfoNewsFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().add(R.id.fl_currency_container,
+                    currencyInfoNewsFragment).add(R.id.fl_currency_container,
+                    currencyInfoBriefFragment).add(R.id.fl_currency_container,
+                    currencyInfoMarketFragment).show(currencyInfoNewsFragment).hide
+                    (currencyInfoBriefFragment).hide(currencyInfoMarketFragment).commit();
+            rlShare.setOnClickListener(this);
+            tvAddOptional.setOnClickListener(this);
+        }
         tabIndicatorView = (TabIndicatorViewV2) this.findViewById(R.id.tabIndicatorView);
+        mrvKlineType = (MeasureRecyclerView) findViewById(R.id.mrv_kline_type);
         mLineView = (MLineView) this.findViewById(R.id.mLineView);
         mLineView.setMarket(HS_MARKET);
         kDayLineView = (KlineView) this.findViewById(R.id.kDayLineView);
@@ -125,6 +136,21 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 }
             });
+            final String[] array = getResources().getStringArray(R.array.item_currency_info_kline);
+            LogUtils.e("array=" + array.toString());
+            LinearLayoutManager layout = new LinearLayoutManager(this);
+            mrvKlineType.setLayoutManager(layout);
+            layout.setStackFromEnd(true);
+            kLineAdpater = new CurrencyKLineAdpater(R.layout.item_currency_kline_type, Arrays
+                    .asList(array));
+            mrvKlineType.setAdapter(kLineAdpater);
+            kLineAdpater.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    String type = array[position];
+                    onClickKLineType(type);
+                }
+            });
         }
         String[] title = getResources().getStringArray(R.array.currency_trend);
         tabIndicatorView.setTitles(Arrays.asList(title));
@@ -133,15 +159,12 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
         kDayLineView.setOnClickListener(listener);
         kWeekLineView.setOnClickListener(listener);
         kMonthLineView.setOnClickListener(listener);
-        rlShare = (RelativeLayout) findViewById(R.id.rl_share);
-        rlShare.setOnClickListener(this);
-        tvAddOptional = (TextView) findViewById(R.id.tv_add_optional);
-        tvAddOptional.setOnClickListener(this);
+
         mrvLine.setLayoutManager(createGridLayoutManager(3));
         LogUtils.e("isLand==" + isLand);
         if (isLand) {
-            currencyLineAdapter = new CurrencyLineAdapter(this, R.layout.item_currency_kline_land,
-                    getData());
+            currencyLineAdapter = new CurrencyLineAdapter(this, R.layout
+                    .item_currency_kline_land, getData());
         } else {
             currencyLineAdapter = new CurrencyLineAdapter(this, R.layout.item_currency_kline,
                     getData());
@@ -172,8 +195,10 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
         super.onConfigurationChanged(newConfig);
         int mCurrentOrientation = getResources().getConfiguration().orientation;
         if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            LogUtils.e("横屏");
             isLand = true;
         } else {
+            LogUtils.e("竖屏");
             isLand = false;
         }
 
@@ -232,6 +257,9 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
         kMonthLineView.setVisibility(View.GONE);
         mLineView.setVisibility(View.GONE);
         llLine.setVisibility(View.GONE);
+        if (mrvKlineType != null) {
+        mrvKlineType.setVisibility(View.GONE);
+        }
         changeChartView(position);
     }
 
@@ -252,4 +280,6 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
     public abstract void init();
 
     public abstract void addOrDel();
+
+    public abstract void onClickKLineType(String type);
 }
