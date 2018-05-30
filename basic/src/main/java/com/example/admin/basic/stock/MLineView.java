@@ -69,21 +69,21 @@ public class MLineView extends StockLineView {
     }
 
     public void setMarket(String market) {
-        this.market = market;
-        if (TextUtils.isEmpty(market)) {
-            return;
-        }
-        switch (market) {
-            case "hs":
-                MAX_MDATA_NUM = 480;
-                break;
-            case "hk":
-                MAX_MDATA_NUM = 332;
-                break;
-            case "us":
-                MAX_MDATA_NUM = 391;
-                break;
-        }
+//        this.market = market;
+//        if (TextUtils.isEmpty(market)) {
+//            return;
+//        }
+//        switch (market) {
+//            case "hs":
+//                MAX_MDATA_NUM = 480;
+//                break;
+//            case "hk":
+//                MAX_MDATA_NUM = 332;
+//                break;
+//            case "us":
+//                MAX_MDATA_NUM = 391;
+//                break;
+//        }
     }
 
 
@@ -92,36 +92,36 @@ public class MLineView extends StockLineView {
         switch (mlineType) {
             case ONE_DAY_MINUTES_LINE:
                 isOneDayMLine = true;
-                switch (market) {
-                    case "hs":
-                        MAX_MDATA_NUM = 480;
-                        break;
-                    case "hk":
-                        MAX_MDATA_NUM = 332;
-                        break;
-                    case "us":
-                        MAX_MDATA_NUM = 391;
-                        break;
-                    default:
-                        break;
-                }
+//                switch (market) {
+//                    case "hs":
+//                        MAX_MDATA_NUM = 480;
+//                        break;
+//                    case "hk":
+//                        MAX_MDATA_NUM = 332;
+//                        break;
+//                    case "us":
+//                        MAX_MDATA_NUM = 391;
+//                        break;
+//                    default:
+//                        break;
+//                }
                 break;
             case FIVE_DAY_MINUTES_LINE:
                 isOneDayMLine = false;
 //                setMarket(market);
-                switch (market) {
-                    case "hs":
-                        MAX_MDATA_NUM = 245;
-                        break;
-                    case "hk":
-                        MAX_MDATA_NUM = 336;
-                        break;
-                    case "us":
-                        MAX_MDATA_NUM = 395;
-                        break;
-                    default:
-                        break;
-                }
+//                switch (market) {
+//                    case "hs":
+//                        MAX_MDATA_NUM = 245;
+//                        break;
+//                    case "hk":
+//                        MAX_MDATA_NUM = 336;
+//                        break;
+//                    case "us":
+//                        MAX_MDATA_NUM = 395;
+//                        break;
+//                    default:
+//                        break;
+//                }
                 break;
             default:
                 break;
@@ -425,8 +425,8 @@ public class MLineView extends StockLineView {
             float tmp = paint.measureText("09:30");
             float offsetX = (endX - startX - 0.1f) / (MAX_MDATA_NUM);
             float marketRestTimeX = 0;
-            switch (market) {
-                case "hs":
+//            switch (market) {
+//                case "hs":
                     marketRestTimeX = startX + offsetX * 121;
                     canvas.drawLine(marketRestTimeX, startY, marketRestTimeX, endY, paint);
                     paint.setAntiAlias(true);
@@ -434,28 +434,28 @@ public class MLineView extends StockLineView {
                     canvas.drawText("00:00", startX, drawY, paint);
 //                    canvas.drawText("11:30/13:00", marketRestTimeX - tmp, drawY, paint);
                     canvas.drawText("24:00", endX - tmp, drawY, paint);
-                    break;
-                case "hk":
-                    marketRestTimeX = startX + offsetX * 151;
-                    canvas.drawLine(marketRestTimeX, startY, marketRestTimeX, endY, paint);
-                    paint.setAntiAlias(true);
-                    paint.setColor(ColorText);
-                    canvas.drawText("9:30", startX, drawY, paint);
-                    canvas.drawText("12:00/13:00", marketRestTimeX - tmp, drawY, paint);
-                    canvas.drawText("16:00", endX - tmp, drawY, paint);
-                    break;
-                case "us":
-                    marketRestTimeX = startX + offsetX * 181;
-                    canvas.drawLine(marketRestTimeX, startY, marketRestTimeX, endY, paint);
-                    paint.setAntiAlias(true);
-                    paint.setColor(ColorText);
-                    canvas.drawText("9:30", startX, drawY, paint);
-                    canvas.drawText("12:30", marketRestTimeX - tmp / 2, drawY, paint);
-                    canvas.drawText("16:00", endX - tmp, drawY, paint);
-                    break;
-                default:
-                    break;
-            }
+//                    break;
+//                case "hk":
+//                    marketRestTimeX = startX + offsetX * 151;
+//                    canvas.drawLine(marketRestTimeX, startY, marketRestTimeX, endY, paint);
+//                    paint.setAntiAlias(true);
+//                    paint.setColor(ColorText);
+//                    canvas.drawText("9:30", startX, drawY, paint);
+//                    canvas.drawText("12:00/13:00", marketRestTimeX - tmp, drawY, paint);
+//                    canvas.drawText("16:00", endX - tmp, drawY, paint);
+//                    break;
+//                case "us":
+//                    marketRestTimeX = startX + offsetX * 181;
+//                    canvas.drawLine(marketRestTimeX, startY, marketRestTimeX, endY, paint);
+//                    paint.setAntiAlias(true);
+//                    paint.setColor(ColorText);
+//                    canvas.drawText("9:30", startX, drawY, paint);
+//                    canvas.drawText("12:30", marketRestTimeX - tmp / 2, drawY, paint);
+//                    canvas.drawText("16:00", endX - tmp, drawY, paint);
+//                    break;
+//                default:
+//                    break;
+//            }
 //            paint.setAntiAlias(true);
 //            paint.setColor(ColorText);
 //            int num = (int) (endX - startX) / times.size();

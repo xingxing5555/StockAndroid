@@ -72,6 +72,7 @@
             android:id="@+id/btn_huobi"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_30"
+            android:textColor="#FFFFFF"
             android:background="@drawable/select_btn_increase" />
     </LinearLayout>
 </LinearLayout>
