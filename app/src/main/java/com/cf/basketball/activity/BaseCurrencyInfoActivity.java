@@ -74,12 +74,12 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        id = getIntent().getStringExtra("id");
-        LogUtils.e("当前的id" + id);
+
     }
 
     @Override
     public void initView() {
+        id = getIntent().getStringExtra("id");
         setContentView(R.layout.activity_currency_info);
         tvInfoPrice = (TextView) findViewById(R.id.tv_info_price);
         tvInfoForeignPrice = (TextView) findViewById(R.id.tv_info_foregin_price);

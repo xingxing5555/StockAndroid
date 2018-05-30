@@ -49,7 +49,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     String curMarket = HS_MARKET;
     boolean canRefresh;
     int currentChart;
-    String id = "36";
+//    String id = "36";
     private CurrencyInfoModel.DataBean data;
     private String last;
 
@@ -60,7 +60,6 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
         yearWeek = now.get(Calendar.YEAR);
         yearMonth = now.get(Calendar.YEAR);
         currentChart = MLINE;
-        refresh();
         NetManager.getInstance().getCurrencyInfo(id, this);
     }
 
@@ -215,6 +214,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
                 tvTrendName.setText(data.getBarName());
             }
             last = data.getLast();
+            refresh();
         }
 
         if (TextUtils.equals(tag, Constants.TAG_ADD_DEL_EVENT)) {

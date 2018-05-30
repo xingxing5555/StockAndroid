@@ -698,23 +698,25 @@ public class MLineView extends StockLineView {
                 right = left > endX ? endX : left;
                 bottom = this.volumeEndY - 1;
 
-                if (mlineType == ONE_DAY_MINUTES_LINE) {
-                    if (i == 0) {
-                        curVolume = minDataList.get(i).get(1);
-                    } else {
-                        curVolume = minDataList.get(i).get(1) - minDataList.get(i - 1).get(1);
-                    }
-                } else {
-                    if (i == 0 || i % 49 == 0) {
-                        curVolume = minDataList.get(i).get(1);
-                    } else {
-                        curVolume = minDataList.get(i).get(1) - minDataList.get(i - 1).get(1);
-                    }
-                }
+//                if (mlineType == ONE_DAY_MINUTES_LINE) {
+//                    if (i == 0) {
+//                        curVolume = minDataList.get(i).get(1);
+//                    } else {
+//                        curVolume = minDataList.get(i).get(1) - minDataList.get(i - 1).get(1);
+//                    }
+//                } else {
+//                    if (i == 0 || i % 49 == 0) {
+//                        curVolume = minDataList.get(i).get(1);
+//                    } else {
+//                        curVolume = minDataList.get(i).get(1) - minDataList.get(i - 1).get(1);
+//                    }
+//                }
 
 
-                float h = (float) (volHeight * curVolume / (maxVolume));
+                float h = (float) (volHeight * minDataList.get(i).get(1) / (maxVolume));
+
                 top = bottom - h;
+                System.out.println("h: "+h+"  top: "+top);
 
                 canvas.drawLine(left, top, right, bottom, paint);
             }

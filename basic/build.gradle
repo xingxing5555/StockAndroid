@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+//    buildToolsVersion "25.0.2"
 
 
     defaultConfig {
@@ -31,28 +31,28 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.4.0'
-    testCompile 'junit:junit:4.12'
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.android.support:appcompat-v7:26.1.0'
+    testImplementation 'junit:junit:4.12'
     //    网络请求
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.google.code.gson:gson-parent:2.8.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-    compile 'com.squareup.retrofit2:converter-scalars:2.0.0'
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
+    api 'com.squareup.retrofit2:retrofit:2.2.0'
+    api 'com.google.code.gson:gson:2.8.1'
+    api 'com.google.code.gson:gson-parent:2.8.1'
+    api 'com.squareup.retrofit2:converter-gson:2.2.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.0.0'
+    api 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     // RecyclerView的适配器帮助类
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     //图片加载工具
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    api 'com.github.bumptech.glide:glide:3.7.0'
     //图表工具
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    api 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     //卡片布局
-    compile 'com.android.support:cardview-v7:25.3.1'
     //    EventBus
-    compile 'org.greenrobot:eventbus:3.0.0'
+    api 'org.greenrobot:eventbus:3.0.0'
     //    RecyclerView的封装库
-    compile 'com.github.jdsjlzx:LRecyclerView:1.5.0'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+    api 'com.github.jdsjlzx:LRecyclerView:1.5.0'
+    api 'com.android.support:support-v4:26.1.0'
+    api 'com.android.support:cardview-v7:26.1.0'
+    api 'com.android.support:recyclerview-v7:26.1.0'
 }
