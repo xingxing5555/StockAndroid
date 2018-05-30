@@ -46,6 +46,11 @@ public class HomeType4Adapter extends ListBaseAdapter<HomeType4Model.DataBean.Co
         tvHuobiForeignPrice.setText(item.getPrice2());
         btnHuobi.setText(item.getUpdown());
         boolean minus = CommonUtils.isMinus(item.getUpdown());
+        if (!minus) {
+            btnHuobi.setText(TextUtils.concat("+", item.getUpdown()));
+        } else {
+            btnHuobi.setText(item.getUpdown());
+        }
         btnHuobi.setSelected(minus);
         tvHuobiPrice.setEnabled(minus);
     }

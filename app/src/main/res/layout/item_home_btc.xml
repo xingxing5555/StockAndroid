@@ -73,6 +73,7 @@
             android:id="@+id/btn_btc"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_30"
-            android:background="@drawable/select_btn_increase" />
+            android:background="@drawable/select_btn_increase"
+            android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

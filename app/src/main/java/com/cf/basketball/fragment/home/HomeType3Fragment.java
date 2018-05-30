@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class HomeType3Fragment extends BaseRecyclerViewFragment implements OnRequestListener {
 
-    private HomeType3Adapter homeBTCAdapter;
+    private HomeType3Adapter homeType3Adapter;
     private List<HomeType3Model.DataBean.CoinsBean> list = new ArrayList<>();
     private int pageNum = 1;
     private String id;
@@ -54,9 +54,9 @@ public class HomeType3Fragment extends BaseRecyclerViewFragment implements OnReq
 
     @Override
     public LRecyclerViewAdapter getLRecyclerViewAdapter() {
-        homeBTCAdapter = new HomeType3Adapter(getContext());
-        homeBTCAdapter.setDataList(list);
-        return new LRecyclerViewAdapter(homeBTCAdapter);
+        homeType3Adapter = new HomeType3Adapter(getContext());
+        homeType3Adapter.setDataList(list);
+        return new LRecyclerViewAdapter(homeType3Adapter);
     }
 
     @Override
@@ -74,9 +74,9 @@ public class HomeType3Fragment extends BaseRecyclerViewFragment implements OnReq
         }
         List<HomeType3Model.DataBean.CoinsBean> coins = marketMarketModel.getData().getCoins();
         list.addAll(coins);
-        homeBTCAdapter.setDataList(list);
+        homeType3Adapter.setDataList(list);
         mRecyclerView.refreshComplete(0);
-        homeBTCAdapter.notifyDataSetChanged();
+        homeType3Adapter.notifyDataSetChanged();
     }
 
     @Override

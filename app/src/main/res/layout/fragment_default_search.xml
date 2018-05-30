@@ -20,11 +20,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/dp_30"
                     android:layout_marginBottom="@dimen/dp_20"
+                    android:paddingTop="@dimen/dp_30"
                     android:text="@string/search_history"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
                 <com.example.admin.basic.view.MeasureRecyclerView
                     android:id="@+id/mrv_search_history_list"
@@ -38,7 +39,8 @@
                     android:layout_marginBottom="@dimen/dp_20"
                     android:text="@string/hot_currency"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
                 <com.example.admin.basic.view.MeasureRecyclerView
                     android:id="@+id/mrv_search_hot_list"
@@ -51,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dp_20"
                     android:text="@string/select_trade"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16" />
 

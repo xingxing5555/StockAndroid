@@ -67,8 +67,12 @@ public class HomeOptionalAdapter extends ListBaseAdapter<HomeOptionalModel.DataB
                 .getVolume()));
         tvIncreasePrice.setText(item.getPrice1());
         tvIncreaseForeignPrice.setText(item.getPrice2());
-        btnIncrease.setText(item.getUpdown());
         boolean minus = CommonUtils.isMinus(item.getUpdown());
+        if (!minus) {
+            btnIncrease.setText(TextUtils.concat("+", item.getUpdown()));
+        } else {
+            btnIncrease.setText(item.getUpdown());
+        }
         btnIncrease.setSelected(minus);
         tvIncreasePrice.setEnabled(minus);
     }

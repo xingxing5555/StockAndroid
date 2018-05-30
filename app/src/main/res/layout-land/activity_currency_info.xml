@@ -25,7 +25,6 @@
                     android:id="@+id/tv_trend_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="货币"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -34,7 +33,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_trend_type"
-                    android:text="dfsf"
                     android:textColor="@color/grey_9"
                     android:textSize="@dimen/sp_12" />
             </RelativeLayout>

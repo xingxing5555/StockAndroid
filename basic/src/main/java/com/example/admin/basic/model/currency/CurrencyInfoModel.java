@@ -6,13 +6,14 @@ package com.example.admin.basic.model.currency;
 
 public class CurrencyInfoModel {
 
+
     /**
      * code : 200
      * msg :
-     * data : {"barName":"OMG/BTC","time":"2018/05/27 11:55:48","price1":"69.2640585",
-     * "price2":"10.8425","updown":"-0.000047","rate":"-0.21%","open":"0.022294",
-     * "close":"0.022247","high":"0.022728","low":"0.022118","last":"0.00144","buy1":"0.022241",
-     * "sell1":"0.022319","volumn":"23134.14"}
+     * data : {"barName":"VEN/BNB","time":"2018/05/30 17:32:41","price1":"22.36595308",
+     * "price2":"3.48428","updown":"0.0044","rate":"1.64%","open":"0.2677","close":"0.2721",
+     * "high":"0.2784","low":"0.2555","last":"0.2718","buy1":"0.2724","sell1":"0.2736",
+     * "volumn":"12507.394612","isSelfSelected":false}
      */
 
     private int code;
@@ -45,20 +46,21 @@ public class CurrencyInfoModel {
 
     public static class DataBean {
         /**
-         * barName : OMG/BTC
-         * time : 2018/05/27 11:55:48
-         * price1 : 69.2640585
-         * price2 : 10.8425
-         * updown : -0.000047
-         * rate : -0.21%
-         * open : 0.022294
-         * close : 0.022247
-         * high : 0.022728
-         * low : 0.022118
-         * last : 0.00144
-         * buy1 : 0.022241
-         * sell1 : 0.022319
-         * volumn : 23134.14
+         * barName : VEN/BNB
+         * time : 2018/05/30 17:32:41
+         * price1 : 22.36595308
+         * price2 : 3.48428
+         * updown : 0.0044
+         * rate : 1.64%
+         * open : 0.2677
+         * close : 0.2721
+         * high : 0.2784
+         * low : 0.2555
+         * last : 0.2718
+         * buy1 : 0.2724
+         * sell1 : 0.2736
+         * volumn : 12507.394612
+         * isSelfSelected : false
          */
 
         private String barName;
@@ -75,6 +77,7 @@ public class CurrencyInfoModel {
         private String buy1;
         private String sell1;
         private String volumn;
+        private boolean isSelfSelected;
 
         public String getBarName() {
             return barName;
@@ -186,6 +189,14 @@ public class CurrencyInfoModel {
 
         public void setVolumn(String volumn) {
             this.volumn = volumn;
+        }
+
+        public boolean isIsSelfSelected() {
+            return isSelfSelected;
+        }
+
+        public void setIsSelfSelected(boolean isSelfSelected) {
+            this.isSelfSelected = isSelfSelected;
         }
     }
 }

@@ -17,9 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cf.basketball.R;
+import com.cf.basketball.activity.BtcInfoActivity;
 import com.cf.basketball.adapter.btc.BtcMarketListAdapter;
 import com.cf.basketball.databinding.FragmentBtcChartBinding;
 import com.cf.basketball.net.NetManager;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.admin.basic.base.BaseFragment;
 import com.example.admin.basic.constants.Constants;
 import com.example.admin.basic.interfaces.OnRequestListener;
@@ -46,6 +48,7 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
     private FragmentBtcChartBinding binding;
     private ArrayList<PieData> mPieDatas = new ArrayList<>();
     private BtcMarketListAdapter adapter;
+    private List<BtcMarketModel.DataBean.MarketsBean> markets;
     private String id;
 
     @Override
@@ -69,7 +72,7 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
         binding.mrvList.setLayoutManager(createLayoutManager(true));
         binding.mrvList.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
-        adapter = new BtcMarketListAdapter(getContext());
+        adapter = new BtcMarketListAdapter(R.layout.item_home_btc, markets);
         binding.mrvList.setAdapter(adapter);
 
 
@@ -119,9 +122,15 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
             return;
         }
         BtcMarketModel.DataBean data = marketModel.getData();
-        List<BtcMarketModel.DataBean.MarketsBean> markets = data.getMarkets();
-        adapter.setDataList(markets);
+        markets = data.getMarkets();
+        adapter.setNewData(markets);
         adapter.notifyDataSetChanged();
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(String.valueOf(markets.get(position).getId()), BtcInfoActivity.class);
+            }
+        });
         binding.tvTurnVolume.setText(data.getAmount());
         List<String> rates = data.getRates();
         List<String> names = data.getNames();

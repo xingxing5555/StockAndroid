@@ -52,8 +52,12 @@ public class HomeMarketAdapter extends ListBaseAdapter<HomeMarketModel.DataBean.
         tvMarketName.setText(bean.getName());
         tvMarketTotalValue.setText(TextUtils.concat(Constants.SIGN_MONEY, bean.getValue()));
         tvMarketPrice.setText(TextUtils.concat(Constants.SIGN_MONEY, bean.getPrice()));
-        btnIncrease.setText(bean.getUpdown());
         boolean minus = CommonUtils.isMinus(bean.getUpdown());
+        if (!minus) {
+            btnIncrease.setText(TextUtils.concat("+", bean.getUpdown()));
+        } else {
+            btnIncrease.setText(bean.getUpdown());
+        }
         btnIncrease.setSelected(minus);
         tvMarketPrice.setEnabled(minus);
     }

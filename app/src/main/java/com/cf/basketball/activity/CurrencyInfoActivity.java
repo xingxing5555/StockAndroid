@@ -52,6 +52,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     //    String id = "36";
     private CurrencyInfoModel.DataBean data;
     private String last;
+    private CurrencyInfoModel model;
 
     @Override
     public void init() {
@@ -68,6 +69,14 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
      */
     @Override
     public void addOrDel() {
+        if (model == null) {
+            return;
+        }
+        boolean isSelfSelected = model.getData().isIsSelfSelected();
+        if (isSelfSelected) {
+            ToastUtils.toastShot(this, "已加入自选,请勿重复添加");
+            return;
+        }
         NetManager.getInstance().addOrDelCurrency(token, id, Constants.EVENT_ADD, this);
     }
 
@@ -147,7 +156,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     public void onResponse(String tag, String json) {
         if (TextUtils.equals(tag, Constants.TAG_CURRENCY_INFO)) {
             LogUtils.e("详情页：" + json);
-            CurrencyInfoModel model = new Gson().fromJson(json, CurrencyInfoModel.class);
+            model = new Gson().fromJson(json, CurrencyInfoModel.class);
             if (model == null || model.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
                 return;
             }

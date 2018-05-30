@@ -1,6 +1,7 @@
 package com.cf.basketball.adapter.home;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -41,6 +42,11 @@ public class HomeUpDownAdapter extends ListBaseAdapter<HomeUpDownModel.DataBean.
         tvIncreaseForeignPrice.setText(item.getPrice2());
         btnIncrease.setText(item.getUpdown());
         boolean plus = CommonUtils.isMinus(item.getUpdown());
+        if (!plus) {
+            btnIncrease.setText(TextUtils.concat("+", item.getUpdown()));
+        } else {
+            btnIncrease.setText(item.getUpdown());
+        }
         btnIncrease.setSelected(plus);
         tvIncreasePrice.setEnabled(plus);
     }

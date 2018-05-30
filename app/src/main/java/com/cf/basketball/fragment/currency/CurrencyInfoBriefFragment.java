@@ -4,6 +4,7 @@ package com.cf.basketball.fragment.currency;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,13 +81,13 @@ public class CurrencyInfoBriefFragment extends BaseFragment implements OnRequest
 
     private List<String> getList(CurrencyBriefModel.DataBean data) {
         List<String> list = new ArrayList<>();
-        list.add("");//英文名称
-        list.add("");//中文名称
+        list.add(data.getEn_name());//英文名称
+        list.add(data.getCn_name());//中文名称
         list.add(data.getUrl1());
         list.add(data.getRank());
         list.add(data.getVolume());
         list.add(data.getCirculation());
-        list.add("");//上市家数
+        list.add(TextUtils.concat(data.getBourse(), "家").toString());//上市家数
         return list;
     }
 }

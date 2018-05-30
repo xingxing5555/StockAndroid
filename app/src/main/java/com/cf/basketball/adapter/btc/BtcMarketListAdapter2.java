@@ -1,4 +1,4 @@
-package com.cf.basketball.adapter.home;
+package com.cf.basketball.adapter.btc;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cf.basketball.R;
-import com.example.admin.basic.model.home.HomeType3Model;
+import com.example.admin.basic.model.market.BtcMarketModel;
 import com.example.admin.basic.utils.CommonUtils;
 import com.example.admin.basic.view.ListBaseAdapter;
 import com.example.admin.basic.view.SuperViewHolder;
@@ -17,9 +17,9 @@ import com.example.admin.basic.view.SuperViewHolder;
  * @author Xinxin Shi
  */
 
-public class HomeType3Adapter extends ListBaseAdapter<HomeType3Model.DataBean.CoinsBean> {
+public class BtcMarketListAdapter2 extends ListBaseAdapter<BtcMarketModel.DataBean.MarketsBean> {
 
-    public HomeType3Adapter(Context context) {
+    public BtcMarketListAdapter2(Context context) {
         super(context);
     }
 
@@ -36,20 +36,17 @@ public class HomeType3Adapter extends ListBaseAdapter<HomeType3Model.DataBean.Co
         TextView tvBtcPrice = holder.getView(R.id.tv_btc_price);
         TextView tvBtcForeignPrice = holder.getView(R.id.tv_btc_foreign_price);
         Button btnBtc = holder.getView(R.id.btn_btc);
-        HomeType3Model.DataBean.CoinsBean item = getDataList().get(position);
+        BtcMarketModel.DataBean.MarketsBean item = getDataList().get(position);
         tvBtcName.setText(item.getName());
-        tvBtcSource.setText(item.getChange());
-        tvBtcVolume.setText(TextUtils.concat("交易量", item.getVolume()));
+//        tvBtcSource.setText(item.getChange());
+        tvBtcVolume.setText(TextUtils.concat("交易量", item.getValue()));
         tvBtcPrice.setText(item.getPrice1());
         tvBtcForeignPrice.setText(item.getPrice2());
         String updown = item.getUpdown();
+        btnBtc.setText(updown);
         boolean plus = CommonUtils.isMinus(updown);
-        if (!plus) {
-            btnBtc.setText(TextUtils.concat("+", item.getUpdown()));
-        } else {
-            btnBtc.setText(item.getUpdown());
-        }
         btnBtc.setSelected(plus);
         tvBtcPrice.setEnabled(plus);
     }
+
 }
