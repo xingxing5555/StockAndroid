@@ -650,6 +650,11 @@ public class KlineView extends StockLineView {
                     g.drawText(endTime, x1 - Util.stringWidth(endTime, paint) / 2, volumeEndY +
                             FontHeight - 4, paint);
                 }
+//                修改日期位置
+//                int num = (int) (endX - startX) / times.size();
+//                for (int j = 0; j < times.size(); j++) {
+//                    g.drawText(times.get(j), startX + j * num, volumeEndY + FontHeight - 4, paint);
+//                }
             }
 
 
@@ -869,7 +874,7 @@ public class KlineView extends StockLineView {
         String[] content = s.split(",");
 //        x = endX - Util.stringWidth(content[0],paint);
         x = endX;
-        y = volumeStartY + (volumeEndY - volumeStartY) / 2 ;
+        y = volumeStartY + (volumeEndY - volumeStartY) / 2;
         Util.drawString(content[0], x, y, 0, g, paint);
         y = volumeStartY + (volumeEndY - volumeStartY) / 2 + FontHeight / 2;
         paint.setColor(kline_biankuang);
@@ -884,7 +889,7 @@ public class KlineView extends StockLineView {
         g.drawLine(startX, y, endX + 5, y, paint);
 
         if (klineDataList != null) {
-            float  w, h;
+            float w, h;
             int length, index;
 
             if (beginflag == 1) {
@@ -1188,6 +1193,12 @@ public class KlineView extends StockLineView {
     protected int getBeginFlag() {
         return beginflag;
     }
+
+    @Override
+    protected int getScrollTextBg() {
+        return 0xff2FDF61;
+    }
+
 
     Map<Integer, Float> hashMap = new HashMap<>();
 

@@ -107,7 +107,7 @@ public class HomeOptionalFragment extends BaseFragment implements SortLayout
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                startActivity(CurrencyInfoActivity.class);
+                startActivity(String.valueOf(list.get(i).getId()), CurrencyInfoActivity.class);
             }
         });
         binding.sryContainer.setOnTouchListener(new View.OnTouchListener() {

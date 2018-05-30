@@ -32,10 +32,12 @@ public class CurrencyInfoNewsFragment extends BaseFragment implements BaseQuickA
     private List<CurrencyInfoNewsModel> list = new ArrayList<>();
     private MeasureRecyclerView mRecyclerView;
     private CurrencyInfoNewsAdapter adapter;
+    private String id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        id = getArguments().getString("id");
         getData();
     }
 

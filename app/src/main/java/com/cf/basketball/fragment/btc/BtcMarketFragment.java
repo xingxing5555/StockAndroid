@@ -46,12 +46,13 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
     private FragmentBtcChartBinding binding;
     private ArrayList<PieData> mPieDatas = new ArrayList<>();
     private BtcMarketListAdapter adapter;
-    private String id = "36";
+    private String id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments().getString("id");
+        LogUtils.e("btc 市场id=" + id);
         NetManager.getInstance().getBtcMarket(id, this);
     }
 
@@ -70,14 +71,11 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
                 DividerItemDecoration.VERTICAL));
         adapter = new BtcMarketListAdapter(getContext());
         binding.mrvList.setAdapter(adapter);
-        initPieChart();
+
     }
 
-    private void initPieChart() {
-        List<PieEntry> strings = new ArrayList<>();
-        strings.add(new PieEntry(20f, ""));
-        strings.add(new PieEntry(30f, ""));
-        strings.add(new PieEntry(50f, ""));
+    private void initPieChart(List<PieEntry> strings, String title, String percent) {
+
         PieDataSet dataSet = new PieDataSet(strings, "");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(8f);
@@ -91,7 +89,7 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
         binding.picChart.setData(pieData);
         binding.picChart.setTouchEnabled(false);
 
-        binding.picChart.setCenterText(generateCenterSpannableText("Binance", "19.45%"));
+        binding.picChart.setCenterText(generateCenterSpannableText(title, percent));
         Description description = new Description();
         description.setText("");
         binding.picChart.setDescription(description);
@@ -124,6 +122,23 @@ public class BtcMarketFragment extends BaseFragment implements OnRequestListener
         adapter.setDataList(markets);
         adapter.notifyDataSetChanged();
         binding.tvTurnVolume.setText(data.getAmount());
+        List<String> rates = data.getRates();
+        List<String> names = data.getNames();
+        List<Float> list = new ArrayList<>();
+        for (int i = 0; i < rates.size(); i++) {
+            String replace = rates.get(i).replace("%", "");
+            float v = Float.parseFloat(replace);
+            list.add(v);
+        }
+        float totalNum = 0;
+        List<PieEntry> strings = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            strings.add(new PieEntry(list.get(i), names.get(i)));
+            totalNum += list.get(i);
+        }
+        if (totalNum == 100) {
+            initPieChart(strings, names.get(0), rates.get(0));
+        }
     }
 
     @Override

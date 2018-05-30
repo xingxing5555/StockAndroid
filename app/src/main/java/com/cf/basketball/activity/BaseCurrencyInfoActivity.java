@@ -62,6 +62,9 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
     public TextView tvInfoTradeTotal;
     public HomeCurrencyInfoDataAdapter homeInfoDataAdapter;
     public String id;
+    public CurrencyLineAdapter currencyLineAdapter;
+    public CurrencyLineAdapter landCurrencyLineAdapter;
+    public TextView tvTrendName;
 
 
     @Override
@@ -113,6 +116,7 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
         llLine = (LinearLayout) this.findViewById(R.id.ll_line);
         mrvLine = (MeasureRecyclerView) this.findViewById(R.id.mrv_line);
         tvLineTime = (TextView) this.findViewById(R.id.tv_line_time);
+        tvTrendName = (TextView) this.findViewById(R.id.tv_trend_name);
         ivClose = (ImageView) findViewById(R.id.iv_close);
         if (ivClose != null) {
             ivClose.setOnClickListener(new View.OnClickListener() {
@@ -136,12 +140,13 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
         mrvLine.setLayoutManager(createGridLayoutManager(3));
         LogUtils.e("isLand==" + isLand);
         if (isLand) {
-            mrvLine.setAdapter(new CurrencyLineAdapter(this, R.layout.item_currency_kline_land,
-                    getData()));
+            currencyLineAdapter = new CurrencyLineAdapter(this, R.layout.item_currency_kline_land,
+                    getData());
         } else {
-            mrvLine.setAdapter(new CurrencyLineAdapter(this, R.layout.item_currency_kline,
-                    getData()));
+            currencyLineAdapter = new CurrencyLineAdapter(this, R.layout.item_currency_kline,
+                    getData());
         }
+        mrvLine.setAdapter(currencyLineAdapter);
     }
 
     @Override

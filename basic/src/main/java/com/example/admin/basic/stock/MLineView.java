@@ -60,7 +60,7 @@ public class MLineView extends StockLineView {
     public float closeTrend = 0;
     public boolean isYB;
     public int TEXTSIZE = 18;
-    int MAX_MDATA_NUM = 242;
+    int MAX_MDATA_NUM = 480;
     private SMMACurve smmaCurve = new SMMACurve(MAX_MDATA_NUM, MAX_MDATA_NUM);
 
     public MLineView(Context context, AttributeSet attrs) {
@@ -75,7 +75,7 @@ public class MLineView extends StockLineView {
         }
         switch (market) {
             case "hs":
-                MAX_MDATA_NUM = 242;
+                MAX_MDATA_NUM = 480;
                 break;
             case "hk":
                 MAX_MDATA_NUM = 332;
@@ -94,7 +94,7 @@ public class MLineView extends StockLineView {
                 isOneDayMLine = true;
                 switch (market) {
                     case "hs":
-                        MAX_MDATA_NUM = 242;
+                        MAX_MDATA_NUM = 480;
                         break;
                     case "hk":
                         MAX_MDATA_NUM = 332;
@@ -108,7 +108,7 @@ public class MLineView extends StockLineView {
                 break;
             case FIVE_DAY_MINUTES_LINE:
                 isOneDayMLine = false;
-                setMarket(market);
+//                setMarket(market);
                 switch (market) {
                     case "hs":
                         MAX_MDATA_NUM = 245;
@@ -224,6 +224,11 @@ public class MLineView extends StockLineView {
     @Override
     protected int getBeginFlag() {
         return 0;
+    }
+
+    @Override
+    protected int getScrollTextBg() {
+        return 0xff113EC0;
     }
 
     public MLineView(Context context) {
@@ -426,9 +431,9 @@ public class MLineView extends StockLineView {
                     canvas.drawLine(marketRestTimeX, startY, marketRestTimeX, endY, paint);
                     paint.setAntiAlias(true);
                     paint.setColor(ColorText);
-                    canvas.drawText("9:30", startX, drawY, paint);
-                    canvas.drawText("11:30/13:00", marketRestTimeX - tmp, drawY, paint);
-                    canvas.drawText("15:00", endX - tmp, drawY, paint);
+                    canvas.drawText("00:00", startX, drawY, paint);
+//                    canvas.drawText("11:30/13:00", marketRestTimeX - tmp, drawY, paint);
+                    canvas.drawText("24:00", endX - tmp, drawY, paint);
                     break;
                 case "hk":
                     marketRestTimeX = startX + offsetX * 151;
@@ -451,6 +456,12 @@ public class MLineView extends StockLineView {
                 default:
                     break;
             }
+//            paint.setAntiAlias(true);
+//            paint.setColor(ColorText);
+//            int num = (int) (endX - startX) / times.size();
+//            for (int j = 0; j < times.size(); j++) {
+//                canvas.drawText(times.get(j), startX + j * num, drawY, paint);
+//            }
         }
 
         paint.setColor(mline_biankuang);
@@ -557,6 +568,7 @@ public class MLineView extends StockLineView {
                     lastX = startX;
                     lastY = top;
                 } else {
+//                    todo 修改了线的颜色值
                     linePaint.setColor(mline_junxian);
                     linePaint.setStrokeWidth(2.0f);
                     if (left <= endX) {
@@ -630,7 +642,7 @@ public class MLineView extends StockLineView {
                 kd_5 = "0.00%";
             }
         }
-
+//右侧数据
         linePaint.setColor(CharColor);
         canvas.drawText(kd_1, endX - (Util.stringWidth(kd_1, linePaint) + 4), startY, linePaint);
         canvas.drawText(kd_2, endX - (Util.stringWidth(kd_2, linePaint) + 4), startY + (endY -
@@ -646,7 +658,7 @@ public class MLineView extends StockLineView {
     }
 
     /**
-     * �����Ƴɽ�����
+     * 下方的数据
      *
      * @param canvas
      */
@@ -673,9 +685,9 @@ public class MLineView extends StockLineView {
                     paint.setColor(mline_trendline);
                 } else {
                     if (minDataList.get(i).get(0) > minDataList.get(i - 1).get(0)) {
-                        paint.setColor(ColorRed);
-                    } else if (minDataList.get(i).get(0) < minDataList.get(i - 1).get(0)) {
                         paint.setColor(ColorGreen);
+                    } else if (minDataList.get(i).get(0) < minDataList.get(i - 1).get(0)) {
+                        paint.setColor(ColorRed);
                     } else {
                         paint.setColor(mline_trendline);
                     }

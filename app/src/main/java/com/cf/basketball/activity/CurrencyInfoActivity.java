@@ -10,6 +10,8 @@ import com.example.admin.basic.interfaces.OnRequestListener;
 import com.example.admin.basic.model.HSKlineModel;
 import com.example.admin.basic.model.HSTodayModel;
 import com.example.admin.basic.model.currency.CurrencyInfoModel;
+import com.example.admin.basic.model.currency.KLineModel;
+import com.example.admin.basic.model.currency.MLineModel;
 import com.example.admin.basic.model.home.CommonStateModel;
 import com.example.admin.basic.net.RequestManager;
 import com.example.admin.basic.stock.KlineView;
@@ -49,6 +51,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     int currentChart;
     String id = "36";
     private CurrencyInfoModel.DataBean data;
+    private String last;
 
     @Override
     public void init() {
@@ -67,7 +70,6 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
     @Override
     public void addOrDel() {
         NetManager.getInstance().addOrDelCurrency(token, id, Constants.EVENT_ADD, this);
-
     }
 
     @Override
@@ -77,53 +79,49 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
 //        kLineTypeView.setVisibility(View.GONE);
         this.currentChart = currentChart;
         refresh();
-        switch (currentChart) {
-            case MLINE:
-                mLineView.clearData();
-                mLineView.setVisibility(View.VISIBLE);
-                llLine.setVisibility(View.VISIBLE);
-
-                if (hsModel != null) {
-                    mLineView.setData(hsModel.parseData());
-                }
-                break;
-            case DAY_KLINE:
-                kWeekLineView.clearData();
-                kWeekLineView.setVisibility(View.VISIBLE);
-//                kLineTypeView.setVisibility(View.VISIBLE);
-                if (hsWeekKlineModel != null) {
-                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false,
-                            KlineView.K_BOTTOM_TYPE_CJL);
-                }
-//                kDayLineView.clearData();
-//                kDayLineView.setVisibility(View.VISIBLE);
-////                kLineTypeView.setVisibility(View.VISIBLE);
-//                if (hsDayKlineModel != null) {
-//                    kDayLineView.setData(hsDayKlineModel.parseData(), DAY_KLINE, false, KlineView
-//                            .K_BOTTOM_TYPE_KDJ);
+//        switch (currentChart) {
+//            case MLINE:
+//
+//
+//                if (hsModel != null) {
+//                    mLineView.setData(hsModel.parseData());
 //                }
-                break;
-            case WEEK_KLINE:
-                kWeekLineView.clearData();
-                kWeekLineView.setVisibility(View.VISIBLE);
-//                kLineTypeView.setVisibility(View.VISIBLE);
-                if (hsWeekKlineModel != null) {
-                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false,
-                            KlineView.K_BOTTOM_TYPE_CJL);
-                }
-                break;
-            case MONTH_KLINE:
-                kMonthLineView.clearData();
-                kMonthLineView.setVisibility(View.VISIBLE);
-//                kLineTypeView.setVisibility(View.VISIBLE);
-                if (hsMonthKlineModel != null) {
-                    kMonthLineView.setData(hsMonthKlineModel.parseData(), MONTH_KLINE, false,
-                            KlineView.K_BOTTOM_TYPE_KDJ);
-                }
-                break;
-            default:
-                break;
-        }
+//                break;
+//            case DAY_KLINE:
+//
+////                kLineTypeView.setVisibility(View.VISIBLE);
+//                if (hsWeekKlineModel != null) {
+//                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false,
+//                            KlineView.K_BOTTOM_TYPE_CJL);
+//                }
+////                kDayLineView.clearData();
+////                kDayLineView.setVisibility(View.VISIBLE);
+//////                kLineTypeView.setVisibility(View.VISIBLE);
+////                if (hsDayKlineModel != null) {
+////                    kDayLineView.setData(hsDayKlineModel.parseData(), DAY_KLINE, false,
+/// KlineView
+////                            .K_BOTTOM_TYPE_KDJ);
+////                }
+//                break;
+//            case WEEK_KLINE:
+//
+////                kLineTypeView.setVisibility(View.VISIBLE);
+//                if (hsWeekKlineModel != null) {
+//                    kWeekLineView.setData(hsWeekKlineModel.parseData(), WEEK_KLINE, false,
+//                            KlineView.K_BOTTOM_TYPE_CJL);
+//                }
+//                break;
+//            case MONTH_KLINE:
+//
+////                kLineTypeView.setVisibility(View.VISIBLE);
+//                if (hsMonthKlineModel != null) {
+//                    kMonthLineView.setData(hsMonthKlineModel.parseData(), WEEK_KLINE, false,
+//                            KlineView.K_BOTTOM_TYPE_KDJ);
+//                }
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     @Override
@@ -143,31 +141,158 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
 
 
     private void refresh() {
-        RequestManager.init();
         canRefresh = false;
         switch (currentChart) {
             case MLINE:
+                mLineView.clearData();
+                mLineView.setVisibility(View.VISIBLE);
+                llLine.setVisibility(View.VISIBLE);
                 NetManager.getInstance().getMLine(id, this);
-                getTodayData(curMarket, stockCode, true);
+//                getTodayData(curMarket, stockCode, true);
                 break;
             case DAY_KLINE:
+                kWeekLineView.clearData();
+                kWeekLineView.setVisibility(View.VISIBLE);
                 NetManager.getInstance().getKLine(id, currentChart - 1, this);
 //                refreshDayData(curMarket, stockCode);
-                refreshWeekData(curMarket, stockCode);
+//                refreshWeekData(curMarket, stockCode);
                 break;
             case WEEK_KLINE:
+                kWeekLineView.clearData();
+                kWeekLineView.setVisibility(View.VISIBLE);
                 NetManager.getInstance().getKLine(id, currentChart - 1, this);
-                refreshWeekData(curMarket, stockCode);
+//                refreshWeekData(curMarket, stockCode);
                 break;
             case MONTH_KLINE:
+                kMonthLineView.clearData();
+                kMonthLineView.setVisibility(View.VISIBLE);
                 NetManager.getInstance().getKLine(id, currentChart - 1, this);
-                refreshMonthData(curMarket, stockCode);
+//                refreshMonthData(curMarket, stockCode);
                 break;
             default:
                 break;
 
         }
     }
+
+
+    /**
+     * @param tag
+     * @param json
+     */
+    @Override
+    public void onResponse(String tag, String json) {
+        if (TextUtils.equals(tag, Constants.TAG_CURRENCY_INFO)) {
+            LogUtils.e("详情页：" + json);
+            CurrencyInfoModel model = new Gson().fromJson(json, CurrencyInfoModel.class);
+            if (model == null || model.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+                return;
+            }
+            data = model.getData();
+            rtlText.setToolbarTitle(data.getBarName());
+            rtlText.setTvToolbarContent(data.getTime());
+            tvInfoForeignPrice.setText(data.getPrice1());
+            tvInfoPrice.setText(TextUtils.concat("(¥", data.getPrice2(), ")"));
+            tvInfoRate.setText(TextUtils.concat(data.getUpdown() + "\t\t" + data.getRate()));
+            tvInfoTradeTotal.setText(TextUtils.concat("成交量 " + data.getVolumn()));
+            homeInfoDataAdapter.setDataList(getInfoData());
+            homeInfoDataAdapter.notifyDataSetChanged();
+            currencyLineAdapter.setNewData(getKLineData());
+            currencyLineAdapter.notifyDataSetChanged();
+            tvLineTime.setText(data.getTime());
+            if (tvTrendName != null) {
+                tvTrendName.setText(data.getBarName());
+            }
+            last = data.getLast();
+        }
+
+        if (TextUtils.equals(tag, Constants.TAG_ADD_DEL_EVENT)) {
+            LogUtils.e("添加详情：" + json);
+            CommonStateModel stateModel = new Gson().fromJson(json, CommonStateModel.class);
+            if (stateModel == null || stateModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+                ToastUtils.toastShot(CurrencyInfoActivity.this, getString(R.string.failure));
+                return;
+            }
+            ToastUtils.toastShot(CurrencyInfoActivity.this, getString(R.string.success));
+            EventBus.getDefault().post(Constants.EVENT_REFRESH);
+        }
+
+        if (TextUtils.equals(tag, Constants.TAG_CURRENCY_MLINE)) {
+//TODO 实时图
+            LogUtils.e("实时图：" + json);
+            MLineModel mLineModel = new Gson().fromJson(json, MLineModel.class);
+            if (mLineModel == null || mLineModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+                return;
+            }
+            mLineView.setMlineType(MLineView.ONE_DAY_MINUTES_LINE);
+            mLineView.setData(mLineModel.parseData(last));
+            mLineView.postInvalidate();
+        }
+
+        if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
+                (DAY_KLINE - 1)))) {
+            LogUtils.e("K图0：" + json);
+            KLineModel kLineModel = new Gson().fromJson(json, KLineModel.class);
+            if (kLineModel == null || kLineModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+                return;
+            }
+            kWeekLineView.setData(kLineModel.parseData(), WEEK_KLINE, false, KlineView
+                    .K_BOTTOM_TYPE_CJL);
+            kWeekLineView.postInvalidate();
+        }
+        if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
+                (WEEK_KLINE - 1)))) {
+//       TODO     周K图
+            LogUtils.e("K图1：" + json);
+            KLineModel kLineModel = new Gson().fromJson(json, KLineModel.class);
+            if (kLineModel == null || kLineModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+                return;
+            }
+            kWeekLineView.setData(kLineModel.parseData(), WEEK_KLINE, false, KlineView
+                    .K_BOTTOM_TYPE_CJL);
+            kWeekLineView.postInvalidate();
+        }
+        if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
+                (MONTH_KLINE - 1)))) {
+//       TODO     月K图
+            LogUtils.e("K图2：" + json);
+            KLineModel kLineModel = new Gson().fromJson(json, KLineModel.class);
+            if (kLineModel == null || kLineModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
+                return;
+            }
+            kMonthLineView.setData(kLineModel.parseData(), WEEK_KLINE, false, KlineView
+                    .K_BOTTOM_TYPE_CJL);
+            kMonthLineView.postInvalidate();
+        }
+    }
+
+    @Override
+    public void onRequestFailure(String errorMsg) {
+
+    }
+
+    public List<String> getInfoData() {
+        List<String> list = new ArrayList<>();
+        list.add(data.getHigh());
+        list.add(data.getLow());
+        list.add(data.getOpen());
+        list.add(data.getClose());
+        list.add(data.getBuy1());
+        list.add(data.getSell1());
+        return list;
+    }
+
+    public List<String> getKLineData() {
+        List<String> list = new ArrayList<>();
+        list.add(data.getOpen());
+        list.add(data.getHigh());
+        list.add(data.getVolumn());
+        list.add(data.getClose());
+        list.add(data.getLow());
+        list.add(data.getRate());
+        return list;
+    }
+
 
     private void getTodayData(String market, String stockCode, final boolean isRefresh) {
         Call<HSTodayModel> call = RequestManager.getService().getTodayModelWithMarket(market,
@@ -177,9 +302,7 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
             public void onResponse(Call<HSTodayModel> call, Response<HSTodayModel> response) {
                 hsModel = response.body();
                 if (isRefresh) {
-                    mLineView.setMlineType(MLineView.ONE_DAY_MINUTES_LINE);
-                    mLineView.setData(hsModel.parseData());
-                    mLineView.postInvalidate();
+
                 } else {
                     changeChartView(currentChart);
 
@@ -405,78 +528,4 @@ public class CurrencyInfoActivity extends BaseCurrencyInfoActivity implements On
                 break;
         }
     }
-
-
-    /**
-     * @param tag
-     * @param json
-     */
-    @Override
-    public void onResponse(String tag, String json) {
-        if (TextUtils.equals(tag, Constants.TAG_CURRENCY_INFO)) {
-            LogUtils.e("详情页：" + json);
-            CurrencyInfoModel model = new Gson().fromJson(json, CurrencyInfoModel.class);
-            if (model == null || model.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
-                return;
-            }
-            data = model.getData();
-            rtlText.setToolbarTitle(data.getBarName());
-            rtlText.setTvToolbarContent(data.getTime());
-            tvInfoForeignPrice.setText(data.getPrice1());
-            tvInfoPrice.setText(TextUtils.concat("(¥", data.getPrice2(), ")"));
-            tvInfoRate.setText(TextUtils.concat(data.getUpdown() + "\t\t" + data.getRate()));
-            tvInfoTradeTotal.setText(TextUtils.concat("成交量 " + data.getVolumn()));
-            homeInfoDataAdapter.setDataList(getInfoData());
-            homeInfoDataAdapter.notifyDataSetChanged();
-        }
-
-        if (TextUtils.equals(tag, Constants.TAG_ADD_DEL_EVENT)) {
-            LogUtils.e("添加详情：" + json);
-            CommonStateModel stateModel = new Gson().fromJson(json, CommonStateModel.class);
-            if (stateModel == null || stateModel.getCode() != Constants.NET_REQUEST_SUCCESS_CODE) {
-                ToastUtils.toastShot(CurrencyInfoActivity.this, getString(R.string.failure));
-                return;
-            }
-            ToastUtils.toastShot(CurrencyInfoActivity.this, getString(R.string.success));
-            EventBus.getDefault().post(Constants.EVENT_REFRESH);
-        }
-
-        if (TextUtils.equals(tag, Constants.TAG_CURRENCY_MLINE)) {
-//TODO 实时图
-            LogUtils.e("实时图：" + json);
-        }
-
-        if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
-                (DAY_KLINE - 1)))) {
-//       TODO     日K图
-            LogUtils.e("K图0：" + json);
-        }
-        if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
-                (WEEK_KLINE - 1)))) {
-//       TODO     周K图
-            LogUtils.e("K图1：" + json);
-        }
-        if (TextUtils.equals(tag, TextUtils.concat(Constants.TAG_CURRENCY_KLINE, String.valueOf
-                (MONTH_KLINE - 1)))) {
-//       TODO     月K图
-            LogUtils.e("K图2：" + json);
-        }
-    }
-
-    @Override
-    public void onRequestFailure(String errorMsg) {
-
-    }
-
-    public List<String> getInfoData() {
-        List<String> list = new ArrayList<>();
-        list.add(data.getHigh());
-        list.add(data.getLow());
-        list.add(data.getOpen());
-        list.add(data.getClose());
-        list.add(data.getBuy1());
-        list.add(data.getSell1());
-        return list;
-    }
-
 }

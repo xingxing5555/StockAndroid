@@ -34,7 +34,7 @@ public abstract class StockLineView extends View implements ILineScatter {
     private boolean mDrawHorizontalHighlightIndicator = false;
     private boolean isShowHighLightIndicator = true;
     //    private int mHighLightColor = Color.rgb(255, 255, 255);
-    private int mHighLightColor =0xff999999;
+    private int mHighLightColor = 0xff999999;
     private float mHighlightLineWidth = 1f;
     protected float startX, startY, endX, endY;
     protected float volumeStartY;//量图的顶部Y值
@@ -113,18 +113,53 @@ public abstract class StockLineView extends View implements ILineScatter {
         highlightPaint.setStrokeWidth(getHighlightLineWidth());
         highlightPaint.setColor(getHighLightColor());
         //highlightPaint.setPathEffect(getDashPathEffectHighlight());
-
+        Paint textPaint = new Paint();
+        textPaint.setColor(getScrollTextBg());
+        textPaint.setAntiAlias(true);
+        textPaint.setTextSize(Util.sp2px(this.getContext(), 10));
+        int FontHeight;
+        Paint.FontMetrics fm = textPaint.getFontMetrics();
+        FontHeight = (int) Math.ceil(fm.descent - fm.top) + 2;
+        int dataIndex = getBeginFlag() + index;
         if (isHorizontalHighlightIndicatorEnabled()) {
             mPath.reset();
-            mPath.moveTo(0, currentY);
-            mPath.lineTo(getWidth(), currentY);
+            mPath.moveTo(startX, currentY);
+            mPath.lineTo(endX, currentY);
             canvas.drawPath(mPath, highlightPaint);
+//            手势后的左右显示提示内容
+//            String text = String.valueOf(klineDataList.get(dataIndex).get(1));
+            String text = "0950943";
+            float width = Util.stringWidth(text, textPaint);
+            canvas.drawRect(startX, currentY - (FontHeight / 2 + 4), startX + width + 8, currentY
+                    + FontHeight / 2 + 4, textPaint);
+            textPaint.setColor(Color.WHITE);
+            canvas.drawText(text, startX + 2, currentY + FontHeight / 2 - 8, textPaint);
+//            手势右侧数据
+//            String rate = String.format("%s%s", klineDataList.get(dataIndex).get(5), "%");
+            String rate = "0950943";
+            width = Util.stringWidth(text, textPaint);
+            textPaint.setColor(getScrollTextBg());
+            canvas.drawRect(endX - (width + 8), currentY - FontHeight / 2, endX, currentY +
+                    FontHeight / 2 + 4, textPaint);
+            textPaint.setColor(Color.WHITE);
+            canvas.drawText(rate, endX - (width + 4), currentY + FontHeight / 2 - 8, textPaint);
         }
         if (isVerticalHighlightIndicatorEnabled()) {
             mPath.reset();
             mPath.moveTo(currentX, 0);
             mPath.lineTo(currentX, getHeight());
             canvas.drawPath(mPath, highlightPaint);
+
+//            手势的下方时间
+            textPaint.setColor(getScrollTextBg());
+
+            String time = times.get(dataIndex);
+            float width = Util.stringWidth(time, textPaint);
+            canvas.drawRect(currentX - width / 2 - 4, volumeEndY, currentX + width / 2 + 4,
+                    volumeEndY + FontHeight, textPaint);
+            textPaint.setColor(Color.WHITE);
+            textPaint.setTextSize(Util.sp2px(this.getContext(), 9));
+            canvas.drawText(time, currentX - width / 2 + 4, volumeEndY + FontHeight / 2, textPaint);
         }
 
         if (isHorizontalHighlightIndicatorEnabled() && isVerticalHighlightIndicatorEnabled()) {
@@ -141,7 +176,7 @@ public abstract class StockLineView extends View implements ILineScatter {
 
             ArrayList<String> content = new ArrayList<>();
             if (this instanceof KlineView) {
-                int dataIndex = getBeginFlag() + index;
+                dataIndex = getBeginFlag() + index;
                 content.add(String.format("时间:%s", times.get(dataIndex)));
                 content.add(String.format("现价:%s", klineDataList.get(dataIndex).get(1)));
                 content.add(String.format("涨幅:%s%s", klineDataList.get(dataIndex).get(5), "%"));
@@ -178,13 +213,13 @@ public abstract class StockLineView extends View implements ILineScatter {
             linePaint.setColor(Color.BLACK);
             linePaint.setStyle(Paint.Style.FILL);
             RectF rect = new RectF(left, top, left + width + 1, top + height);
-            canvas.drawRoundRect(rect, 5, 5, linePaint);
+//            canvas.drawRoundRect(rect, 5, 5, linePaint);
             linePaint.setTextSize(14);
             linePaint.setColor(Color.WHITE);
-            for (String item : content) {
-                canvas.drawText(item, left + 3, top + 15, linePaint);
-                top += 15;
-            }
+//            for (String item : content) {
+//                canvas.drawText(item, left + 3, top + 15, linePaint);
+//                top += 15;
+//            }
         }
 
     }
@@ -283,6 +318,8 @@ public abstract class StockLineView extends View implements ILineScatter {
     protected abstract float getEndY();
 
     protected abstract int getBeginFlag();
+
+    protected abstract int getScrollTextBg();
 
     public int getIndex() {
         return index + getBeginFlag();

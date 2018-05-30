@@ -30,7 +30,7 @@ public class BtcInfoActivity extends BaseActivity implements OnItemClickListener
     private BtcMarketFragment btcChartFragment;
     private BtcBriefFragment btcBriefFragment;
     private CurrencyInfoNewsFragment infoNewsFragment;
-    private String id = "36";
+    private String id;
 
 
     @Override
@@ -43,6 +43,8 @@ public class BtcInfoActivity extends BaseActivity implements OnItemClickListener
 
     @Override
     public void initData() {
+        id = getIntent().getStringExtra("id");
+        LogUtils.e("传入的id=" + id);
         NetManager.getInstance().getMarketInfo(id, this);
         btcChartFragment = new BtcMarketFragment();
         btcBriefFragment = new BtcBriefFragment();

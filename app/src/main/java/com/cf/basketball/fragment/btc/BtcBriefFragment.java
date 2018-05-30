@@ -40,6 +40,7 @@ public class BtcBriefFragment extends BaseFragment implements OnRequestListener 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments().getString("id");
+        LogUtils.e("btc 简介id=" + id);
         NetManager.getInstance().getMarketDesc(id, this);
     }
 
@@ -59,8 +60,6 @@ public class BtcBriefFragment extends BaseFragment implements OnRequestListener 
                 .item_btc_brief_project);
         binding.mrvProjectList.setAdapter(btcBriefProjectAdapter);
     }
-
-
 
 
     @Override

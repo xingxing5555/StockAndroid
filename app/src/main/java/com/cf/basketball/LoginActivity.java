@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
         super.onResume();
         tabIndicatorView = (TabIndicatorViewV2) this.findViewById(R.id.tabIndicatorView);
         mLineView = (MLineView) this.findViewById(R.id.mLineView);
-        mLineView.setMarket(HS_MARKET);
+//        mLineView.setMarket(HS_MARKET);
         kDayLineView = (KlineView) this.findViewById(R.id.kDayLineView);
         kWeekLineView = (KlineView) this.findViewById(R.id.kWeekLineView);
         kMonthLineView = (KlineView) this.findViewById(R.id.kMonthLineView);
@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements KlineView.GetMor
 
 
     private void changeChartView() {
-        mLineView.setMarket(curMarket);
+//        mLineView.setMarket(curMarket);
 //        buySellContainer.setVisibility(View.GONE);
 //        kLineTypeView.setVisibility(View.GONE);
         switch (currentChart) {
