@@ -27,6 +27,7 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.ViewHold
     private int selectedPosition = -1;
     private OnItemClickListener onItemClickListener;
     private View selectedView;
+    private TextView selectedTextView;
 
     public HomeTabAdapter(Context context) {
         this.context = context;
@@ -54,8 +55,11 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.ViewHold
         if ((selectedPosition == -1 && position == 0) || selectedPosition == position) {
             selectedPosition = position;
             holder.tvNavigationLine.setVisibility(View.VISIBLE);
+            selectedTextView = holder.tvNavigationTitle;
             selectedView = holder.tvNavigationLine;
+            selectedTextView.setSelected(true);
         } else {
+            holder.tvNavigationTitle.setSelected(false);
             holder.tvNavigationLine.setVisibility(View.INVISIBLE);
         }
         holder.rlNavigation.setOnClickListener(new View.OnClickListener() {
@@ -63,8 +67,11 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.ViewHold
             public void onClick(View v) {
                 if (onItemClickListener != null) {
                     selectedView.setVisibility(View.INVISIBLE);
+                    selectedTextView.setSelected(false);
                     selectedView = holder.tvNavigationLine;
+                    selectedTextView = holder.tvNavigationTitle;
                     selectedView.setVisibility(View.VISIBLE);
+                    selectedTextView.setSelected(true);
                     onItemClickListener.onItemClickListener(position);
                 }
             }

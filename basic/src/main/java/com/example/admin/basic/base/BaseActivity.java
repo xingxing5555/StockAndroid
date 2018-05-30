@@ -13,7 +13,6 @@ import android.widget.ScrollView;
 
 import com.example.admin.basic.R;
 import com.example.admin.basic.application.BaseApplication;
-import com.example.admin.basic.model.HomeCurrencyModel;
 import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
 
 import java.util.ArrayList;
@@ -74,17 +73,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             manager.scrollToPositionWithOffset(0, n);
             manager.setStackFromEnd(false);
         }
-    }
-
-    public List<HomeCurrencyModel> createData() {
-        List<HomeCurrencyModel> list = new ArrayList<>();
-        list.add(new HomeCurrencyModel(0,"火币", "BTC/USD", "¥56352.54", "8856.825",
-                "交易量27163.070BT", "-4.81%", "0"));
-        list.add(new HomeCurrencyModel(1,"火币", "BTC/USD", "¥56352.54", "8856.825",
-                "交易量27163.070BT", "-4.81%", "1"));
-        list.add(new HomeCurrencyModel(2,"火币", "BTC/USD", "¥56352.54", "8856.825",
-                "交易量27163.070BT", "-4.81%", "1"));
-        return list;
     }
 
     public List<String> getData() {

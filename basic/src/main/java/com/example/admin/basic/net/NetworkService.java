@@ -139,6 +139,9 @@ public interface NetworkService {
     @GET("v1/exchanges/detail")
     Call<String> getCurrencyMarketData(@Query("id") String id);
 
+    @GET("v1/exchanges/info")
+    Call<String> getCurrencyBriefData(@Query("id") String id);
+
     //    市值详情
 
     @GET("v1/market/coin")

@@ -164,10 +164,9 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
         LogUtils.e("isLand==" + isLand);
         if (isLand) {
             currencyLineAdapter = new CurrencyLineAdapter(this, R.layout
-                    .item_currency_kline_land, getData());
+                    .item_currency_kline_land);
         } else {
-            currencyLineAdapter = new CurrencyLineAdapter(this, R.layout.item_currency_kline,
-                    getData());
+            currencyLineAdapter = new CurrencyLineAdapter(this, R.layout.item_currency_kline);
         }
         mrvLine.setAdapter(currencyLineAdapter);
     }
@@ -256,7 +255,7 @@ public abstract class BaseCurrencyInfoActivity extends BaseActivity implements
         kWeekLineView.setVisibility(View.GONE);
         kMonthLineView.setVisibility(View.GONE);
         mLineView.setVisibility(View.GONE);
-        llLine.setVisibility(View.GONE);
+//        llLine.setVisibility(View.GONE);
         if (mrvKlineType != null) {
         mrvKlineType.setVisibility(View.GONE);
         }

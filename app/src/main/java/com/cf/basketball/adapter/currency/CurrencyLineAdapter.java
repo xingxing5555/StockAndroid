@@ -1,13 +1,10 @@
 package com.cf.basketball.adapter.currency;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
 import com.cf.basketball.R;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-
-import java.util.List;
 
 /**
  * @author Xinxin Shi
@@ -16,8 +13,8 @@ import java.util.List;
 public class CurrencyLineAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     private String[] titleArray;
 
-    public CurrencyLineAdapter(Context context, int layoutResId, @Nullable List<String> data) {
-        super(layoutResId, data);
+    public CurrencyLineAdapter(Context context, int layoutResId) {
+        super(layoutResId);
         titleArray = context.getResources().getStringArray(R.array.currency_line);
     }
 

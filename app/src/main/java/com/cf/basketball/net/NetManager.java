@@ -117,6 +117,11 @@ public class NetManager {
                 listener));
     }
 
+    public void getCurrencyBriefData(String id,OnRequestListener listener){
+        RequestManager.getService().getCurrencyBriefData(id).enqueue(createListener("",
+                listener));
+    }
+
     public void getCurrencyMarketData(String id, OnRequestListener listener) {
         RequestManager.getService().getCurrencyMarketData(id).enqueue(createListener("", listener));
     }

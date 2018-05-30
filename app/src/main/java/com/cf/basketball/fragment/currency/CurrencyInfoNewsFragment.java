@@ -38,7 +38,6 @@ public class CurrencyInfoNewsFragment extends BaseFragment implements BaseQuickA
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments().getString("id");
-        getData();
     }
 
     @Nullable
@@ -61,16 +60,6 @@ public class CurrencyInfoNewsFragment extends BaseFragment implements BaseQuickA
         adapter.setOnItemClickListener(this);
     }
 
-
-    public void getData() {
-        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
-        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
-        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
-        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
-        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
-        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
-        list.add(new CurrencyInfoNewsModel("“BTC不再是比特币，BCH才是比特币”——Bitcoin.co...", "2小时前", "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=885950579,4133410334&fm=200&gp=0.jpg"));
-    }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
